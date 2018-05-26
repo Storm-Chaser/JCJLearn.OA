@@ -47,11 +47,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBSesion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JCJ.OA.DLL\JCJ.OA.DLL.csproj">
+      <Project>{511aaabd-d8cb-4625-9860-2c8be995b92d}</Project>
+      <Name>JCJ.OA.DLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JCJ.OA.IDAL\JCJ.OA.IDAL.csproj">
+      <Project>{301b0b5c-bf46-47f0-a697-39eabcbd285d}</Project>
+      <Name>JCJ.OA.IDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JCJ.OA.Model\JCJ.OA.Model.csproj">
+      <Project>{c165f29b-629b-4ffa-917d-c540e35e4657}</Project>
+      <Name>JCJ.OA.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

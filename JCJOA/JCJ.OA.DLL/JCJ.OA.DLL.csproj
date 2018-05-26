@@ -48,11 +48,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDal.cs" />
+    <Compile Include="DBContexFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserInfoDal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JCJ.OA.IDAL\JCJ.OA.IDAL.csproj">
+      <Project>{301b0b5c-bf46-47f0-a697-39eabcbd285d}</Project>
+      <Name>JCJ.OA.IDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JCJ.OA.Model\JCJ.OA.Model.csproj">
+      <Project>{c165f29b-629b-4ffa-917d-c540e35e4657}</Project>
+      <Name>JCJ.OA.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
