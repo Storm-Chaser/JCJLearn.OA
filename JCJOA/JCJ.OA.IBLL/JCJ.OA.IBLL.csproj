@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{25C0F90D-8F81-4D85-829D-F01EC9009E9B}</ProjectGuid>
+    <ProjectGuid>{01B04A21-CD4F-435E-89DF-E0DECAD2D474}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JCJ.OA.BLL</RootNamespace>
-    <AssemblyName>JCJ.OA.BLL</AssemblyName>
+    <RootNamespace>JCJ.OA.IBLL</RootNamespace>
+    <AssemblyName>JCJ.OA.IBLL</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
