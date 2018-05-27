@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace JCJ.OA.DLL
 {
+    /// <summary>
+    /// 每个继承IBaseDal接口及其子接口的类都要实现CRUD操作，所以打包在一起放在父类，子类代码干净许多
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class BaseDal<T>where T:class,new()
     {
         //Model.ItcastCmsEntities Db = new ItcastCmsEntities();
@@ -42,9 +46,9 @@ namespace JCJ.OA.DLL
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public bool EditEntity(UserInfo entity)
+        public bool EditEntity(T entity)
         {
-            Db.Entry<UserInfo>(entity).State = System.Data.Entity.EntityState.Modified;
+            Db.Entry<T>(entity).State = System.Data.Entity.EntityState.Modified;
             //return Db.SaveChanges() > 0;
             return true;
         }

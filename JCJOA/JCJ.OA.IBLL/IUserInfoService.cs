@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JCJ.OA.IDAL
+namespace JCJ.OA.IBLL
 {
-    public interface IUserInfoDal:IBaseDal<UserInfo>
+    public interface IUserInfoService:IBaseService<UserInfo>
     {
-        //写userinfo 特有的方法
+
     }
 }

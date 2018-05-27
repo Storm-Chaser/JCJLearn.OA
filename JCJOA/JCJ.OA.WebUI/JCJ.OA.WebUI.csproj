@@ -155,6 +155,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -201,6 +202,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\UserInfo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -218,6 +220,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JCJ.OA.BLL\JCJ.OA.BLL.csproj">
+      <Project>{25c0f90d-8f81-4d85-829d-f01ec9009e9b}</Project>
+      <Name>JCJ.OA.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JCJ.OA.IBLL\JCJ.OA.IBLL.csproj">
+      <Project>{01b04a21-cd4f-435e-89df-e0decad2d474}</Project>
+      <Name>JCJ.OA.IBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JCJ.OA.Model\JCJ.OA.Model.csproj">
+      <Project>{c165f29b-629b-4ffa-917d-c540e35e4657}</Project>
+      <Name>JCJ.OA.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

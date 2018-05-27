@@ -12,7 +12,7 @@ namespace JCJ.OA.DLL
     public class DBContexFactory
     {
         /// <summary>
-        /// 保证线程内唯一
+        /// 保证线程内唯一EF对象
         /// </summary>
         /// <returns></returns>
         public static DbContext CreateDbContext()

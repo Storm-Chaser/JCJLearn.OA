@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace JCJ.OA.DALFactory
 {
-    public class DBSesion
+    public class DBSesion :IDBSession
     {
         //Model.ItcastCmsEntities Db = new ItcastCmsEntities();
         public DbContext Db
@@ -18,17 +18,20 @@ namespace JCJ.OA.DALFactory
             get { return DBContexFactory.CreateDbContext(); }
         }
         private IUserInfoDal _userInfoDal;
-        public IUserInfoDal UserInfoDal
+        public IUserInfoDal userInfoDal
         {
             get {
                 if(_userInfoDal == null)
                 {
-                    _userInfoDal = new UserInfoDal();
+                    //_userInfoDal = new UserInfoDal();  //解耦和
+                    _userInfoDal = AbstractFactory.CreateUserInfoDal();
                 }
                 return _userInfoDal;
             }
             set { _userInfoDal = value; }
         }
+
+        //public IUserInfoDal userInfoDal { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         //一个业务中可能涉及到对多张表的操作，但是希望链接一次数据库，完成对多张表的操作。
         //工作单元模式

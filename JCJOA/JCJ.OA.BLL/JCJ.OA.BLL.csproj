@@ -41,7 +41,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserInfoService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JCJ.OA.DALFactory\JCJ.OA.DALFactory.csproj">
+      <Project>{a000b9dd-0083-4adb-8538-24d78d15fc3a}</Project>
+      <Name>JCJ.OA.DALFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JCJ.OA.IBLL\JCJ.OA.IBLL.csproj">
+      <Project>{01b04a21-cd4f-435e-89df-e0decad2d474}</Project>
+      <Name>JCJ.OA.IBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JCJ.OA.IDAL\JCJ.OA.IDAL.csproj">
+      <Project>{301b0b5c-bf46-47f0-a697-39eabcbd285d}</Project>
+      <Name>JCJ.OA.IDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JCJ.OA.Model\JCJ.OA.Model.csproj">
+      <Project>{c165f29b-629b-4ffa-917d-c540e35e4657}</Project>
+      <Name>JCJ.OA.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
