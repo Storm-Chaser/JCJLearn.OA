@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace JCJ.OA.BLL
 {
-    public class UserInfoService : BaseService<UserInfo>,IUserInfoService
+    public class UserInfoService : BaseService<UserInfo>, IUserInfoService
     {
         public override void SetCurrentDal()
         {

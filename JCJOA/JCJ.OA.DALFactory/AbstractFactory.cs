@@ -18,7 +18,7 @@ namespace JCJ.OA.DALFactory
         private static readonly string NameSpace = ConfigurationManager.AppSettings["NameSpace"];
         public static IDAL.IUserInfoDal CreateUserInfoDal()
         {
-            string fullClassName = NameSpace + ".userInfoDal";
+            string fullClassName = NameSpace + ".UserInfoDal";
             return CreateInstance(fullClassName) as IDAL.IUserInfoDal; //注意：转成的是接口，不能是具体的类
         }
         /// <summary>
@@ -28,6 +28,7 @@ namespace JCJ.OA.DALFactory
         /// <returns></returns>
         private static object CreateInstance(string className)
         {
+
             var assembly = Assembly.Load(AssemblyPath);
             return assembly.CreateInstance(className);
         }

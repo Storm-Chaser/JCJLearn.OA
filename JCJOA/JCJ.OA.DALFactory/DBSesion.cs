@@ -24,6 +24,7 @@ namespace JCJ.OA.DALFactory
                 if(_userInfoDal == null)
                 {
                     //_userInfoDal = new UserInfoDal();  //解耦和
+
                     _userInfoDal = AbstractFactory.CreateUserInfoDal();
                 }
                 return _userInfoDal;

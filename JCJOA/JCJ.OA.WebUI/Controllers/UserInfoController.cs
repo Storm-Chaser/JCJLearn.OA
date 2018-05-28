@@ -12,9 +12,10 @@ namespace JCJ.OA.WebUI.Controllers
         IBLL.IUserInfoService UserInfoService = new BLL.UserInfoService();
         public ActionResult Index()
         {
-            var userInfoList = UserInfoService.LoadEntities(u=>true);
+            var userInfoList = UserInfoService.LoadEntities(u => true);
             ViewData.Model = userInfoList;
             return View();
         }
+
     }
 }
