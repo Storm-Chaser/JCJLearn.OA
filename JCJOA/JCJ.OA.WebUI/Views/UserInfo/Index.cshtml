@@ -1,5 +1,4 @@
-﻿@model IEnumerable<JCJ.OA.Model.UserInfo>
-
+﻿
 @{
     Layout = null;
 }
@@ -9,69 +8,68 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Content/themes/icon.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
+    <script src="~/Scripts/datapattern.js"></script>
     <title>Index</title>
+    <script type="text/javascript">
+        $(function () {
+            loadData();
+        });
+
+        function loadData() {
+            $('#tt').datagrid({
+                url: '/UserInfo/GetUserInfo',
+                title: '用户数据表格',
+                width: 700,
+                height: 400,
+                fitColumns: true, //列自适应
+                nowrap: false,
+                idField: 'ID',//主键列的列明
+                loadMsg: '正在加载用户的信息...',
+                pagination: true,//是否有分页
+                singleSelect: false,//是否单行选择
+                pageSize: 2,//页大小，一页多少条数据
+                pageNumber: 1,//当前页，默认的
+                pageList: [5, 10, 15],
+                queryParams: {},//往后台传递参数
+                columns: [[//c.UserName, c.UserPass, c.Email, c.RegTime
+                    { field: 'ck', checkbox: true, align: 'left', width: 50 },
+                    { field: 'ID', title: '编号', width: 80 },
+                    { field: 'UserName', title: '姓名', width: 120 },
+                    { field: 'UserPass', title: '密码', width: 120 },
+                    { field: 'Email', title: '邮箱', width: 120 },
+                    {
+                        field: 'RegTime', title: '时间', width: 80, align: 'right',
+                        formatter: function (value, row, index) {
+                            return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).pattern("yyyy-M-d");
+                        }
+                    }
+                ]],
+                toolbar: [{
+                    id: 'btnDelete',
+                    text: '删除',
+                    iconCls: 'icon-remove',
+                    handler: function () {
+                        var rows = $('#tt').datagrid('getSelections');
+                        if (!rows || rows.length == 0) {
+                            //alert("请选择要修改的商品！");
+                            $.messager.alert("提醒", "请选择要删除的记录!", "error");
+                            return;
+                        }
+
+                    }
+                }],
+            });
+        }
+    </script>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UPwd)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SubTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DelFlag)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Remark)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sort)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UPwd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DelFlag)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Remark)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sort)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-    
-    </table>
+    <div>
+        <table id="tt" style="width: 700px;" title="标题，可以使用代码进行初始化，也可以使用这种属性的方式" iconcls="icon-edit"></table>
+    </div>
 </body>
 </html>
