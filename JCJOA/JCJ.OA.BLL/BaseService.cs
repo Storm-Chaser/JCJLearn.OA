@@ -43,7 +43,7 @@ namespace JCJ.OA.BLL
         /// <returns></returns>
         public IQueryable<T> LoadPageEntities<s>(int pageIndex, int pageSize, out int totalCount, System.Linq.Expressions.Expression<Func<T, bool>> whereLambda, System.Linq.Expressions.Expression<Func<T, s>> orderbyLambda, bool isAsc)
         {
-            return CurrentDal.LoadPageEntities<s>(pageIndex, pageIndex, out totalCount, whereLambda,orderbyLambda,isAsc);
+            return CurrentDal.LoadPageEntities<s>(pageIndex, pageSize, out totalCount, whereLambda,orderbyLambda,isAsc);
         }
 
         /// <summary>

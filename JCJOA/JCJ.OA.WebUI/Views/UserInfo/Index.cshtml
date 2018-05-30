@@ -32,7 +32,7 @@
                 loadMsg: '正在加载用户的信息...',
                 pagination: true,//是否有分页
                 singleSelect: false,//是否单行选择
-                pageSize: 2,//页大小，一页多少条数据
+                pageSize: 5,//页大小，一页多少条数据
                 pageNumber: 1,//当前页，默认的
                 pageList: [5, 10, 15],
                 queryParams: {},//往后台传递参数
@@ -40,10 +40,10 @@
                     { field: 'ck', checkbox: true, align: 'left', width: 50 },
                     { field: 'ID', title: '编号', width: 80 },
                     { field: 'UserName', title: '姓名', width: 120 },
-                    { field: 'UserPass', title: '密码', width: 120 },
-                    { field: 'Email', title: '邮箱', width: 120 },
+                    { field: 'UserPwd', title: '密码', width: 120 },
+                    { field: 'Sort', title: '邮箱', width: 120 },
                     {
-                        field: 'RegTime', title: '时间', width: 80, align: 'right',
+                        field: 'SubTime', title: '时间', width: 80, align: 'right',
                         formatter: function (value, row, index) {
                             return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).pattern("yyyy-M-d");
                         }
@@ -54,16 +54,43 @@
                     text: '删除',
                     iconCls: 'icon-remove',
                     handler: function () {
-                        var rows = $('#tt').datagrid('getSelections');
-                        if (!rows || rows.length == 0) {
-                            //alert("请选择要修改的商品！");
-                            $.messager.alert("提醒", "请选择要删除的记录!", "error");
-                            return;
-                        }
-
+                        //var rows = $('#tt').datagrid('getSelections');
+                        //if (!rows || rows.length == 0) {
+                        //    //alert("请选择要修改的商品！");
+                        //    $.messager.alert("提醒", "请选择要删除的记录!", "error");
+                        //    return;
+                        deleteUser();
                     }
+
                 }],
             });
+        }
+        function deleteUser() {
+            var rows = $('#tt').datagrid('getSelections');
+            if (!rows || rows.length == 0) {
+               //alert("请选择要修改的商品")；
+               $.messager.alert("提醒", "请选择要删除的记录", "error");
+               return;
+            }
+            $.messager.confirm("提示", "确认要删除么？", function (r) {
+                if (r) {
+                    var strId = "";
+            for (var i = 0; i < rows.length; i++) {
+                strId = strId + rows[i].ID + ",";   //1,2,
+            }
+            strId = strId.substr(0, strId.length - 1);  //1,2
+            $.post("@Url.Action("DeleteUser","UserInfo")", { "strId": strId }, function (data) {
+                if (data == "ok") {
+                    //移除删除的历史纪录编号
+                    $('#tt').datagrid('clearSelections');
+                    $('#tt').datagrid('reload');
+                } else {
+                    $.messager.alert("提醒", "删除记录失败！", "error");
+                }
+            });
+                }
+            });
+
         }
     </script>
 </head>
