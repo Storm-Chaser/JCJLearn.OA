@@ -1,4 +1,5 @@
-﻿using JCJ.OA.Model.Enum;
+﻿using JCJ.OA.Model;
+using JCJ.OA.Model.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,37 @@ namespace JCJ.OA.WebUI.Controllers
                 list.Add(Convert.ToInt32(id));
             }
             return Content(UserInfoService.DeleteEntities(list) ? "ok" : "no");
+        }
+
+        /// <summary>
+        /// 添加用户
+        /// </summary>
+        public ActionResult AddUser(UserInfo userInfo)
+        {
+            short delFlag = (short)DelFlagEnum.Normal;
+            userInfo.DelFlag = delFlag;
+            userInfo.ModifiedOn = DateTime.Now;
+            userInfo.SubTime = DateTime.Now;
+            UserInfoService.AddEntity(userInfo);
+            return Content("ok");
+        }
+
+        /// <summary>
+        /// 展示要修改的数据
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowEdit()
+        {
+            int id = int.Parse(Request["id"]);
+            var userInfo = UserInfoService.LoadEntities(u => u.ID == id).FirstOrDefault();
+            if (userInfo != null)
+            {
+                return Json(new { Msg="ok",UserInfo=userInfo},JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { Mag = "no" });
+            }
         }
                
     }

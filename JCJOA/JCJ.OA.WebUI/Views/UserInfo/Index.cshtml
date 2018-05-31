@@ -13,10 +13,14 @@
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery.easyui.min.js"></script>
     <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/datapattern.js"></script>
     <title>Index</title>
     <script type="text/javascript">
         $(function () {
+            $("#addDiv").css("display", "none");
+            $("#editDiv").css("display", "none");
             loadData();
         });
 
@@ -54,17 +58,29 @@
                     text: '删除',
                     iconCls: 'icon-remove',
                     handler: function () {
-                        //var rows = $('#tt').datagrid('getSelections');
-                        //if (!rows || rows.length == 0) {
-                        //    //alert("请选择要修改的商品！");
-                        //    $.messager.alert("提醒", "请选择要删除的记录!", "error");
-                        //    return;
                         deleteUser();
                     }
 
-                }],
+                },{
+                        id: 'btnAdd',
+                        text: '添加',
+                        iconCls: 'icon-add',
+                        handler: function () {
+                            addUser();
+                        }
+                    }, {
+                        id: 'btnEdit',
+                        text: '编辑',
+                        iconCls: 'icon-edit',
+                        handler: function () {
+                            editUser();
+                        }
+                    }
+                ],
             });
         }
+
+        //删除用户数据
         function deleteUser() {
             var rows = $('#tt').datagrid('getSelections');
             if (!rows || rows.length == 0) {
@@ -90,13 +106,115 @@
             });
                 }
             });
+        }
+        //添加用户信息
+        function addUser() {
+            $("#addDiv").css("display", "block");
+            $('#addDiv').dialog({
+                title: "添加用户信息",
+                collapsible: true,
+                maximizable: true,
+                resizable: true,
+                modal: true,
+                width: 300,
+                height:300,
+                buttons: [{
+                    text: 'Ok',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        validateUser();
+                        $("#addForm").submit();  //提交
+                    }
+                }, {
+                    text: 'Cancel',
+                    handler: function () {
+                        $('#addDiv').dialog('close');
+                        $('#addDiv input').val("");
+                    }
+                }]
+            });
+        }
+        //添加成功以后
+        function afterAdd(data) {
+            if (data == "ok") {
+                $('#addDiv').dialog("close");
+                $('#tt').datagrid('reload');    //重新加载
+                $('#addDiv input').val("");
+            }
+        }
+        //编辑用户
+        function editUser() {
+            //判断是否选择了要修改的数据
+            var rows = $('#tt').datagrid('getSelections');
+            if (rows.length != 1) {
+                $.messager.alert("提示", "每次只能修改一条记录", "error");
+                return;
+            }
 
+            //将要修改的数据填充到表单中
+            var id = rows[0].ID;
+            $.post("@Url.Action("ShowEdit","UserInfo")", { "id": id }, function (data) {
+                var msg = data.Msg;
+                if (msg == "ok") {
+                    var userInfo = data.userInfo;
+                    $("#txtEditUName").val(userInfo.UName);
+                    $("#txtEditUPwd").val(userInfo.UPwd);
+                    $("#txtEditRemark").val(userInfo.Remark);
+                    $("#txtEditSort").val(userInfo.Sort);
+                } else {
+                    $.messager.alert("提示", "数据不存在", "error");
+                }
+            })
+            $("#editDiv").css("display", "block");
+        }
+        //验证
+        function validateUser() {
+            $("#addForm").validate({//对form表单进行校验
+                rules: {//校验规则
+                    UName: "required",//表示对表单元素name属性的值为UName的文本框进行校验
+                    UPwd: {
+                        required: true,
+                        minlength: 5
+                    }
+                },
+                messages: {//错误消息
+                    UName: "请输入姓名",
+                    UPwd: {
+                        required: "请输入密码",
+                        minlength: "密码不能小于5个字 符"
+                    }
+                }
+            });
         }
     </script>
 </head>
 <body>
     <div>
         <table id="tt" style="width: 700px;" title="标题，可以使用代码进行初始化，也可以使用这种属性的方式" iconcls="icon-edit"></table>
+    </div>
+    <!------------------添加------------------->
+    <div id="addDiv">
+        @using (Ajax.BeginForm("AddUser", "UserInfo", new { }, new AjaxOptions() { HttpMethod="post",OnSuccess="afterAdd"}, new { id = "addForm" }))
+        {
+            <table>
+                <tr><td>用户名</td><td><input type="text" name="UName" /></td></tr>
+                <tr><td>密码</td><td><input type="text" name="UPwd" /></td></tr>
+                <tr><td>备注</td><td><input type="text" name="Remark" /></td></tr>
+                <tr><td>排序</td><td><input type="text" name="Sort" /></td></tr>
+            </table>
+        }
+    </div>
+    <!------------------修改--------------------->
+    <div id="editDiv">
+        @using (Ajax.BeginForm("EditUser", "UserInfo", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterEdit" }, new { id = "editForm" }))
+        {
+            <table>
+                <tr><td>用户名</td><td><input type="text" name="UName" id="txtEditUName"/></td></tr>
+                <tr><td>密码</td><td><input type="text" name="UPwd" id="txtEditUPwd"/></td></tr>
+                <tr><td>备注</td><td><input type="text" name="Remark" id="txtEditRemark"/></td></tr>
+                <tr><td>排序</td><td><input type="text" name="Sort" id="txtEditSort"/></td></tr>
+            </table>
+        }
     </div>
 </body>
 </html>
