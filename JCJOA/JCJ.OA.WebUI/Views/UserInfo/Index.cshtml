@@ -21,10 +21,18 @@
         $(function () {
             $("#addDiv").css("display", "none");
             $("#editDiv").css("display", "none");
+            $("#btnSearch").click(function () {
+                //搜索
+                var pars = {
+                    name: $("#txtSearchUName").val(),
+                    remark: $("#txtSearchRemark").val()
+                };
+                loadData(pars)
+            });
             loadData();
         });
 
-        function loadData() {
+        function loadData(pars) {
             $('#tt').datagrid({
                 url: '/UserInfo/GetUserInfo',
                 title: '用户数据表格',
@@ -39,13 +47,13 @@
                 pageSize: 5,//页大小，一页多少条数据
                 pageNumber: 1,//当前页，默认的
                 pageList: [5, 10, 15],
-                queryParams: {},//往后台传递参数
+                queryParams: pars,//往后台传递参数
                 columns: [[//c.UserName, c.UserPass, c.Email, c.RegTime
                     { field: 'ck', checkbox: true, align: 'left', width: 50 },
                     { field: 'ID', title: '编号', width: 80 },
                     { field: 'UserName', title: '姓名', width: 120 },
                     { field: 'UserPwd', title: '密码', width: 120 },
-                    { field: 'Sort', title: '邮箱', width: 120 },
+                    { field: 'Remark', title: '备注', width: 120 },
                     {
                         field: 'SubTime', title: '时间', width: 80, align: 'right',
                         formatter: function (value, row, index) {
@@ -142,6 +150,7 @@
                 $('#addDiv input').val("");
             }
         }
+
         //编辑用户
         function editUser() {
             //判断是否选择了要修改的数据
@@ -150,26 +159,64 @@
                 $.messager.alert("提示", "每次只能修改一条记录", "error");
                 return;
             }
-
             //将要修改的数据填充到表单中
             var id = rows[0].ID;
             $.post("@Url.Action("ShowEdit","UserInfo")", { "id": id }, function (data) {
                 var msg = data.Msg;
+                
                 if (msg == "ok") {
-                    var userInfo = data.userInfo;
+                    var userInfo = data.UserInfo;
+                    console.log(userInfo);
                     $("#txtEditUName").val(userInfo.UName);
                     $("#txtEditUPwd").val(userInfo.UPwd);
                     $("#txtEditRemark").val(userInfo.Remark);
                     $("#txtEditSort").val(userInfo.Sort);
+                    $("#txtEditId").val(userInfo.ID);
+                    $("#txtEditSubTime").val(ChangeDateFormat(userInfo.SubTime));
+                    $("#editDiv").css("display", "block");
+                    $('#editDiv').dialog({
+                        title: "编辑用户信息",
+                        collapsible: true,
+                        maximizable: true,
+                        resizable: true,
+                        modal: true,
+                        width: 300,
+                        height: 300,
+                        buttons: [{
+                            text: 'Ok',
+                            iconCls: 'icon-ok',
+                            handler: function () {
+                                validateUser();
+                                $('#editDiv').dialog('close');
+                                $("#editDiv").submit();  //提交
+                            }
+                        }, {
+                            text: 'Cancel',
+                            handler: function () {
+                                $('#editDiv').dialog('close');
+                                //$('#editDiv input').val("");
+                            }
+                        }]
+                    });
                 } else {
                     $.messager.alert("提示", "数据不存在", "error");
                 }
             })
-            $("#editDiv").css("display", "block");
+            
+        }
+
+        //编辑成功后调用该方法
+        function afterEdit(data) {
+            if (data == "ok") {
+                $('#editDiv').dialog('close');
+                $('#tt').datagrid('reload');    //重新加载
+            } else {
+                $.messager.alert("提示", "数据更新失败！！", "error");
+            }
         }
         //验证
         function validateUser() {
-            $("#addForm").validate({//对form表单进行校验
+            $("#editForm").validate({//对form表单进行校验
                 rules: {//校验规则
                     UName: "required",//表示对表单元素name属性的值为UName的文本框进行校验
                     UPwd: {
@@ -186,10 +233,19 @@
                 }
             });
         }
+            //将序列化成json格式后日期(毫秒数)转成日期格式
+        function ChangeDateFormat(cellval) {
+             var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+            return date.getFullYear() + "-" + month + "-" + currentDate;
+        }
     </script>
 </head>
 <body>
     <div>
+        用户名：<input type="text" id="txtSearchUName" />&nbsp;&nbsp;备注：<input type="text" id="txtSearchRemark" />
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width:80px" id="btnSearch">Search</a>
         <table id="tt" style="width: 700px;" title="标题，可以使用代码进行初始化，也可以使用这种属性的方式" iconcls="icon-edit"></table>
     </div>
     <!------------------添加------------------->
@@ -208,6 +264,8 @@
     <div id="editDiv">
         @using (Ajax.BeginForm("EditUser", "UserInfo", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterEdit" }, new { id = "editForm" }))
         {
+            <input type="hidden" name="ID" id="txtEditId" />
+            <input type="hidden" name="SubTime" id="txtEditSubTime" />
             <table>
                 <tr><td>用户名</td><td><input type="text" name="UName" id="txtEditUName"/></td></tr>
                 <tr><td>密码</td><td><input type="text" name="UPwd" id="txtEditUPwd"/></td></tr>

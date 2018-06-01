@@ -1,5 +1,6 @@
 ﻿using JCJ.OA.IBLL;
 using JCJ.OA.Model;
+using JCJ.OA.Model.Search;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,26 @@ namespace JCJ.OA.BLL
                 this.DbSession.userInfoDal.DeleteEntity(userInfo);
             }
             return this.DbSession.SaveChanges();
+        }
+
+        /// <summary>
+        /// 完成用户信息搜索
+        /// </summary>
+        /// <param name="userInfoSearch"></param>
+        /// <returns></returns>
+        public IQueryable<UserInfo> LoadSearchEntities(UserInfoSearch userInfoSearch)
+        {
+            var temp = this.DbSession.userInfoDal.LoadEntities(u => u.DelFlag == 0);
+            if (!string.IsNullOrEmpty(userInfoSearch.UName))
+            {
+                temp = temp.Where<UserInfo>(u => u.UName.Contains(userInfoSearch.UName));
+            }
+            if (!string.IsNullOrEmpty(userInfoSearch.URemark))
+            {
+                temp = temp.Where<UserInfo>(u => u.Remark.Contains(userInfoSearch.URemark));
+            }
+            userInfoSearch.TotalCount = temp.Count();
+            return temp.OrderBy<UserInfo, int>(u => u.ID).Skip<UserInfo>((userInfoSearch.PageIndex - 1) * userInfoSearch.PageSize).Take<UserInfo>(userInfoSearch.PageSize); 
         }
 
         public override void SetCurrentDal()
