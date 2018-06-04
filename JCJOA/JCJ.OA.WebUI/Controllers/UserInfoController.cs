@@ -12,7 +12,7 @@ namespace JCJ.OA.WebUI.Controllers
     public class UserInfoController : Controller
     {
         // GET: UserInfo /Spring.Net
-        IBLL.IUserInfoService UserInfoService = new BLL.UserInfoService();
+        IBLL.IUserInfoService UserInfoService { get; set; }
         public ActionResult Index()
         {
             
