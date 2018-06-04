@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+
+  <!--此处配置各种要注入的实体对象-->
+  <object name="UserInfoService" type="JCJ.OA.SpringNer.UserInfoService,JCJ.OA.SpringNer">
+    <property name="UserName" value="jcj"/>
+    <property name="Person" ref="MyPerson"/>
+  </object>
+  <!--autowire="constructor"根据构造函数注入 au-->
+  <!--<object name="UserInfoDal" type="SpringNetTest.UserInfoDal,SpringNetTest" autowire="byType">
+        <constructor-arg name="Id" value="2"/>
+        -->
+  <!--<constructor-arg name="OrderInfo" ref="OrderInfo"/>-->
+  <!--</object>-->
+  <object name="MyPerson" type="JCJ.OA.SpringNer.Person,JCJ.OA.SpringNer">
+    <property name="Age" value="25"/>
+    <!--<property name="Name" value="jayjay"/>
+        <property name="OrderInfo" ref="OrderInfo"/>-->
+  </object>
+</objects>

@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JCJ.OA.DALFactory", "JCJ.OA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JCJ.OA.WebUI", "JCJ.OA.WebUI\JCJ.OA.WebUI.csproj", "{5F611BEA-5BE2-4419-818A-3550B4BAE856}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{6C823400-86B4-4471-8D2C-E3AFF9F5C74B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JCJ.OA.SpringNer", "JCJ.OA.SpringNer\JCJ.OA.SpringNer.csproj", "{55617F3B-F04B-4C13-BB5A-0CD5680D8A23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,9 +61,16 @@ Global
 		{5F611BEA-5BE2-4419-818A-3550B4BAE856}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F611BEA-5BE2-4419-818A-3550B4BAE856}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F611BEA-5BE2-4419-818A-3550B4BAE856}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55617F3B-F04B-4C13-BB5A-0CD5680D8A23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55617F3B-F04B-4C13-BB5A-0CD5680D8A23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55617F3B-F04B-4C13-BB5A-0CD5680D8A23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55617F3B-F04B-4C13-BB5A-0CD5680D8A23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{55617F3B-F04B-4C13-BB5A-0CD5680D8A23} = {6C823400-86B4-4471-8D2C-E3AFF9F5C74B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E2F5923D-DABA-4C3E-81DA-DA909185E36D}
