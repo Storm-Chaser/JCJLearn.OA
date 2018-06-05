@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JCJ.OA.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,23 @@ namespace JCJ.OA.WebUI.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            if (Session["userInfo"] == null)
+            {
+                //filterContext.HttpContext.Response.Redirect("/Login/Index");
+                if (Request.Cookies["cp1"] != null)
+                {
+                    string userName = Request.Cookies["cp1"].Value;  //获得cookies中存的
+                    UserInfo userInfo = UserInfoService.LoadEntities(u => u.UName == userName).FirstOrDefault();
+                    if (Common.WebCommon.ValidateCookieInfo(userInfo))
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -49,7 +67,8 @@ namespace JCJ.OA.WebUI.Controllers
             string userPwd = Request["LoginPwd"];
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(userPwd))
             {
-                var userInfo = UserInfoService.LoadEntities(u => u.UName == userName && u.UPwd == userPwd).FirstOrDefault();   //校验用户名密码
+                string uPwd = Common.WebCommon.GetMd5String(Common.WebCommon.GetMd5String(userPwd));
+                var userInfo = UserInfoService.LoadEntities(u => u.UName == userName && u.UPwd == uPwd).FirstOrDefault();   //校验用户名密码
                 if (userInfo != null)
                 {
                     Session["userInfo"] = userInfo;
@@ -57,7 +76,7 @@ namespace JCJ.OA.WebUI.Controllers
                     if(!string.IsNullOrEmpty(Request["autoLogin"]))
                     {
                         HttpCookie cookie1 = new HttpCookie("cp1", userName);
-                        HttpCookie cookie2 = new HttpCookie("cp2", userPwd);
+                        HttpCookie cookie2 = new HttpCookie("cp2", Common.WebCommon.GetMd5String(Common.WebCommon.GetMd5String(userPwd)));
                         cookie1.Expires = DateTime.Now.AddDays(7);
                         cookie2.Expires = DateTime.Now.AddDays(7);
                         Response.Cookies.Add(cookie1);

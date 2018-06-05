@@ -47,5 +47,11 @@
     <Compile Include="ValidateCode.cs" />
     <Compile Include="WebCommon.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JCJ.OA.Model\JCJ.OA.Model.csproj">
+      <Project>{C165F29B-629B-4FFA-917D-C540E35E4657}</Project>
+      <Name>JCJ.OA.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
