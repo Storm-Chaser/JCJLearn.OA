@@ -5,7 +5,8 @@
     <property name="UserInfoService" ref="UserInfoService" />
   </object>
 
-  <object type="JCJ.OA.BLL.UserInfoService, JCJ.OA.BLL" singleton="false" name="UserInfoService">
+  <object type="JCJ.OA.WebUI.Controllers.LoginController, JCJ.OA.WebUI" singleton="false" >
+    <property name="UserInfoService" ref="UserInfoService" />
   </object>
 
   
