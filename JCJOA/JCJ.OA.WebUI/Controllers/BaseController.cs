@@ -12,10 +12,13 @@ namespace JCJ.OA.WebUI.Controllers
 {
     public class BaseController : Controller
     {
+        public UserInfo LoginUser { get; set; }
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
-            if (Session["userInfo"] == null)
+
+            //if (Session["userInfo"] == null)
+            if (Request.Cookies["sessionId"] == null)
             {
                 //filterContext.HttpContext.Response.Redirect("/Login/Index");
                 if (Request.Cookies["cp1"] != null)
@@ -29,12 +32,27 @@ namespace JCJ.OA.WebUI.Controllers
                     {
                         filterContext.Result = Redirect(Url.Action("Index", "Login"));
                     }
+                    LoginUser = userInfo;
                 }
                 else
                 {
                     filterContext.Result = Redirect(Url.Action("Index", "Login"));
                 }
-                
+            }
+            else        //如果有值就取出来
+            {
+                string sessionId = Request.Cookies["sessionId"].Value;
+                object obj = Common.MemcacheHelper.Get(sessionId);    //获取memcache中的数据
+                if (obj != null)
+                {
+                    UserInfo userInfo = Common.SerializeHelper.DeserializeToObject<UserInfo>(obj.ToString());   //反序列化
+                    LoginUser = userInfo;
+                    //模拟滑动过期时间
+                    Common.MemcacheHelper.Set(sessionId, obj, DateTime.Now.AddMinutes(20));
+                }
+                else {
+                    filterContext.Result = Redirect(Url.Action("Index", "Login"));
+                }
             }
         }
     }

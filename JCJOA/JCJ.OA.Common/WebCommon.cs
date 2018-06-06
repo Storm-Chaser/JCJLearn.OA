@@ -49,10 +49,10 @@ namespace JCJ.OA.Common
                     string userPwd = context.Request.Cookies["cp2"].Value;
                     if (userInfo.UPwd == userPwd)
                     {
-                         context.Session["userInfo"] = userInfo;
-                        //string sessionId = Guid.NewGuid().ToString();//必须保证Memcache的key唯一
-                        //Common.MemcacheHelper.Set(sessionId, Common.SerializeHelper.SerializeToString(userInfo), DateTime.Now.AddMinutes(20));//向Memcache中添加登录用户数据.
-                        //context.Response.Cookies["sessionId"].Value = sessionId;
+                         //context.Session["userInfo"] = userInfo;
+                        string sessionId = Guid.NewGuid().ToString();//必须保证Memcache的key唯一
+                        Common.MemcacheHelper.Set(sessionId, Common.SerializeHelper.SerializeToString(userInfo), DateTime.Now.AddMinutes(20));//向Memcache中添加登录用户数据.
+                        context.Response.Cookies["sessionId"].Value = sessionId;
                         isSucess = true;
                         return isSucess;
                     }

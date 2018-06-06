@@ -13,9 +13,25 @@ namespace JCJ.OA.WebUI.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            if (Session["userInfo"] == null)
+            //if (Session["userInfo"] == null)
+            //{
+            //    //filterContext.HttpContext.Response.Redirect("/Login/Index");
+            //    if (Request.Cookies["cp1"] != null)
+            //    {
+            //        string userName = Request.Cookies["cp1"].Value;  //获得cookies中存的
+            //        UserInfo userInfo = UserInfoService.LoadEntities(u => u.UName == userName).FirstOrDefault();
+            //        if (Common.WebCommon.ValidateCookieInfo(userInfo))
+            //        {
+            //            return RedirectToAction("Index", "Home");
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+            if (Request.Cookies["sessionId"] == null)
             {
-                //filterContext.HttpContext.Response.Redirect("/Login/Index");
                 if (Request.Cookies["cp1"] != null)
                 {
                     string userName = Request.Cookies["cp1"].Value;  //获得cookies中存的
@@ -28,7 +44,20 @@ namespace JCJ.OA.WebUI.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                string sessionId = Request.Cookies["sessionId"].Value;
+                object obj = Common.MemcacheHelper.Get(sessionId);    //获取memcache中的数据   
+                if (obj != null)
+                {
+                    UserInfo userInfo = Common.SerializeHelper.DeserializeToObject<UserInfo>(obj.ToString());   //反序列化
+                    //模拟滑动过期时间
+                    Common.MemcacheHelper.Set(sessionId, obj, DateTime.Now.AddMinutes(20));
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View();
+                }
+                
             }
             return View();
         }
@@ -71,7 +100,11 @@ namespace JCJ.OA.WebUI.Controllers
                 var userInfo = UserInfoService.LoadEntities(u => u.UName == userName && u.UPwd == uPwd).FirstOrDefault();   //校验用户名密码
                 if (userInfo != null)
                 {
-                    Session["userInfo"] = userInfo;
+                    //Session["userInfo"] = userInfo;
+                    string sessionId = Guid.NewGuid().ToString();
+                    Common.MemcacheHelper.Set(sessionId, Common.SerializeHelper.SerializeToString(userInfo), DateTime.Now.AddMinutes(20));  //Memcache中添加登陆用户数据
+                    Response.Cookies["sessionId"].Value = sessionId;  //将自创的Session赋值给cookies返回给浏览器
+
                     //判断复选框是否被选中
                     if(!string.IsNullOrEmpty(Request["autoLogin"]))
                     {

@@ -10,6 +10,7 @@ namespace JCJ.OA.WebUI.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.UserName = LoginUser.UName;
             return View();
         }
 
