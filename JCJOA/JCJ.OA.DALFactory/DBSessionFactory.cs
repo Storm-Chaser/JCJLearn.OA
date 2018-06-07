@@ -14,7 +14,7 @@ namespace JCJ.OA.DALFactory
             IDAL.IDBSession dbSession = (IDAL.IDBSession)CallContext.GetData("dbSession");
             if (dbSession == null)
             {
-                dbSession = new DBSesion();
+                dbSession = new DBSession();
                 CallContext.SetData("dbSession", dbSession);
             }
             return dbSession;

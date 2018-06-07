@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JCJ.OA.IDAL
 {
-    public interface IUserInfoDal:IBaseDal<UserInfo>
+    public partial interface IUserInfoDal:IBaseDal<UserInfo>
     {
         //写userinfo 特有的方法
     }

@@ -10,27 +10,27 @@ using System.Threading.Tasks;
 
 namespace JCJ.OA.DALFactory
 {
-    public class DBSesion :IDBSession
+    public partial class DBSession :IDBSession
     {
         //Model.ItcastCmsEntities Db = new ItcastCmsEntities();
         public DbContext Db
         {
             get { return DBContexFactory.CreateDbContext(); }
         }
-        private IUserInfoDal _userInfoDal;
-        public IUserInfoDal userInfoDal
-        {
-            get {
-                if(_userInfoDal == null)
-                {
-                    //_userInfoDal = new UserInfoDal();  //解耦和
+        //private IUserInfoDal _userInfoDal;
+        //public IUserInfoDal userInfoDal
+        //{
+        //    get {
+        //        if(_userInfoDal == null)
+        //        {
+        //            //_userInfoDal = new UserInfoDal();  //解耦和
 
-                    _userInfoDal = AbstractFactory.CreateUserInfoDal();
-                }
-                return _userInfoDal;
-            }
-            set { _userInfoDal = value; }
-        }
+        //            _userInfoDal = AbstractFactory.CreateUserInfoDal();
+        //        }
+        //        return _userInfoDal;
+        //    }
+        //    set { _userInfoDal = value; }
+        //}
 
         //public IUserInfoDal userInfoDal { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 

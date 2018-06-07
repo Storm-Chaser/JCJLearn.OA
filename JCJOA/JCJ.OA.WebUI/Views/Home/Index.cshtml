@@ -101,20 +101,48 @@
             width: 22px;
             height: 22px;
         }
+        .txt {
+            font-size: 30px;
+            font-family: '微软雅黑';
+            font-weight: bolder;
+            color: dodgerblue;
+            margin: 0 auto;
+        }
     </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#layout1").ligerLayout({
+                minLeftWidth: 80,
+                minRightWidth: 80,
+                allowTopResize: false
+                topHeight:71
+            });
+        });
+
+    </script>
 </head>
-<body style="overflow: hidden; background: url(/Content/Images/applebg.jpg) no-repeat  center center;">
-    <div id="winlinks">
-        <ul></ul>
+
+<body style="overflow: hidden; background: url(/Content/images/applebg.jpg) no-repeat  center center;">
+    <div id="layout1">
+        <div position="center" title="标题" style=" background: url(/Content/images/applebg.jpg) no-repeat  center center;">
+            <div id="winlinks">
+                <ul></ul>
+            </div>
+        </div>
+        @*<div position="top" style="background-image:url(/Content/Images/bg3.png)">
+            <img src="~/Content/Images/logo.gif" style="float:left" />
+            <div class="txt">Itcast协同OA管理系统</div>
+        </div>*@
     </div>
 </body>
+
 <script type="text/javascript">
     var LINKWIDTH = 90, LINKHEIGHT = 90, TASKBARHEIGHT = 43;
     var winlinksul = $("#winlinks ul");
     function f_open(url, title, icon) {
         var win = $.ligerDialog.open(
             {
-                height: 500, url: url, width: 600, showMax: true, showToggle: true, showMin: true, isResize: true, modal: false, title: title, slide: false, buttons: [
+                height: 520, url: url, width: 740, showMax: true, showToggle: true, showMin: true, isResize: true, modal: false, title: title, slide: true, buttons: [
                     {
                         text: '确定', onclick: function (item, Dialog, index) {
                             win.hide();
@@ -129,7 +157,7 @@
         return win;
     }
     var links = [
-        { icon: '/Content/images/3DSMAX.png', title: '填写周报', url: '../case/week.htm' },
+        { icon: '/Content/images/3DSMAX.png', title: '用户管理', url: '/UserInfo/Index' },
         { icon: '/Content/images/3DSMAX.png', title: 'treegrid', url: '../grid/treegrid/treegrid.htm' },
         { icon: '/Content/images/3DSMAX.png', title: '多表头', url: '../grid/mulheader/grid2.htm' },
         { icon: '/Content/images/Program Files Folder.png', title: '固定列', url: '../grid/frozen/frozengrid.htm' },

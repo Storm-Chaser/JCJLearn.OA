@@ -6,6 +6,16 @@
     <edmx:Diagrams>
       <Diagram DiagramId="8680f57ffe074ac4be52080b9a6ef8d6" Name="Diagram1">
         <EntityTypeShape EntityType="ItcastCmsModel.UserInfo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ItcastCmsModel.ActionInfo" Width="1.5" PointX="11" PointY="1.625" />
+        <EntityTypeShape EntityType="ItcastCmsModel.Department" Width="1.5" PointX="4.25" PointY="4.625" />
+        <EntityTypeShape EntityType="ItcastCmsModel.R_UserInfo_ActionInfo" Width="1.5" PointX="8.125" PointY="0.5" />
+        <EntityTypeShape EntityType="ItcastCmsModel.RoleInfo" Width="1.5" PointX="6.125" PointY="1.75" />
+        <AssociationConnector Association="ItcastCmsModel.FK_ActionInfoR_UserInfo_ActionInfo" />
+        <AssociationConnector Association="ItcastCmsModel.FK_UserInfoR_UserInfo_ActionInfo" />
+        <AssociationConnector Association="ItcastCmsModel.DepartmentActionInfo" />
+        <AssociationConnector Association="ItcastCmsModel.RoleInfoActionInfo" />
+        <AssociationConnector Association="ItcastCmsModel.UserInfoDepartment" />
+        <AssociationConnector Association="ItcastCmsModel.UserInfoRoleInfo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

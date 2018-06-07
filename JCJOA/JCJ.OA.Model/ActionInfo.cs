@@ -11,35 +11,38 @@ namespace JCJ.OA.Model
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
-
-    public partial class UserInfo
+    
+    public partial class ActionInfo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserInfo()
+        public ActionInfo()
         {
             this.R_UserInfo_ActionInfo = new HashSet<R_UserInfo_ActionInfo>();
             this.Department = new HashSet<Department>();
             this.RoleInfo = new HashSet<RoleInfo>();
         }
-
+    
         public int ID { get; set; }
-        public string UName { get; set; }
-        public string UPwd { get; set; }
         public System.DateTime SubTime { get; set; }
         public short DelFlag { get; set; }
-        public System.DateTime ModifiedOn { get; set; }
+        public string ModifiedOn { get; set; }
         public string Remark { get; set; }
+        public string Url { get; set; }
+        public string HttpMethod { get; set; }
+        public string ActionMethodName { get; set; }
+        public string ControllerName { get; set; }
+        public string ActionInfoName { get; set; }
         public string Sort { get; set; }
-
+        public short ActionTypeEnum { get; set; }
+        public string MenuIcon { get; set; }
+        public int IconWidth { get; set; }
+        public int IconHeight { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
         public virtual ICollection<R_UserInfo_ActionInfo> R_UserInfo_ActionInfo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
         public virtual ICollection<Department> Department { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
         public virtual ICollection<RoleInfo> RoleInfo { get; set; }
     }
 }

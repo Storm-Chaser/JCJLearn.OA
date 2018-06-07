@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace JCJ.OA.DLL
 {
-    public class UserInfoDal : BaseDal<UserInfo>,IUserInfoDal
+    public partial class UserInfoDal : BaseDal<UserInfo>,IUserInfoDal
     {
         
     }

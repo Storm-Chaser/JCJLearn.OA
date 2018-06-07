@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace JCJ.OA.BLL
 {
-    public class UserInfoService : BaseService<UserInfo>, IUserInfoService
+    public partial class UserInfoService : BaseService<UserInfo>, IUserInfoService
     {
         /// <summary>
         /// 批量删除用户数据
@@ -18,10 +18,10 @@ namespace JCJ.OA.BLL
         /// <returns></returns>
         public bool DeleteEntities(List<int> list)
         {
-            var userInfoList = this.DbSession.userInfoDal.LoadEntities(u => list.Contains(u.ID));
+            var userInfoList = this.DbSession.UserInfoDal.LoadEntities(u => list.Contains(u.ID));
             foreach(var userInfo in userInfoList)
             {
-                this.DbSession.userInfoDal.DeleteEntity(userInfo);
+                this.DbSession.UserInfoDal.DeleteEntity(userInfo);
             }
             return this.DbSession.SaveChanges();
         }
@@ -33,7 +33,7 @@ namespace JCJ.OA.BLL
         /// <returns></returns>
         public IQueryable<UserInfo> LoadSearchEntities(UserInfoSearch userInfoSearch)
         {
-            var temp = this.DbSession.userInfoDal.LoadEntities(u => u.DelFlag == 0);
+            var temp = this.DbSession.UserInfoDal.LoadEntities(u => u.DelFlag == 0);
             if (!string.IsNullOrEmpty(userInfoSearch.UName))
             {
                 temp = temp.Where<UserInfo>(u => u.UName.Contains(userInfoSearch.UName));
@@ -46,9 +46,9 @@ namespace JCJ.OA.BLL
             return temp.OrderBy<UserInfo, int>(u => u.ID).Skip<UserInfo>((userInfoSearch.PageIndex - 1) * userInfoSearch.PageSize).Take<UserInfo>(userInfoSearch.PageSize); 
         }
 
-        public override void SetCurrentDal()
-        {
-            CurrentDal = this.DbSession.userInfoDal;
-        }
+        //public override void SetCurrentDal()
+        //{
+        //    CurrentDal = this.DbSession.UserInfoDal;
+        //}
     }
 }
