@@ -14,5 +14,10 @@ namespace JCJ.OA.WebUI.Controllers
             return View();
         }
 
+        public ActionResult HomePage()
+        {
+            return View();
+        }
+
     }
 }

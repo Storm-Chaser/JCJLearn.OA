@@ -1,0 +1,81 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HomePage</title>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
+    <link href="~/Content/themes/icon.css" rel="stylesheet" />
+    <link href="~/Content/themes/default/easyui.css" rel="stylesheet" />
+    <style type="text/css">
+        .txt {
+            font-size:30px;
+            font-family:'微软雅黑';
+            font-weight:bolder;
+            color:dodgerblue;
+            margin:0 auto;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            bindMenuClickEvent();
+        });
+        function bindMenuClickEvent() {
+            $(".detailLink").click(function () {
+                var title = $(this).text();
+                var url = $(this).attr('url');
+                var isExt = $('#tt').tabs('exists', title);
+                if (isExt) {
+                    $('#tt').tabs('select', title);
+                    return;
+                }
+                $('#tt').tabs('add', {
+                    title: title,
+                    content: createContent(),
+                    closable: true
+                });
+            });
+        }
+        function createContent(url) {
+            var str = '<iframe src="' + url + '" width="100%" height="100%" frameborder="0"></iframe>';
+            return str;
+        }
+    </script>
+</head>
+<body class="easyui-layout">
+    <!--顶部显示栏-->
+    <div data-options="region:'north',border:false" style="height:80px;background:#B3DFDA;padding:10px;overflow:hidden">
+        <img src="~/Content/Images/logo.gif" style="float:left"/>
+        <div class="txt">Itcast协同OA管理系统</div>
+    </div>
+    <!--左边导航栏-->
+    <div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:3px;">
+        <div class="easyui-accordion" style="width:auto;height:auto;">
+            <div title="About" data-options="iconCls:'icon-ok'" style="overflow:auto;padding:5px;">
+                <a href="javascript:void(0)" class="detailLink" url="/UserInfo/Index">用户管理</a>
+            </div>
+            <div title="Help" data-options="iconCls:'icon-ok'" style="padding:5px;">
+                <a href="javascript:void(0)" class="detailLink" url="/RoleInfo/Index">角色管理</a>
+            </div>
+        </div>
+    </div>
+    <!--底部栏-->
+    <div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;text-align:center">版权所有&copy;jcj.cn</div>
+    <!--中间主要显示栏-->
+    <div data-options="region:'center',title:'Center'">
+        <div class="easyui-tabs" style="width:700px;height:250px" fit="true" id="tt">
+            <div title="用户管理" data-options="iconCls:'icon-help'" style="padding:10px">
+                <iframe src="/UserInfo/Index" width="100%" height="100%" frameborder="0"></iframe>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
