@@ -3,10 +3,15 @@
 
   <object type="JCJ.OA.WebUI.Controllers.UserInfoController, JCJ.OA.WebUI" singleton="false" >
     <property name="UserInfoService" ref="UserInfoService" />
+    <property name="RoleInfoService" ref="RoleInfoService" />
   </object>
 
   <object type="JCJ.OA.WebUI.Controllers.LoginController, JCJ.OA.WebUI" singleton="false" >
     <property name="UserInfoService" ref="UserInfoService" />
+  </object>
+
+  <object type="JCJ.OA.WebUI.Controllers.RoleInfoController, JCJ.OA.WebUI" singleton="false" >
+    <property name="RoleInfoService" ref="RoleInfoService" />
   </object>
 
   

@@ -13,9 +13,9 @@ namespace JCJ.OA.WebUI.Controllers
     {
         // GET: UserInfo /Spring.Net
         IBLL.IUserInfoService UserInfoService { get; set; }
+        IBLL.IRoleInfoService RoleInfoService { get; set; }
         public ActionResult Index()
         {
-            
             return View();
         }
         /// <summary>
@@ -103,6 +103,36 @@ namespace JCJ.OA.WebUI.Controllers
             userInfo.ModifiedOn = DateTime.Now;
             return Content(UserInfoService.EditEntity(userInfo) ? "ok" : "no");
         }
-               
+
+        /// <summary>
+        /// 设置用户角色
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SetUserRoleInfo()
+        {
+            //接受userid
+            int userId = int.Parse(Request["uid"]);
+            var userInfo = UserInfoService.LoadEntities(u => u.ID == userId).FirstOrDefault();  //获得要分配角色的用户
+            //要分配角色的用户以前具有哪些角色
+            var userRoleIdList = (from r in userInfo.RoleInfo
+                                  select r.ID).ToList();
+            short delFlag = (short)DelFlagEnum.Normal;
+            //获得所有的角色
+            var roleInfoList = RoleInfoService.LoadEntities(r => r.DelFlag == delFlag).ToList();
+            ViewBag.UserRoleIdList = userRoleIdList;
+            ViewBag.RoleInfoList = roleInfoList;
+            ViewBag.UserInfo = userInfo;
+            return View();
+        }
+        /// <summary>
+        /// 保存设置用户的角色
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SetUserRole()
+        {
+            return Content("ok");
+        }
+
+
     }
 }

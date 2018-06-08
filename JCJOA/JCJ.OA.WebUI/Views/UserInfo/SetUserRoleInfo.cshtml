@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = null;
+}
+@using JCJ.OA.Model
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>完成用户角色分配</title>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function subForm() {
+            $("#setForm").submit();
+        }
+    </script>
+</head>
+<body>
+    <div>
+        为用户@{
+            UserInfo userInfo = ViewBag.UserInfo;
+            <span style="font-size:14px;color:red">@userInfo.UName</span>
+        } 分配角色
+        <br />
+        @using (Ajax.BeginForm("SetUserRole", "UserInfo", new AjaxOptions() { }, new { id = "setForm" }))
+        {
+              <input type="hidden" name="userId" value="@userInfo.ID" />
+              List<RoleInfo> roleInfoList = ViewBag.RoleInfoList;
+              List<int> roleIdList = ViewBag.UserRoleIdList;
+              foreach (var roleInfo in roleInfoList)
+              {
+
+                   if (roleIdList.Contains(roleInfo.ID))
+                   {
+                       <input type="checkbox" name="roleName" checked="checked" />@roleInfo.RoleName
+                   }
+                   else
+                   {
+                       <input type="checkbox" name="roleName"/>@roleInfo.RoleName
+                   }
+
+              }
+            
+        }
+
+    </div>
+</body>
+</html>
