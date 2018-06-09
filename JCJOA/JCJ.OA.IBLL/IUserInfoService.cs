@@ -13,6 +13,7 @@ namespace JCJ.OA.IBLL
         bool DeleteEntities(List<int> list);
 
         IQueryable<UserInfo> LoadSearchEntities(UserInfoSearch userInfoSearch);
-       
+
+        bool SetUserRoleInfo(int userId, List<int> roleIdList);
     }
 }

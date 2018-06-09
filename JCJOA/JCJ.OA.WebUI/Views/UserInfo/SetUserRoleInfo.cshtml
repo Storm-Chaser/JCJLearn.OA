@@ -15,6 +15,9 @@
         function subForm() {
             $("#setForm").submit();
         }
+        function afterSet(data) {
+            window.parent.afterSetRole(data);
+        }
     </script>
 </head>
 <body>
@@ -24,26 +27,26 @@
             <span style="font-size:14px;color:red">@userInfo.UName</span>
         } 分配角色
         <br />
-        @using (Ajax.BeginForm("SetUserRole", "UserInfo", new AjaxOptions() { }, new { id = "setForm" }))
+        @using (Ajax.BeginForm("SetUserRole", "UserInfo", new AjaxOptions() { HttpMethod="post",OnSuccess="afterSet"}, new { id = "setForm" }))
         {
               <input type="hidden" name="userId" value="@userInfo.ID" />
-              List<RoleInfo> roleInfoList = ViewBag.RoleInfoList;
-              List<int> roleIdList = ViewBag.UserRoleIdList;
-              foreach (var roleInfo in roleInfoList)
-              {
-
-                   if (roleIdList.Contains(roleInfo.ID))
-                   {
-                       <input type="checkbox" name="roleName" checked="checked" />@roleInfo.RoleName
+            List<RoleInfo> roleInfoList = ViewBag.RoleInfoList;
+            List<int> roleIdList = ViewBag.UserRoleIdList;
+            foreach (var roleInfo in roleInfoList)
+            {
+                var roleName = "cba_" + roleInfo.ID;
+                if (roleIdList.Contains(roleInfo.ID))
+                {
+                       <input type="checkbox" name="@roleName" checked="checked" />@roleInfo.RoleName
                    }
                    else
                    {
-                       <input type="checkbox" name="roleName"/>@roleInfo.RoleName
+                       <input type="checkbox" name="@roleName"/>@roleInfo.RoleName
                    }
 
-              }
-            
-        }
+                }
+
+            }
 
     </div>
 </body>

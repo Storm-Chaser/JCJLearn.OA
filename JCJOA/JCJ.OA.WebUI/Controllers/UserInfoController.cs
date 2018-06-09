@@ -130,7 +130,19 @@ namespace JCJ.OA.WebUI.Controllers
         /// <returns></returns>
         public ActionResult SetUserRole()
         {
-            return Content("ok");
+            string[] roleName = Request.Form.AllKeys; //获取所有表单的name属性的值
+            int userId = Convert.ToInt32(Request["userId"]); //给该用户分配角色
+            List<int> list = new List<int>();
+            foreach (string name in roleName)
+            {
+                if (name.StartsWith("cba_"))
+                {
+                    string id = name.Replace("cba_","");
+                    list.Add(Convert.ToInt32(id));
+                }
+            }
+            return UserInfoService.SetUserRoleInfo(userId, list) ? Content("ok") : Content("no");
+            
         }
 
 

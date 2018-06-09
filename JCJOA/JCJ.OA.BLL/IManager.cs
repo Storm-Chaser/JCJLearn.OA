@@ -50,6 +50,7 @@ namespace JCJ.OA.BLL
         {
 			CurrentDal = this.DbSession.UserInfoDal;
         }
+
     }   
 	
 }

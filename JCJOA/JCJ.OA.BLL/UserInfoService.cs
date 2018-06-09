@@ -46,6 +46,28 @@ namespace JCJ.OA.BLL
             return temp.OrderBy<UserInfo, int>(u => u.ID).Skip<UserInfo>((userInfoSearch.PageIndex - 1) * userInfoSearch.PageSize).Take<UserInfo>(userInfoSearch.PageSize); 
         }
 
+        /// <summary>
+        /// 完成用户的角色分配
+        /// </summary>
+        /// <param name="userId">用户编号</param>
+        /// <param name="roleIdList">角色编号</param>
+        /// <returns></returns>
+        public bool SetUserRoleInfo(int userId, List<int> roleIdList)
+        {
+            var userInfo = this.DbSession.UserInfoDal.LoadEntities(u => u.ID == userId).FirstOrDefault();
+            if (userInfo != null)
+            {
+                //先删除用户已有的属性
+                userInfo.RoleInfo.Clear();
+                foreach (int roleId in roleIdList)
+                {
+                    var roleInfo = this.DbSession.RoleInfoDal.LoadEntities(r => r.ID == roleId).FirstOrDefault();
+                    userInfo.RoleInfo.Add(roleInfo);
+                }
+                return this.DbSession.SaveChanges();
+            }
+            return false;          
+        }
         //public override void SetCurrentDal()
         //{
         //    CurrentDal = this.DbSession.UserInfoDal;

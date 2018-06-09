@@ -130,7 +130,14 @@
             });
 
         }
-
+        //分配完成角色以后调用该方法
+        function afterSetRole(data) {
+            if (data == "ok") {
+                $('#setUserRoleDiv').dialog('close');
+            } else {
+                $.messager.alert("提示", "角色分配失败", "error");
+            }
+        }
         //删除用户数据
         function deleteUser() {
             var rows = $('#tt').datagrid('getSelections');
