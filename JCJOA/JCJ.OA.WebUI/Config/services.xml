@@ -4,4 +4,6 @@
     </object>
     <object type="JCJ.OA.BLL.RoleInfoService, JCJ.OA.BLL" singleton="false" name="RoleInfoService">
     </object>
+    <object type="JCJ.OA.BLL.ActionInfoService, JCJ.OA.BLL" singleton="false" name="ActionInfoService">
+    </object>
   </objects>

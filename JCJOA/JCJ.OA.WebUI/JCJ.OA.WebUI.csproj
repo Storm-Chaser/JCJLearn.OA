@@ -206,6 +206,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ActionInfoController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -1163,6 +1164,7 @@
     <Content Include="Views\RoleInfo\Index.cshtml" />
     <Content Include="Views\RoleInfo\ShowAddRole.cshtml" />
     <Content Include="Views\UserInfo\SetUserRoleInfo.cshtml" />
+    <Content Include="Views\ActionInfo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
