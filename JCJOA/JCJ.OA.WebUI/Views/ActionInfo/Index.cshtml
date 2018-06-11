@@ -19,8 +19,9 @@
     <script src="~/Scripts/datapattern.js"></script>
     <script type="text/javascript">
         $(function () {
-            //$("#addDiv").css("display", "none");
+            $("#addDiv").css("display", "none");
             loadData();
+            bindActionTypeChange();
         });
         function loadData() {
             $('#tt').datagrid({
@@ -85,7 +86,7 @@
                     text: '添加',
                     iconCls: 'icon-add',
                     handler: function () {
-                        addRole();
+                        addAction();
                     }
                 }, {
                     id: 'btnEdit',
@@ -98,11 +99,87 @@
                 ],
             });
         }
+
+        //给权限类别下拉框绑定change事件
+        function bindActionTypeChange() {
+            $("#actionTypeChange").change(function () {
+                if ($(this).value == "1") {//菜单权限
+                    $("#trIcon").fadeIn();
+                } else {
+                    $("#trIcon").fadeOut();
+                }
+            });
+        }
+        //添加权限
+        function addAction() {
+            $("#addDiv").css("display", "none");
+            $('#addDiv').dialog({
+                title: "添加权限信息",
+                collapsible: true,
+                maximizable: true,
+                resizable: true,
+                modal: true,
+                width: 300,
+                height: 400,
+                buttons: [{
+                    text: 'Ok',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        //在主窗体中调用子窗体的方法
+                        var childWindow = $("#addFrame").get(0).contentWindow; //获得子窗体的window对象
+                        childWindow.subForm();  //调用子窗体的方法
+
+                    }
+                }, {
+                    text: 'Cancel',
+                    handler: function () {
+                        $('#addDiv').dialog('close');
+                        $('#addDiv input').val("");
+                    }
+                }]
+            });
+        }
     </script>
 </head>
 <body>
     <div>
         <table id="tt" style="width: 700px;" title="标题，可以使用代码进行初始化，也可以使用这种属性的方式" iconcls="icon-edit"></table>
+    </div>
+    <div id="addDiv">
+        <table>
+            <tr><td>权限名称</td><td><input type="text" name="ActionInfoName" /></td></tr>
+            <tr><td>Url</td><td><input type="text" name="Url" /></td></tr>
+            <tr>
+                <td>HttpMethod</td>
+                <td>
+                    <select name="HttpMethod">
+                        <option value="GET">Get</option>
+                        <option value="POST">Post</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>权限类型</td>
+                <td>
+                    <select name="ActionTypeEnum" id="actionTypeChange">
+                        <option value="0">普通权限</option>
+                        <option value="1">菜单权限</option>
+                    </select>
+                </td>
+            </tr>
+            <tr style="display:none" id="trIcon">
+                <td>上传图标</td>
+                <td>
+                    <input type="file" name="fileUp" />
+                    <input type="button" value="上传" id="btnFileUp" />
+                    <div id="showImg">
+
+                    </div>
+                </td>
+            </tr>
+            <tr><td>备注</td><td><input type="text" name="Remark" /></td></tr>
+            <tr><td>排序</td><td><input type="text" name="Sort" /></td></tr>
+        </table>
     </div>
 </body>
 </html>
