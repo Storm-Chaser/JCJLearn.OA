@@ -677,6 +677,7 @@
     <Content Include="Content\ligerUI\skins\Tab\images\win\dialog-winbtns.gif" />
     <Content Include="Content\ligerUI\skins\Tab\images\win\dialogbtn.gif" />
     <Content Include="Content\ligerUI\skins\Tab\images\win\dialogicon.gif" />
+    <Content Include="Content\tableStyle.css" />
     <Content Include="Content\themes\angular.css" />
     <Content Include="Content\themes\black\accordion.css" />
     <Content Include="Content\themes\black\calendar.css" />
@@ -1167,6 +1168,7 @@
     <Content Include="Views\UserInfo\SetUserRoleInfo.cshtml" />
     <Content Include="Views\ActionInfo\Index.cshtml" />
     <Content Include="Views\RoleInfo\ShowRoleAction.cshtml" />
+    <Content Include="Views\UserInfo\ShowUserAction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

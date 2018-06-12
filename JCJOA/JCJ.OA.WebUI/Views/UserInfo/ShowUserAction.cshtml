@@ -1,0 +1,82 @@
+﻿
+@{
+    Layout = null;
+}
+@using JCJ.OA.Model
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowUserAction</title>
+    <link href="~/Content/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Content/tableStyle.css" rel="stylesheet" />
+    <link href="~/Content/themes/icon.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+    <div>
+        为用户@{
+            UserInfo userInfo = ViewBag.UserInfo;
+            <span style="font-size:14px;color:red">@userInfo.UName</span>
+        }分配权限.
+        <br />
+        <table>
+            <tr><th>编号</th><th>权限名称</th><th>Url</th><th>HttpMethod</th><th>操作</th></tr>
+            @{
+                List<ActionInfo> actionInfoList = ViewBag.ActionInfoList;
+                //List<R_UserInfo_ActionInfo> actionIdList = ViewBag.ActionIdList;
+                foreach (var actionInfo in actionInfoList)
+                {
+                    var allowName = "cba_" + actionInfo.ID;
+                    var forbidName = "nocba_" + actionInfo.ID;
+                    <tr>
+                        <td>@actionInfo.ID</td>
+                        <td>@actionInfo.ActionInfoName</td>
+                        <td>@actionInfo.Url</td>
+                        <td>@actionInfo.HttpMethod</td>
+                        @*<td>
+                            @{
+                                var isExt = (from r_UserInfo_ActionInfo in actionIdList
+                                             where r_UserInfo_ActionInfo.ActionInfoID == actionInfo.ID
+                                             select r_UserInfo_ActionInfo).FirstOrDefault();
+                                if (isExt != null)
+                                {
+                                    if (isExt.IsPass)//允许
+                                    {
+                                        <label for="@allowName">允许</label>
+                                        <input type="radio" id="@allowName" value="true" class="selectionActions" ids="@actionInfo.ID" checked="checked" name="@allowName" />
+
+                                        <label for="@forbidName">禁止</label>
+                                        <input type="radio" id="@forbidName" value="false" class="selectionActions" ids="@actionInfo.ID" name="@allowName" />
+                                    }
+                                    else//禁止
+                                    {
+                                        <label for="@allowName">允许</label>
+                                        <input type="radio" id="@allowName" value="true" class="selectionActions" ids="@actionInfo.ID" name="@allowName" />
+
+                                        <label for="@forbidName">禁止</label>
+                                        <input type="radio" id="@forbidName" value="false" class="selectionActions" ids="@actionInfo.ID" name="@allowName" checked="checked" />
+                                    }
+                                }
+                                else//表示用户没有权限.
+                                {
+                                    <label for="@allowName">允许</label>
+                                    <input type="radio" id="@allowName" value="true" class="selectionActions" ids="@actionInfo.ID" name="@allowName" />
+
+                                    <label for="@forbidName">禁止</label>
+                                    <input type="radio" id="@forbidName" value="false" class="selectionActions" ids="@actionInfo.ID" name="@allowName" />
+
+                                }
+                                <input type="button" value="删除" class="btnClear" ids="@actionInfo.ID" />
+                            }
+                        </td>*@
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</body>
+</html>

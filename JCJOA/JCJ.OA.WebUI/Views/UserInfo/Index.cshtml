@@ -92,11 +92,52 @@
                         handler: function () {
                             setUserRole();
                         }
+                    },
+                    {
+                        id: 'btnSetUserAction',
+                        text: '设置用户权限',
+                        iconCls: 'icon-edit',
+                        handler: function () {
+                            setUserAction();
+
+                        }
                     }
                 ],
             });
         }
-        
+        //完成用户权限的分配
+        function setUserAction() {
+            var rows = $('#tt').datagrid('getSelections');
+            if (rows.length != 1) {
+                $.messager.alert("提示", "只能选择一个用户", "error");
+                return;
+            }
+            var id = rows[0].ID;//用户编号
+            $("#setUserActionFrame").attr("src", "/UserInfo/ShowUserAction?userId=" + id);
+            $("#setUserActionDiv").css("display", "block");
+            $('#setUserActionDiv').dialog({
+                title: '为用户分配权限信息',
+                collapsible: true,
+                maximizable: true,
+                resizable: true,
+                modal: true,
+                width: 700,
+                height: 500,
+                buttons: [{
+                    text: 'Ok',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+
+                    }
+                }, {
+                    text: 'Cancel',
+                    handler: function () {
+                        $('#setUserActionDiv').dialog('close');
+
+                    }
+                }]
+            });
+        }
         //为用户分配角色
         function setUserRole() {
             var rows = $('#tt').datagrid('getSelections');
@@ -301,7 +342,7 @@
     </div>
     <!------------------添加------------------->
     <div id="addDiv">
-        @using (Ajax.BeginForm("AddUser", "UserInfo", new { }, new AjaxOptions() { HttpMethod="post",OnSuccess="afterAdd"}, new { id = "addForm" }))
+        @using (Ajax.BeginForm("AddUser", "UserInfo", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterAdd" }, new { id = "addForm" }))
         {
             <table>
                 <tr><td>用户名</td><td><input type="text" name="UName" /></td></tr>
@@ -318,16 +359,20 @@
             <input type="hidden" name="ID" id="txtEditId" />
             <input type="hidden" name="SubTime" id="txtEditSubTime" />
             <table>
-                <tr><td>用户名</td><td><input type="text" name="UName" id="txtEditUName"/></td></tr>
-                <tr><td>密码</td><td><input type="text" name="UPwd" id="txtEditUPwd"/></td></tr>
-                <tr><td>备注</td><td><input type="text" name="Remark" id="txtEditRemark"/></td></tr>
-                <tr><td>排序</td><td><input type="text" name="Sort" id="txtEditSort"/></td></tr>
+                <tr><td>用户名</td><td><input type="text" name="UName" id="txtEditUName" /></td></tr>
+                <tr><td>密码</td><td><input type="text" name="UPwd" id="txtEditUPwd" /></td></tr>
+                <tr><td>备注</td><td><input type="text" name="Remark" id="txtEditRemark" /></td></tr>
+                <tr><td>排序</td><td><input type="text" name="Sort" id="txtEditSort" /></td></tr>
             </table>
         }
     </div>
     <!---------------------为用户分配角色------------------------>
     <div id="setUserRoleDiv">
         <iframe id="setUserRoleFrame" frameborder="0" width="100%" height="100%"></iframe>
+    </div>
+    <!------------------------为用户分配权限----------------------------------->
+    <div id="setUserActionDiv">
+        <iframe id="setUserActionFrame" frameborder="0" width="100%" height="100%"></iframe>
     </div>
 </body>
 </html>

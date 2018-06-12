@@ -14,6 +14,8 @@ namespace JCJ.OA.WebUI.Controllers
         // GET: UserInfo /Spring.Net
         IBLL.IUserInfoService UserInfoService { get; set; }
         IBLL.IRoleInfoService RoleInfoService { get; set; }
+        IBLL.IActionInfoService ActionInfoService { get; set; }
+
         public ActionResult Index()
         {
             return View();
@@ -143,6 +145,19 @@ namespace JCJ.OA.WebUI.Controllers
             }
             return UserInfoService.SetUserRoleInfo(userId, list) ? Content("ok") : Content("no");
             
+        }
+        /// <summary>
+        /// 展示用户对应的权限
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowUserAction() {
+            int userId = int.Parse(Request["userId"]);
+            var userInfo = UserInfoService.LoadEntities(u => u.ID == userId).FirstOrDefault();
+            var actionInfoList = ActionInfoService.LoadEntities(a => a.DelFlag == 0).ToList();
+            ViewBag.UserInfo = userInfo;
+            ViewBag.ActionInfoList = actionInfoList;
+            ViewBag.ActionIdList = actionInfoList;
+            return View();
         }
 
 
