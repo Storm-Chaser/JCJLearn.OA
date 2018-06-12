@@ -21,6 +21,8 @@
         $(function () {
             $("#addDiv").css("display", "none");
             loadData();
+            bindActionTypeChange();
+            bindBtnFileUpClick();
         });
         function loadData() {
             $('#tt').datagrid({
@@ -84,7 +86,7 @@
                     text: '添加',
                     iconCls: 'icon-add',
                     handler: function () {
-                        addRole();
+                        addAction();
                     }
                 }, {
                     id: 'btnEdit',
@@ -97,11 +99,117 @@
                 ],
             });
         }
+        //给权限类别下拉框绑定change事件
+        function bindActionTypeChange() {
+            $("#actionTypeChange").change(function () {
+                if ($(this).val() == "1") {//菜单权限
+                    $("#trIcon").fadeIn();
+                } else {
+                    $("#trIcon").fadeOut();
+                }
+            });
+        }
+        //上传按钮单击
+        function bindBtnFileUpClick() {
+            $("#btnFileUp").click(function () {
+                $("#addForm").ajaxSubmit({
+                    success: function (data) {
+                        var serverData = data.split(':');
+                        if (serverData[0] == "ok") {
+                            $("#showImg").html("<img src='" + serverData[1] + "' width='50px' height='50px'/>");
+                            $("#hiddenMenuIcon").val(serverData[1]);
+                        } else {
+                            $.messager.alert("提示", serverData[1], "error");
+                        }
+                    },
+                    error: function (error) { alert(error); },
+                    url: '/ActionInfo/FileUpload', /*设置post提交到的页面*/
+                    type: "post", /*设置表单以post方法提交*/
+                    dataType: "text" /*设置返回值类型为文本*/
+                });
+            });
+        }
+        //添加权限
+        function addAction() {
+            $("#addDiv").css("display", "block");
+            $('#addDiv').dialog({
+                title: '添加权限信息',
+                collapsible: true,
+                maximizable: true,
+                resizable: true,
+                modal: true,
+                width: 300,
+                height: 300,
+                buttons: [{
+                    text: 'Ok',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+
+                        $("#addForm").submit();//提交
+                    }
+                }, {
+                    text: 'Cancel',
+                    handler: function () {
+                        $('#addDiv').dialog('close');
+
+                    }
+                }]
+            });
+        }
+        //添加完成后执行
+        function afterAdd(data) {
+            if (data == "ok") {
+                $('#addDiv').dialog('close');
+            } else {
+                $.messager.alert("提示", "添加失败", "error");
+            }
+        }
     </script>
 </head>
 <body>
     <div>
         <table id="tt" style="width: 700px;" title="标题，可以使用代码进行初始化，也可以使用这种属性的方式" iconcls="icon-edit"></table>
+    </div>
+    <div id="addDiv">
+        @using (Ajax.BeginForm("AddActionInfo", "ActionInfo", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterAdd" }, new { id = "addForm" }))
+        {
+            <input type="hidden" name="MenuIcon" id="hiddenMenuIcon" />
+            <table>
+                <tr><td>权限名称</td><td><input type="text" name="ActionInfoName" /></td></tr>
+                <tr><td>Url</td><td><input type="text" name="Url" /></td></tr>
+                <tr>
+                    <td>HttpMethod</td>
+                    <td>
+                        <select name="HttpMethod">
+                            <option value="GET">Get</option>
+                            <option value="POST">Post</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>权限类型</td>
+                    <td>
+                        <select name="ActionTypeEnum" id="actionTypeChange">
+                            <option value="0">普通权限</option>
+                            <option value="1">菜单权限</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr style="display:none" id="trIcon">
+                    <td>上传图标</td>
+                    <td>
+                        <input type="file" name="fileUp" />
+                        <input type="button" value="上传" id="btnFileUp" />
+                        <div id="showImg">
+
+                        </div>
+                    </td>
+                </tr>
+
+                <tr><td>备注</td><td><input type="text" name="Remark" /></td></tr>
+                <tr><td>排序</td><td><input type="text" name="Sort" /></td></tr>
+            </table>
+        }
     </div>
 </body>
 </html>

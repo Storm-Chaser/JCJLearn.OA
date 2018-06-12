@@ -1,6 +1,8 @@
-﻿using JCJ.OA.Model.Enum;
+﻿using JCJ.OA.Model;
+using JCJ.OA.Model.Enum;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -40,6 +42,40 @@ namespace JCJ.OA.WebUI.Controllers
                            a.Sort
                        };
             return Json(new { rows = temp, total = totalCount }, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult FileUpload()
+        {
+            HttpPostedFileBase file = Request.Files[0];
+            string fileName = Path.GetFileName(file.FileName);
+            string fileExt = Path.GetExtension(fileName);
+            if (fileExt == ".jpg")
+            {
+                string dir = "/ImageUp/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/" + DateTime.Now.Day + "/";
+                Directory.CreateDirectory(Path.GetDirectoryName(Request.MapPath(dir)));
+                string newfileName = Guid.NewGuid().ToString();
+                string fullDir = dir + newfileName + fileExt;
+                file.SaveAs(Request.MapPath(fullDir));
+                return Content("ok:" + fullDir);
+            }
+            return Content("no:上传失败!!");
+        }
+        /// <summary>
+        /// 完成权限添加
+        /// </summary>
+        /// <param name="actionInfo"></param>
+        /// <returns></returns>
+        public ActionResult AddActionInfo(ActionInfo actionInfo)
+        {
+            actionInfo.DelFlag = 0;
+            actionInfo.ModifiedOn = DateTime.Now.ToString();
+            actionInfo.SubTime = DateTime.Now;
+            actionInfo.Url = actionInfo.Url.ToLower();
+            ActionInfoService.AddEntity(actionInfo);
+            return Content("ok");
         }
     }
 }

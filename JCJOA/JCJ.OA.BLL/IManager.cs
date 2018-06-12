@@ -42,6 +42,7 @@ namespace JCJ.OA.BLL
         {
 			CurrentDal = this.DbSession.RoleInfoDal;
         }
+
     }   
 	
 	public partial class UserInfoService :BaseService<UserInfo>,IUserInfoService

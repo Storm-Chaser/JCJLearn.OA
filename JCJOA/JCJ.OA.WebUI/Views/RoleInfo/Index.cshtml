@@ -21,6 +21,7 @@
     <script type="text/javascript">
         $(function () {
             $("#addDiv").css("display", "none");
+            $("#setRoleActionDiv").css("display", "none");
             loadData();
         });
 
@@ -75,9 +76,58 @@
                     handler: function () {
                         
                     }
+                },
+                {
+                    id: 'btnSetRoleAction',
+                    text: '为角色分配权限',
+                    iconCls: 'icon-edit',
+                    handler: function () {
+                        setRoleAction();
+                    }
                 }
                 ],
             });
+        }
+        //为角色分配权限
+        function setRoleAction() {
+            var rows = $('#tt').datagrid('getSelections');
+            if (rows.length != 1) {
+                $.messager.alert("提示", "只能选择一个角色", "error");
+                return;
+            }
+            $("#setRoleActionFrame").attr("src", "/RoleInfo/ShowRoleAction?roleId=" + rows[0].ID);
+            $("#setRoleActionDiv").css("display", "block");
+            $('#setRoleActionDiv').dialog({
+                title: '为角色分配权限信息',
+                collapsible: true,
+                maximizable: true,
+                resizable: true,
+                modal: true,
+                width: 300,
+                height: 400,
+                buttons: [{
+                    text: 'Ok',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        //在主窗体中调用子窗体的方法。
+                        var childWindow = $("#setRoleActionFrame")[0].contentWindow;//获取子窗体的window对象.
+                        childWindow.subForm();//调用子窗体的的方法.
+                    }
+                }, {
+                    text: 'Cancel',
+                    handler: function () {
+                        $('#setRoleActionDiv').dialog('close');
+                    }
+                }]
+            });
+        }
+        //完成权限分配后调用
+        function afterSet(data) {
+            if (data == "ok") {
+                $('#setRoleActionDiv').dialog('close');
+            } else {
+                $.messager.alert("提示", "权限分配失败!!", "error");
+            }
         }
         function addRole() {
             $("#addFrame").attr("src", "/RoleInfo/ShowAddRole");
@@ -124,6 +174,10 @@
     <!-------------------添加角色---------------------->
     <div id="addDiv">
         <iframe id="addFrame" frameborder="0" width="100%" height="100%" class="addRoleInfo"></iframe>
+    </div>
+    <!-------------------------为角色分配权限------------------------------------->
+    <div id="setRoleActionDiv">
+        <iframe id="setRoleActionFrame" frameborder="0" width="100%" height="100%"></iframe>
     </div>
 </body>
 </html>

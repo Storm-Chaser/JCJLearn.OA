@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = null;
+}
+@using JCJ.OA.Model
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>为角色分配权限</title>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function subForm() {
+            $("#setForm").submit();
+        }
+        function afterSet(data) {
+            window.parent.afterSet(data);
+        }
+    </script>
+</head>
+<body>
+    <div>
+        为角色@{
+            RoleInfo roleInfo = ViewBag.RoleInfo;
+            <span style="font-size:14px;color:red">@roleInfo.RoleName</span>
+        }分配权限
+        <br />
+        @using (Ajax.BeginForm("SetRoleActionInfo", "RoleInfo", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterSet" }, new { id = "setForm" }))
+        {
+            <input type="hidden" name="roleId" value="@roleInfo.ID" />
+            List<ActionInfo> actionInfoList = ViewBag.ActionInfoList;
+            List<int> actionIdList = ViewBag.ActionIdList;
+            foreach (var actionInfo in actionInfoList)
+            {
+                string actionName = "cba_" + actionInfo.ID;
+                if (actionIdList.Contains(actionInfo.ID))
+                {
+                    <input type="checkbox" checked="checked" name="@actionName" />@actionInfo.ActionInfoName
+                }
+                else
+                {
+                    <input type="checkbox" name="@actionName" />@actionInfo.ActionInfoName
+                }
+            }
+        }
+    </div>
+</body>
+</html>

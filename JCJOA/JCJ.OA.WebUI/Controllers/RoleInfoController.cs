@@ -1,4 +1,5 @@
-﻿using JCJ.OA.Model;
+﻿using JCJ.OA.BLL;
+using JCJ.OA.Model;
 using JCJ.OA.Model.Enum;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace JCJ.OA.WebUI.Controllers
     public class RoleInfoController : Controller
     {
         IBLL.IRoleInfoService RoleInfoService { get; set; }
+        IBLL.IActionInfoService ActionInfoService { get; set; }
         // GET: RoleInfo
         public ActionResult Index()
         {
@@ -58,6 +60,41 @@ namespace JCJ.OA.WebUI.Controllers
             roleInfo.DelFlag = (short)DelFlagEnum.Normal;
             RoleInfoService.AddEntity(roleInfo);
             return Content("ok");
+        }
+        /// <summary>
+        /// 展示角色具有权限信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowRoleAction()
+        {
+            int roleId = int.Parse(Request["roleId"]);
+            var roleInfo = RoleInfoService.LoadEntities(r => r.ID == roleId).FirstOrDefault();
+            ViewBag.RoleInfo = roleInfo;
+            var actionInfoList = ActionInfoService.LoadEntities(a => a.DelFlag == 0).ToList();//所有的权限
+            //角色具有的权限
+            var actionIdList = (from a in roleInfo.ActionInfo
+                                select a.ID).ToList();//
+            ViewBag.ActionInfoList = actionInfoList;
+            ViewBag.ActionIdList = actionIdList;
+            return View();
+        }
+        /// <summary>
+        /// 完成角色权限的分配
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SetRoleActionInfo()
+        {
+            int roleId = int.Parse(Request["roleId"]);
+            string[] allKeys = Request.Form.AllKeys;
+            List<int> list = new List<int>();
+            foreach (string key in allKeys)
+            {
+                if (key.StartsWith("cba_"))
+                {
+                    list.Add(Convert.ToInt32(key.Replace("cba_", "")));
+                }
+            }
+            return Content(RoleInfoService.SetRoleActionInfo(roleId, list) ? "ok" : "no");
         }
     }
 }
