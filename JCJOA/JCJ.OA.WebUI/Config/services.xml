@@ -6,4 +6,6 @@
     </object>
     <object type="JCJ.OA.BLL.ActionInfoService, JCJ.OA.BLL" singleton="false" name="ActionInfoService">
     </object>
+    <object type="JCJ.OA.BLL.R_UserInfo_ActionInfoService, JCJ.OA.BLL" singleton="false" name="R_UserInfo_ActionInfoService">
+    </object>
   </objects>

@@ -5,6 +5,7 @@
     <property name="UserInfoService" ref="UserInfoService" />
     <property name="RoleInfoService" ref="RoleInfoService" />
     <property name="ActionInfoService" ref="ActionInfoService" />
+    <property name="R_UserInfo_ActionInfoService" ref="R_UserInfo_ActionInfoService" />
   </object>
 
   <object type="JCJ.OA.WebUI.Controllers.LoginController, JCJ.OA.WebUI" singleton="false" >
@@ -17,6 +18,9 @@
   </object>
   <object type="JCJ.OA.WebUI.Controllers.ActionInfoController, JCJ.OA.WebUI" singleton="false" >
     <property name="ActionInfoService" ref="ActionInfoService" />
+  </object>
+  <object type="JCJ.OA.WebUI.Controllers.HomeController, JCJ.OA.WebUI" singleton="false" >
+    <property name="UserInfoService" ref="UserInfoService" />
   </object>
 
   <!--intentionally do NOT register the AccountController or the ValuesController with the container; demonstrates that the underlying

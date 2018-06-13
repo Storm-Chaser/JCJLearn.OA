@@ -15,5 +15,7 @@ namespace JCJ.OA.IBLL
         IQueryable<UserInfo> LoadSearchEntities(UserInfoSearch userInfoSearch);
 
         bool SetUserRoleInfo(int userId, List<int> roleIdList);
+
+        bool SetUserActionInfo(int userId, int actionId, bool isPass);
     }
 }

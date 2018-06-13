@@ -15,6 +15,7 @@ namespace JCJ.OA.WebUI.Controllers
         IBLL.IUserInfoService UserInfoService { get; set; }
         IBLL.IRoleInfoService RoleInfoService { get; set; }
         IBLL.IActionInfoService ActionInfoService { get; set; }
+        IBLL.IR_UserInfo_ActionInfoService R_UserInfo_ActionInfoService { get; set; }
 
         public ActionResult Index()
         {
@@ -154,12 +155,36 @@ namespace JCJ.OA.WebUI.Controllers
             int userId = int.Parse(Request["userId"]);
             var userInfo = UserInfoService.LoadEntities(u => u.ID == userId).FirstOrDefault();
             var actionInfoList = ActionInfoService.LoadEntities(a => a.DelFlag == 0).ToList();
+            var actionIdList = (from a in userInfo.R_UserInfo_ActionInfo
+                                select a).ToList();
             ViewBag.UserInfo = userInfo;
             ViewBag.ActionInfoList = actionInfoList;
-            ViewBag.ActionIdList = actionInfoList;
+            ViewBag.ActionIdList = actionIdList;
             return View();
         }
-
-
+        /// <summary>
+        /// 完成用户权限的分配
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SetUserAction() {
+            int userId = int.Parse(Request["userId"]);
+            int actionId = int.Parse(Request["actionId"]);
+            bool isPass = Request["isPass"] == "true" ? true : false;
+            return Content(UserInfoService.SetUserActionInfo(userId, actionId, isPass) ? "ok" : "no");
+            
+        }
+        /// <summary>
+        /// 删除用户权限
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DeleteUserAction() {
+            int userId = int.Parse(Request["userId"]);
+            int actionId = int.Parse(Request["actionId"]);
+            var r_UserInfo_ActionInfo = R_UserInfo_ActionInfoService.LoadEntities(a => a.UserInfoID == userId && a.ActionInfoID == actionId).FirstOrDefault();
+            if (r_UserInfo_ActionInfo != null) {
+                return Content(R_UserInfo_ActionInfoService.DeleteEntity(r_UserInfo_ActionInfo) ? "ok" : "no");
+            }
+            return Content("no");  
+        }
     }
 }

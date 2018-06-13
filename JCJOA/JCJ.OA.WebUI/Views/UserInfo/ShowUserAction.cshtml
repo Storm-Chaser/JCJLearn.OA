@@ -27,7 +27,7 @@
             <tr><th>编号</th><th>权限名称</th><th>Url</th><th>HttpMethod</th><th>操作</th></tr>
             @{
                 List<ActionInfo> actionInfoList = ViewBag.ActionInfoList;
-                //List<R_UserInfo_ActionInfo> actionIdList = ViewBag.ActionIdList;
+                List<R_UserInfo_ActionInfo> actionIdList = ViewBag.ActionIdList;
                 foreach (var actionInfo in actionInfoList)
                 {
                     var allowName = "cba_" + actionInfo.ID;
@@ -37,7 +37,7 @@
                         <td>@actionInfo.ActionInfoName</td>
                         <td>@actionInfo.Url</td>
                         <td>@actionInfo.HttpMethod</td>
-                        @*<td>
+                        <td>
                             @{
                                 var isExt = (from r_UserInfo_ActionInfo in actionIdList
                                              where r_UserInfo_ActionInfo.ActionInfoID == actionInfo.ID
@@ -72,7 +72,7 @@
                                 }
                                 <input type="button" value="删除" class="btnClear" ids="@actionInfo.ID" />
                             }
-                        </td>*@
+                        </td>
                     </tr>
                 }
             }
@@ -80,3 +80,58 @@
     </div>
 </body>
 </html>
+<script type="text/javascript">
+    $(function () {
+        //完成用户权限的分配
+        $(".selectionActions").click(function () {
+            setUserAction($(this));
+        });
+        //完成权限的删除
+        $(".btnClear").click(function () {
+            clearUserAction($(this));
+        });
+        function setUserAction(control) {
+            var actionId = control.attr("ids");
+            var isPass = control.val();
+            $.post("/UserInfo/SetUserAction", { "actionId": actionId, "isPass": isPass, "userId": '@userInfo.ID' }, function (data) {
+                if (data == "ok") {
+                    $.messager.show({
+                        title: '提示',
+                        msg: '权限分配成功',
+                        showType: 'show'
+                    });
+                } else {
+                    $.messager.show({
+                        title: '提示',
+                        msg: '权限分配失败',
+                        showType: 'show'
+                    });
+                }
+            });
+        }
+        function clearUserAction(control) {
+            var actionId = control.attr("ids");
+            var userId = '@userInfo.ID';
+            $.post("/UserInfo/DeleteUserAction", { "userId": userId, "actionId": actionId }, function (data) {
+                if (data == "ok") {
+                    //清除单选按钮的状态。
+                    control.parent().find(".selectionActions").removeAttr("checked");
+                    $.messager.show({
+                        title: '提示',
+                        msg: '权限删除成功',
+                        showType: 'show'
+                    });
+
+            } else {
+                $.messager.show({
+                    title: '提示',
+                    msg: '权限删除失败',
+                    showType: 'show'
+                });
+            }
+        });
+        }
+    })
+    
+
+</script>

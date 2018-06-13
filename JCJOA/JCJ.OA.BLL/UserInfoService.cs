@@ -47,6 +47,32 @@ namespace JCJ.OA.BLL
         }
 
         /// <summary>
+        /// 完成用户权限的分配
+        /// </summary>
+        /// <param name="userId">用户编号</param>
+        /// <param name="actionId">权限编号</param>
+        /// <param name="isPass">是否允许禁止</param>
+        /// <returns></returns>
+        public bool SetUserActionInfo(int userId, int actionId, bool isPass)
+        {
+            var r_UserInfo_ActionInfo = this.DbSession.R_UserInfo_ActionInfoDal.LoadEntities(a => a.UserInfoID == userId && a.ActionInfoID == actionId).FirstOrDefault();
+            if (r_UserInfo_ActionInfo != null)
+            {
+                r_UserInfo_ActionInfo.IsPass = isPass;
+                this.DbSession.R_UserInfo_ActionInfoDal.EditEntity(r_UserInfo_ActionInfo);
+                return this.DbSession.SaveChanges();
+            }
+            else {
+                R_UserInfo_ActionInfo userInfoActionInfo = new R_UserInfo_ActionInfo();
+                userInfoActionInfo.ActionInfoID = actionId;
+                userInfoActionInfo.UserInfoID = userId;
+                userInfoActionInfo.IsPass = isPass;
+                this.DbSession.R_UserInfo_ActionInfoDal.AddEntity(userInfoActionInfo);
+                return this.DbSession.SaveChanges();
+            }
+        }
+
+        /// <summary>
         /// 完成用户的角色分配
         /// </summary>
         /// <param name="userId">用户编号</param>
