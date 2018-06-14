@@ -13,16 +13,15 @@ namespace JCJ.OA.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class R_UserInfo_ActionInfo
+    public partial class ArticelComment
     {
         public int ID { get; set; }
-        public int UserInfoID { get; set; }
-        public int ActionInfoID { get; set; }
-        public bool IsPass { get; set; }
+        public string Msg { get; set; }
+        public System.DateTime AddDate { get; set; }
+        public short IsPass { get; set; }
+        public int ArticelID { get; set; }
     
         [JsonIgnore]
-        public virtual ActionInfo ActionInfo { get; set; }
-        [JsonIgnore]
-        public virtual UserInfo UserInfo { get; set; }
+        public virtual Articel Articel { get; set; }
     }
 }

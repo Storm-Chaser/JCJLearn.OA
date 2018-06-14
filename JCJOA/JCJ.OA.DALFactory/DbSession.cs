@@ -29,6 +29,48 @@ namespace JCJ.OA.DALFactory
             set { _ActionInfoDal = value; }
         }
 	
+		private IArticelDal _ArticelDal;
+        public IArticelDal ArticelDal
+        {
+            get
+            {
+                if(_ArticelDal == null)
+                {
+                    _ArticelDal = AbstractFactory.CreateArticelDal();
+                }
+                return _ArticelDal;
+            }
+            set { _ArticelDal = value; }
+        }
+	
+		private IArticelClassDal _ArticelClassDal;
+        public IArticelClassDal ArticelClassDal
+        {
+            get
+            {
+                if(_ArticelClassDal == null)
+                {
+                    _ArticelClassDal = AbstractFactory.CreateArticelClassDal();
+                }
+                return _ArticelClassDal;
+            }
+            set { _ArticelClassDal = value; }
+        }
+	
+		private IArticelCommentDal _ArticelCommentDal;
+        public IArticelCommentDal ArticelCommentDal
+        {
+            get
+            {
+                if(_ArticelCommentDal == null)
+                {
+                    _ArticelCommentDal = AbstractFactory.CreateArticelCommentDal();
+                }
+                return _ArticelCommentDal;
+            }
+            set { _ArticelCommentDal = value; }
+        }
+	
 		private IDepartmentDal _DepartmentDal;
         public IDepartmentDal DepartmentDal
         {

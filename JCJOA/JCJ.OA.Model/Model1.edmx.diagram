@@ -16,6 +16,11 @@
         <AssociationConnector Association="ItcastCmsModel.RoleInfoActionInfo" />
         <AssociationConnector Association="ItcastCmsModel.UserInfoDepartment" />
         <AssociationConnector Association="ItcastCmsModel.UserInfoRoleInfo" />
+        <EntityTypeShape EntityType="ItcastCmsModel.Articel" Width="1.5" PointX="5.625" PointY="7.75" />
+        <EntityTypeShape EntityType="ItcastCmsModel.ArticelClass" Width="1.5" PointX="8.625" PointY="10.25" />
+        <EntityTypeShape EntityType="ItcastCmsModel.ArticelComment" Width="1.5" PointX="8.625" PointY="7.375" />
+        <AssociationConnector Association="ItcastCmsModel.FK_ArticelArticelComment" />
+        <AssociationConnector Association="ItcastCmsModel.ArticelClassArticel" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

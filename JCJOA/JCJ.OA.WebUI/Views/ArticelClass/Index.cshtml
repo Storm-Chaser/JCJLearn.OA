@@ -1,0 +1,72 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>栏目管理</title>
+    <link href="~/Content/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Content/themes/icon.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
+    <script src="~/Scripts/datapattern.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            
+            loadData();
+            
+        });
+        function loadData() {
+            $('#tt').treegrid({
+                title: '栏目管理',
+                iconCls: 'icon-save',
+                width: 500,
+                height: 350,
+                nowrap: false,
+                rownumbers: true,
+                animate: true,
+                collapsible: true,
+                url: '/ArticelClass/ShowArticelClass',
+                idField: 'id',
+                treeField: 'className',
+                lines: true,
+                columns: [[
+                    { field: 'id', title: '编号', width: 150, rowspan: 2 },
+                    { field: 'className', title: '栏目名称', width: 120 },
+                    { field: 'Remark', title: '备注', width: 120, rowspan: 2 }
+
+                ]],
+                toolbar: [{
+                    id: 'btnAdd',
+                    text: '添加子栏目',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        addChildArticel();
+
+                    }
+                }, {
+                    id: 'btnEdit',
+                    text: '编辑',
+                    iconCls: 'icon-edit',
+                    handler: function () {
+                        showChildArticel();
+
+                    }
+                }]
+
+            });
+        }
+    </script>
+</head>
+<body>
+    <div>
+
+        <table id="tt"></table>
+    </div>
+</body>
+</html>

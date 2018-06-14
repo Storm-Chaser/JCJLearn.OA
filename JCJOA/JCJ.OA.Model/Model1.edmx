@@ -25,6 +25,65 @@
           <Property Name="IconWidth" Type="int" Nullable="false" />
           <Property Name="IconHeight" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Articel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KeyWords" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="TitleType" Type="nvarchar" MaxLength="32" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FullTitle" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Intro" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="TitleFontColor" Type="nvarchar" MaxLength="32" />
+          <Property Name="TitleFontType" Type="nvarchar" MaxLength="32" />
+          <Property Name="ArticleContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="Origin" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="AddDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifyDate" Type="datetime" Nullable="false" />
+          <Property Name="DelFlag" Type="smallint" Nullable="false" />
+          <Property Name="PicNews" Type="smallint" Nullable="false" />
+          <Property Name="Changes" Type="smallint" Nullable="false" />
+          <Property Name="Recommend" Type="smallint" Nullable="false" />
+          <Property Name="Rolls" Type="smallint" Nullable="false" />
+          <Property Name="Strip" Type="smallint" Nullable="false" />
+          <Property Name="Popular" Type="smallint" Nullable="false" />
+          <Property Name="Verific" Type="smallint" Nullable="false" />
+          <Property Name="IsTop" Type="smallint" Nullable="false" />
+          <Property Name="CommnetNum" Type="int" Nullable="false" />
+          <Property Name="PhotoUrl" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ArticelClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="CreateUserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="DelFlag" Type="smallint" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticelClassArticel">
+          <Key>
+            <PropertyRef Name="ArticelClass_ID" />
+            <PropertyRef Name="Articel_ID" />
+          </Key>
+          <Property Name="ArticelClass_ID" Type="int" Nullable="false" />
+          <Property Name="Articel_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticelComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Msg" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AddDate" Type="datetime" Nullable="false" />
+          <Property Name="IsPass" Type="smallint" Nullable="false" />
+          <Property Name="ArticelID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="ID" />
@@ -111,6 +170,42 @@
             </Principal>
             <Dependent Role="R_UserInfo_ActionInfo">
               <PropertyRef Name="ActionInfoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticelArticelComment">
+          <End Role="Articel" Type="Self.Articel" Multiplicity="1" />
+          <End Role="ArticelComment" Type="Self.ArticelComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ArticelComment">
+              <PropertyRef Name="ArticelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticelClassArticel_Articel">
+          <End Role="Articel" Type="Self.Articel" Multiplicity="1" />
+          <End Role="ArticelClassArticel" Type="Self.ArticelClassArticel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ArticelClassArticel">
+              <PropertyRef Name="Articel_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticelClassArticel_ArticelClass">
+          <End Role="ArticelClass" Type="Self.ArticelClass" Multiplicity="1" />
+          <End Role="ArticelClassArticel" Type="Self.ArticelClassArticel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArticelClass">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ArticelClassArticel">
+              <PropertyRef Name="ArticelClass_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -224,6 +319,10 @@
         </Association>
         <EntityContainer Name="ItcastCmsModelStoreContainer">
           <EntitySet Name="ActionInfo" EntityType="Self.ActionInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Articel" EntityType="Self.Articel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticelClass" EntityType="Self.ArticelClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticelClassArticel" EntityType="Self.ArticelClassArticel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticelComment" EntityType="Self.ArticelComment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentActionInfo" EntityType="Self.DepartmentActionInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="R_UserInfo_ActionInfo" EntityType="Self.R_UserInfo_ActionInfo" Schema="dbo" store:Type="Tables" />
@@ -235,6 +334,18 @@
           <AssociationSet Name="FK_ActionInfoR_UserInfo_ActionInfo" Association="Self.FK_ActionInfoR_UserInfo_ActionInfo">
             <End Role="ActionInfo" EntitySet="ActionInfo" />
             <End Role="R_UserInfo_ActionInfo" EntitySet="R_UserInfo_ActionInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticelArticelComment" Association="Self.FK_ArticelArticelComment">
+            <End Role="Articel" EntitySet="Articel" />
+            <End Role="ArticelComment" EntitySet="ArticelComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticelClassArticel_Articel" Association="Self.FK_ArticelClassArticel_Articel">
+            <End Role="Articel" EntitySet="Articel" />
+            <End Role="ArticelClassArticel" EntitySet="ArticelClassArticel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticelClassArticel_ArticelClass" Association="Self.FK_ArticelClassArticel_ArticelClass">
+            <End Role="ArticelClass" EntitySet="ArticelClass" />
+            <End Role="ArticelClassArticel" EntitySet="ArticelClassArticel" />
           </AssociationSet>
           <AssociationSet Name="FK_DepartmentActionInfo_ActionInfo" Association="Self.FK_DepartmentActionInfo_ActionInfo">
             <End Role="ActionInfo" EntitySet="ActionInfo" />
@@ -322,6 +433,17 @@
           <AssociationSet Name="UserInfoRoleInfo" Association="ItcastCmsModel.UserInfoRoleInfo">
             <End Role="RoleInfo" EntitySet="RoleInfo" />
             <End Role="UserInfo" EntitySet="UserInfo" />
+          </AssociationSet>
+          <EntitySet Name="Articel" EntityType="ItcastCmsModel.Articel" />
+          <EntitySet Name="ArticelClass" EntityType="ItcastCmsModel.ArticelClass" />
+          <EntitySet Name="ArticelComment" EntityType="ItcastCmsModel.ArticelComment" />
+          <AssociationSet Name="FK_ArticelArticelComment" Association="ItcastCmsModel.FK_ArticelArticelComment">
+            <End Role="Articel" EntitySet="Articel" />
+            <End Role="ArticelComment" EntitySet="ArticelComment" />
+          </AssociationSet>
+          <AssociationSet Name="ArticelClassArticel" Association="ItcastCmsModel.ArticelClassArticel">
+            <End Role="Articel" EntitySet="Articel" />
+            <End Role="ArticelClass" EntitySet="ArticelClass" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="ActionInfo">
@@ -424,6 +546,77 @@
         <Association Name="UserInfoRoleInfo">
           <End Type="ItcastCmsModel.RoleInfo" Role="RoleInfo" Multiplicity="*" />
           <End Type="ItcastCmsModel.UserInfo" Role="UserInfo" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Articel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KeyWords" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TitleType" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FullTitle" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Intro" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TitleFontColor" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="TitleFontType" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ArticleContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Origin" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="AddDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DelFlag" Type="Int16" Nullable="false" />
+          <Property Name="PicNews" Type="Int16" Nullable="false" />
+          <Property Name="Changes" Type="Int16" Nullable="false" />
+          <Property Name="Recommend" Type="Int16" Nullable="false" />
+          <Property Name="Rolls" Type="Int16" Nullable="false" />
+          <Property Name="Strip" Type="Int16" Nullable="false" />
+          <Property Name="Popular" Type="Int16" Nullable="false" />
+          <Property Name="Verific" Type="Int16" Nullable="false" />
+          <Property Name="IsTop" Type="Int16" Nullable="false" />
+          <Property Name="CommnetNum" Type="Int32" Nullable="false" />
+          <Property Name="PhotoUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ArticelComment" Relationship="ItcastCmsModel.FK_ArticelArticelComment" FromRole="Articel" ToRole="ArticelComment" />
+          <NavigationProperty Name="ArticelClass" Relationship="ItcastCmsModel.ArticelClassArticel" FromRole="Articel" ToRole="ArticelClass" />
+        </EntityType>
+        <EntityType Name="ArticelClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="CreateUserId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DelFlag" Type="Int16" Nullable="false" />
+          <Property Name="Remark" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Articel" Relationship="ItcastCmsModel.ArticelClassArticel" FromRole="ArticelClass" ToRole="Articel" />
+        </EntityType>
+        <EntityType Name="ArticelComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Msg" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AddDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsPass" Type="Int16" Nullable="false" />
+          <Property Name="ArticelID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Articel" Relationship="ItcastCmsModel.FK_ArticelArticelComment" FromRole="ArticelComment" ToRole="Articel" />
+        </EntityType>
+        <Association Name="FK_ArticelArticelComment">
+          <End Type="ItcastCmsModel.Articel" Role="Articel" Multiplicity="1" />
+          <End Type="ItcastCmsModel.ArticelComment" Role="ArticelComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ArticelComment">
+              <PropertyRef Name="ArticelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ArticelClassArticel">
+          <End Type="ItcastCmsModel.Articel" Role="Articel" Multiplicity="*" />
+          <End Type="ItcastCmsModel.ArticelClass" Role="ArticelClass" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -531,6 +724,68 @@
             </EndProperty>
             <EndProperty Name="RoleInfo">
               <ScalarProperty Name="ID" ColumnName="RoleInfo_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Articel">
+            <EntityTypeMapping TypeName="ItcastCmsModel.Articel">
+              <MappingFragment StoreEntitySet="Articel">
+                <ScalarProperty Name="PhotoUrl" ColumnName="PhotoUrl" />
+                <ScalarProperty Name="CommnetNum" ColumnName="CommnetNum" />
+                <ScalarProperty Name="IsTop" ColumnName="IsTop" />
+                <ScalarProperty Name="Verific" ColumnName="Verific" />
+                <ScalarProperty Name="Popular" ColumnName="Popular" />
+                <ScalarProperty Name="Strip" ColumnName="Strip" />
+                <ScalarProperty Name="Rolls" ColumnName="Rolls" />
+                <ScalarProperty Name="Recommend" ColumnName="Recommend" />
+                <ScalarProperty Name="Changes" ColumnName="Changes" />
+                <ScalarProperty Name="PicNews" ColumnName="PicNews" />
+                <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="AddDate" ColumnName="AddDate" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="ArticleContent" ColumnName="ArticleContent" />
+                <ScalarProperty Name="TitleFontType" ColumnName="TitleFontType" />
+                <ScalarProperty Name="TitleFontColor" ColumnName="TitleFontColor" />
+                <ScalarProperty Name="Intro" ColumnName="Intro" />
+                <ScalarProperty Name="FullTitle" ColumnName="FullTitle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="TitleType" ColumnName="TitleType" />
+                <ScalarProperty Name="KeyWords" ColumnName="KeyWords" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticelClass">
+            <EntityTypeMapping TypeName="ItcastCmsModel.ArticelClass">
+              <MappingFragment StoreEntitySet="ArticelClass">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticelComment">
+            <EntityTypeMapping TypeName="ItcastCmsModel.ArticelComment">
+              <MappingFragment StoreEntitySet="ArticelComment">
+                <ScalarProperty Name="ArticelID" ColumnName="ArticelID" />
+                <ScalarProperty Name="IsPass" ColumnName="IsPass" />
+                <ScalarProperty Name="AddDate" ColumnName="AddDate" />
+                <ScalarProperty Name="Msg" ColumnName="Msg" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ArticelClassArticel" TypeName="ItcastCmsModel.ArticelClassArticel" StoreEntitySet="ArticelClassArticel">
+            <EndProperty Name="ArticelClass">
+              <ScalarProperty Name="ID" ColumnName="ArticelClass_ID" />
+            </EndProperty>
+            <EndProperty Name="Articel">
+              <ScalarProperty Name="ID" ColumnName="Articel_ID" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

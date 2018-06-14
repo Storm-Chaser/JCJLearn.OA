@@ -17,6 +17,21 @@ namespace JCJ.OA.DLL
 
     }
 		
+	public partial class ArticelDal :BaseDal<Articel>,IArticelDal
+    {
+
+    }
+		
+	public partial class ArticelClassDal :BaseDal<ArticelClass>,IArticelClassDal
+    {
+
+    }
+		
+	public partial class ArticelCommentDal :BaseDal<ArticelComment>,IArticelCommentDal
+    {
+
+    }
+		
 	public partial class DepartmentDal :BaseDal<Department>,IDepartmentDal
     {
 

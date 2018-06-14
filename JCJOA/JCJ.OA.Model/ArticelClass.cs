@@ -13,28 +13,24 @@ namespace JCJ.OA.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class RoleInfo
+    public partial class ArticelClass
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RoleInfo()
+        public ArticelClass()
         {
-            this.ActionInfo = new HashSet<ActionInfo>();
-            this.UserInfo = new HashSet<UserInfo>();
+            this.Articel = new HashSet<Articel>();
         }
     
         public int ID { get; set; }
-        public string RoleName { get; set; }
+        public string ClassName { get; set; }
+        public int ParentId { get; set; }
+        public int CreateUserId { get; set; }
+        public System.DateTime CreateDate { get; set; }
         public short DelFlag { get; set; }
-        public System.DateTime SubTime { get; set; }
         public string Remark { get; set; }
-        public System.DateTime ModifiedOn { get; set; }
-        public string Sort { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [JsonIgnore]
-        public virtual ICollection<ActionInfo> ActionInfo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
-        public virtual ICollection<UserInfo> UserInfo { get; set; }
+        public virtual ICollection<Articel> Articel { get; set; }
     }
 }

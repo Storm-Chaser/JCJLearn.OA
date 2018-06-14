@@ -9,10 +9,10 @@
 
 namespace JCJ.OA.Model
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
-
+    
     public partial class UserInfo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,7 +22,7 @@ namespace JCJ.OA.Model
             this.Department = new HashSet<Department>();
             this.RoleInfo = new HashSet<RoleInfo>();
         }
-
+    
         public int ID { get; set; }
         public string UName { get; set; }
         public string UPwd { get; set; }
@@ -31,7 +31,7 @@ namespace JCJ.OA.Model
         public System.DateTime ModifiedOn { get; set; }
         public string Remark { get; set; }
         public string Sort { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [JsonIgnore]
         public virtual ICollection<R_UserInfo_ActionInfo> R_UserInfo_ActionInfo { get; set; }

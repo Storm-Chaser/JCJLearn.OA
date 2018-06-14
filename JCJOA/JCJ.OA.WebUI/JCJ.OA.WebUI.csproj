@@ -207,6 +207,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActionInfoController.cs" />
+    <Compile Include="Controllers\ArticelClassController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -1140,6 +1141,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\md5.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\MyAjaxForm.js" />
     <Content Include="TextTemplate1.tt">
@@ -1169,6 +1171,7 @@
     <Content Include="Views\ActionInfo\Index.cshtml" />
     <Content Include="Views\RoleInfo\ShowRoleAction.cshtml" />
     <Content Include="Views\UserInfo\ShowUserAction.cshtml" />
+    <Content Include="Views\ArticelClass\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

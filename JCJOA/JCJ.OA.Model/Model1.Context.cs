@@ -30,5 +30,8 @@ namespace JCJ.OA.Model
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<R_UserInfo_ActionInfo> R_UserInfo_ActionInfo { get; set; }
         public virtual DbSet<RoleInfo> RoleInfo { get; set; }
+        public virtual DbSet<Articel> Articel { get; set; }
+        public virtual DbSet<ArticelClass> ArticelClass { get; set; }
+        public virtual DbSet<ArticelComment> ArticelComment { get; set; }
     }
 }

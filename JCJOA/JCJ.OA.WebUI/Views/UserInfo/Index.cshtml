@@ -16,6 +16,7 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/datapattern.js"></script>
+    <script src="~/Scripts/md5.js"></script>
     <title>用户管理</title>
     <script type="text/javascript">
         $(function () {
@@ -224,6 +225,9 @@
                     iconCls: 'icon-ok',
                     handler: function () {
                         validateUser();
+                        var password = $("input[name='UPwd']").val();
+                        var passwd = $.md5($.md5(password));
+                        $("input[name='UPwd']").val(passwd);
                         $("#addForm").submit();  //提交
                     }
                 }, {
@@ -256,7 +260,7 @@
             var id = rows[0].ID;
             $.post("@Url.Action("ShowEdit","UserInfo")", { "id": id }, function (data) {
                 var msg = data.Msg;
-                
+
                 if (msg == "ok") {
                     var userInfo = data.UserInfo;
                     console.log(userInfo);
@@ -281,6 +285,9 @@
                             handler: function () {
                                 validateUser();
                                 $('#editDiv').dialog('close');
+                                var password = $("#txtEditUPwd").val();
+                                var passwd = $.md5($.md5(password));
+                                $("input[name='UPwd']").val(passwd);
                                 $("#editForm").submit();  //提交
                             }
                         }, {
@@ -360,7 +367,7 @@
             <input type="hidden" name="SubTime" id="txtEditSubTime" />
             <table>
                 <tr><td>用户名</td><td><input type="text" name="UName" id="txtEditUName" /></td></tr>
-                <tr><td>密码</td><td><input type="text" name="UPwd" id="txtEditUPwd" /></td></tr>
+                <tr><td>密码</td><td><input type="password" name="UPwd" id="txtEditUPwd" /></td></tr>
                 <tr><td>备注</td><td><input type="text" name="Remark" id="txtEditRemark" /></td></tr>
                 <tr><td>排序</td><td><input type="text" name="Sort" id="txtEditSort" /></td></tr>
             </table>

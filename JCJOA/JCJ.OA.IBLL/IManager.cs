@@ -16,6 +16,21 @@ namespace JCJ.OA.IBLL
        
     }   
 	
+	public partial interface IArticelService : IBaseService<Articel>
+    {
+       
+    }   
+	
+	public partial interface IArticelClassService : IBaseService<ArticelClass>
+    {
+       
+    }   
+	
+	public partial interface IArticelCommentService : IBaseService<ArticelComment>
+    {
+       
+    }   
+	
 	public partial interface IDepartmentService : IBaseService<Department>
     {
        

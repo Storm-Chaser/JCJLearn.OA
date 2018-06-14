@@ -20,6 +20,30 @@ namespace JCJ.OA.BLL
         }
     }   
 	
+	public partial class ArticelService :BaseService<Articel>,IArticelService
+    {
+        public override void SetCurrentDal()
+        {
+			CurrentDal = this.DbSession.ArticelDal;
+        }
+    }   
+	
+	public partial class ArticelClassService :BaseService<ArticelClass>,IArticelClassService
+    {
+        public override void SetCurrentDal()
+        {
+			CurrentDal = this.DbSession.ArticelClassDal;
+        }
+    }   
+	
+	public partial class ArticelCommentService :BaseService<ArticelComment>,IArticelCommentService
+    {
+        public override void SetCurrentDal()
+        {
+			CurrentDal = this.DbSession.ArticelCommentDal;
+        }
+    }   
+	
 	public partial class DepartmentService :BaseService<Department>,IDepartmentService
     {
         public override void SetCurrentDal()
@@ -42,7 +66,6 @@ namespace JCJ.OA.BLL
         {
 			CurrentDal = this.DbSession.RoleInfoDal;
         }
-
     }   
 	
 	public partial class UserInfoService :BaseService<UserInfo>,IUserInfoService
@@ -51,7 +74,6 @@ namespace JCJ.OA.BLL
         {
 			CurrentDal = this.DbSession.UserInfoDal;
         }
-
     }   
 	
 }

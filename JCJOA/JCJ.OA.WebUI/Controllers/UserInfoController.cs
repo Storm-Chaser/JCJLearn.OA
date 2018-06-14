@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace JCJ.OA.WebUI.Controllers
 {
-    public class UserInfoController : Controller
+    public class UserInfoController : BaseController
     {
         // GET: UserInfo /Spring.Net
         IBLL.IUserInfoService UserInfoService { get; set; }
@@ -144,7 +144,18 @@ namespace JCJ.OA.WebUI.Controllers
                     list.Add(Convert.ToInt32(id));
                 }
             }
-            return UserInfoService.SetUserRoleInfo(userId, list) ? Content("ok") : Content("no");
+            var userInfo = UserInfoService.LoadEntities(u => u.ID == userId).FirstOrDefault();  //获取要分配角色的用户
+            //要分角色的用户以前具有哪些角色
+            var userRoleIdList = (from r in userInfo.RoleInfo
+                                  select r.ID).ToList();
+            var newList = list.Union(userRoleIdList);  //差集运算
+            if (newList.Count() == list.Count()&&newList.Count()==userRoleIdList.Count())
+            {
+                return Content("ok");
+            }
+            else {
+                return UserInfoService.SetUserRoleInfo(userId, list) ? Content("ok") : Content("no");
+            }
             
         }
         /// <summary>

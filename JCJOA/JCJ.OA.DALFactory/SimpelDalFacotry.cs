@@ -29,6 +29,48 @@ namespace JCJ.OA.DALFactory
             return obj as IDAL.IActionInfoDal;
         }
 		
+	    public static IDAL.IArticelDal CreateArticelDal()
+        {
+
+            //string classFulleName = ConfigurationManager.AppSettings["DALNameSpace"] + ".ArticelDAL";
+
+
+            //object obj = Assembly.Load(ConfigurationManager.AppSettings["DalAssembly"]).CreateInstance(classFulleName, true);
+			string fullClassName = NameSpace + ".ArticelDal";
+            var obj  = CreateInstance(fullClassName);
+
+
+            return obj as IDAL.IArticelDal;
+        }
+		
+	    public static IDAL.IArticelClassDal CreateArticelClassDal()
+        {
+
+            //string classFulleName = ConfigurationManager.AppSettings["DALNameSpace"] + ".ArticelClassDAL";
+
+
+            //object obj = Assembly.Load(ConfigurationManager.AppSettings["DalAssembly"]).CreateInstance(classFulleName, true);
+			string fullClassName = NameSpace + ".ArticelClassDal";
+            var obj  = CreateInstance(fullClassName);
+
+
+            return obj as IDAL.IArticelClassDal;
+        }
+		
+	    public static IDAL.IArticelCommentDal CreateArticelCommentDal()
+        {
+
+            //string classFulleName = ConfigurationManager.AppSettings["DALNameSpace"] + ".ArticelCommentDAL";
+
+
+            //object obj = Assembly.Load(ConfigurationManager.AppSettings["DalAssembly"]).CreateInstance(classFulleName, true);
+			string fullClassName = NameSpace + ".ArticelCommentDal";
+            var obj  = CreateInstance(fullClassName);
+
+
+            return obj as IDAL.IArticelCommentDal;
+        }
+		
 	    public static IDAL.IDepartmentDal CreateDepartmentDal()
         {
 

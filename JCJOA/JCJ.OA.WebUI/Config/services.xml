@@ -8,4 +8,6 @@
     </object>
     <object type="JCJ.OA.BLL.R_UserInfo_ActionInfoService, JCJ.OA.BLL" singleton="false" name="R_UserInfo_ActionInfoService">
     </object>
+    <object type="JCJ.OA.BLL.ArticelClassService, JCJ.OA.BLL" singleton="false" name="ArticelClassService">
+    </object>
   </objects>

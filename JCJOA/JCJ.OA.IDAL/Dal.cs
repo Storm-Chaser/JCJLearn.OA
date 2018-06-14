@@ -8,7 +8,24 @@ using System.Threading.Tasks;
 
 namespace JCJ.OA.IDAL
 {
+   
+	
 	public partial interface IActionInfoDal :IBaseDal<ActionInfo>
+    {
+      
+    }
+	
+	public partial interface IArticelDal :IBaseDal<Articel>
+    {
+      
+    }
+	
+	public partial interface IArticelClassDal :IBaseDal<ArticelClass>
+    {
+      
+    }
+	
+	public partial interface IArticelCommentDal :IBaseDal<ArticelComment>
     {
       
     }
