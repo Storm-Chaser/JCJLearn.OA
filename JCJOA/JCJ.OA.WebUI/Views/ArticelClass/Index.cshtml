@@ -17,12 +17,12 @@
     <script src="~/Scripts/datapattern.js"></script>
     <script type="text/javascript">
         $(function () {
-            
+            $("#addDiv").css("display", "none");
             loadData();
-            
         });
         function loadData() {
             $('#tt').treegrid({
+                url: '/ArticelClass/ShowArticelClass',
                 title: '栏目管理',
                 iconCls: 'icon-save',
                 width: 500,
@@ -31,16 +31,30 @@
                 rownumbers: true,
                 animate: true,
                 collapsible: true,
-                url: '/ArticelClass/ShowArticelClass',
                 idField: 'id',
                 treeField: 'className',
                 lines: true,
                 columns: [[
-                    { field: 'id', title: '编号', width: 150, rowspan: 2 },
-                    { field: 'className', title: '栏目名称', width: 120 },
-                    { field: 'Remark', title: '备注', width: 120, rowspan: 2 }
-
+                    { title: '编号', field: 'id', width: 150 },
+                    { field: 'className', title: '栏目名称', width: 120, align: 'right' },
+                    { field: 'Remark', title: '备注', width: 120 },
                 ]],
+                onClickRow: function (row) {
+                    //根据所单击的行，获取对应的子类别.
+                    $.post("/ArticelClass/ShowChildClass", { "id": row.id }, function (data) {
+                        //先清空，后追加.如果没有数据不追加
+                        if (data.length != 0) {
+                            var nodes = $('#tt').treegrid('getChildren', row.id);
+                            for (var i = 0; i < nodes.length; i++) {
+                                $('#tt').treegrid('remove', nodes[i].id);
+                            }
+                            $('#tt').treegrid('append', {
+                                parent: row.id,
+                                data: data
+                            });
+                        }
+                    });
+                },
                 toolbar: [{
                     id: 'btnAdd',
                     text: '添加子栏目',
@@ -58,15 +72,58 @@
 
                     }
                 }]
-
             });
+        }
+        //添加子类别
+        function addChildArticel() {
+            var row = $('#tt').treegrid('getSelected');
+            if (row != null) {
+                $("#addFrame").attr("src", "/ArticelClass/ShowAddClass?cId=" + row.id);
+                $("addDiv").css("display", "block");
+                $('#addDiv').dialog({
+                    title: '完成新闻类别创建',
+                    collapsible: true,
+                    maximizable: true,
+                    resizable: true,
+                    modal: true,
+                    width: 300,
+                    height: 300,
+                    buttons: [{
+                        text: 'Ok',
+                        iconCls: 'icon-ok',
+                        handler: function () {
+                            var childWindow = $("#addFrame")[0].contentWindow;
+                            childWindow.subForm();
+
+                        }
+                    }, {
+                        text: 'Cancel',
+                        handler: function () {
+                            $('#addDiv').dialog('close');
+
+                        }
+                    }]
+                });
+            } else {
+                $.messager.alert("提示", "请选择对应的节点!!", "error");
+            }
+        }
+        //添加完成后调用该方法.
+        function afterAdd(data) {
+            if (data == "ok") {
+                $('#addDiv').dialog('close');
+                $('#tt').treegrid('reload');
+            }
         }
     </script>
 </head>
 <body>
     <div>
-
-        <table id="tt"></table>
+        <table id="tt" style="width:800px;height:500px"></table>
+    </div>
+    <div id="addDiv">
+        <iframe id="addFrame" frameborder="0" width="100%" height="100%"></iframe>
     </div>
 </body>
 </html>
+

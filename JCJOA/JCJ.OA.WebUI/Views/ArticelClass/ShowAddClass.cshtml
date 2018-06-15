@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>添加类别</title>
+    <link href="~/Content/tableStyle.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function subForm() {
+            $("#addForm").submit();
+        }
+        function afterAdd(data) {
+            window.parent.afterAdd(data);
+        }
+    </script>
+</head>
+<body>
+    <div>
+        @using (Ajax.BeginForm("addClass", "ArticelClass", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterAdd" }, new { id = "addForm" }))
+        {
+            <table>
+                <tr>
+                    <td>新闻类别</td>
+                    <td>
+                        <select name="ParentId">
+                            <option value="0">根类别</option>
+                            @MvcHtmlString.Create(ViewBag.classInfo)
+
+                        </select>
+                    </td>
+                </tr>
+                <tr><td>类别名称</td><td><input type="text" name="ClassName" /></td></tr>
+                <tr><td>类别备注</td><td><input type="text" name="Remark" /></td></tr>
+            </table>
+        }
+    </div>
+</body>
+</html>
