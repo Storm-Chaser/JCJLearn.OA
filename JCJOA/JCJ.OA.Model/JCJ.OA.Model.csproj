@@ -93,6 +93,7 @@
     <Compile Include="R_UserInfo_ActionInfo.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Search\ArticelSearch.cs" />
     <Compile Include="Search\BaseSearch.cs" />
     <Compile Include="Search\UserInfoSearch.cs" />
     <Compile Include="UserInfo.cs">

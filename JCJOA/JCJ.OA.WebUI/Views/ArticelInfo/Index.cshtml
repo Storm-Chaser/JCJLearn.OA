@@ -19,8 +19,31 @@
     <script src="~/Scripts/datapattern.js"></script>
     <script type="text/javascript">
         $(function () {
+            $("#addDiv").css("dispaly", "none");
+            $("#editDiv").css("dispaly", "none");
             loadData();
+            bindArticeClassEvent();//给类别下拉框绑定事件
+            bindBtnSearchEvent();//搜索按钮
         });
+        function bindArticeClassEvent() {
+            $("#articelClassName").change(function () {
+                var value = $(this).val();
+                var pars = { 'articelClassId': value };
+                loadData(pars);
+            });
+        }
+        function bindBtnSearchEvent() {
+            $("#btnSeach").click(function () {
+                var pars = {
+                    'articelClassId': $("#articelClassName").val(),
+                    'txtArticeTitle': $("#txtArticeTitle").val(),
+                    'txtArticelAuthor': $("#txtArticelAuthor").val(),
+                    'formDatepicker': $("#formDatepicker").datebox('getValue'),
+                    'toDatepicker': $("#toDatepicker").datebox('getValue')
+                };
+                loadData(pars);
+            });
+        }
         function loadData(pars) {
             $('#tt').datagrid({
                 url: '/ArticelInfo/GetArticelInfo',
@@ -78,6 +101,87 @@
                 }],
             });
         }
+        function addArticel() {
+            $("#addFrmae").attr("src", "/ArticelInfo/ShowAddInfo");
+            $("#addDiv").css("dispaly", "block");
+            $('#addDiv').dialog({
+                title: '完成新闻添加',
+                collapsible: true,
+                maximizable: true,
+                resizable: true,
+                modal: true,
+                width: 800,
+                height: 700,
+                buttons: [{
+                    text: 'Ok',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        var childWindow = $("#addFrmae")[0].contentWindow;
+                        childWindow.subForm();
+
+                    }
+                }, {
+                    text: 'Cancel',
+                    handler: function () {
+                        $('#addDiv').dialog('close');
+
+                    }
+                }]
+            });
+
+        }
+        //添加完成后执行.
+        function afterAdd(data) {
+            if (data = "ok") {
+                $('#addDiv').dialog('close');
+                $("#tt").datagrid('reload');
+            } else {
+                $.messager.alert('提示', '添加失败', "error");
+            }
+        }
+        //编辑文章
+        function editArticel() {
+            var rows = $('#tt').datagrid('getSelections');
+            if (rows.length != 1) {
+                $.messager.alert("提示", "你会修改吗?", "error");
+                return;
+            }
+            $("#editFrmae").attr("src", "/ArticelInfo/ShowEditInfo?id=" + rows[0].ID);
+            $("#editDiv").css("dispaly", "block");
+            $('#editDiv').dialog({
+                title: '完成新闻编辑',
+                collapsible: true,
+                maximizable: true,
+                resizable: true,
+                modal: true,
+                width: 800,
+                height: 700,
+                buttons: [{
+                    text: 'Ok',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        var childWindow = $("#editFrmae")[0].contentWindow;
+                        childWindow.subForm();
+
+                    }
+                }, {
+                    text: 'Cancel',
+                    handler: function () {
+                        $('#editDiv').dialog('close');
+
+                    }
+                }]
+            });
+        }
+        //更新完成后调用
+        function afterEdit(data) {
+            if (data = "ok") {
+                $('#editDiv').dialog('close');
+                $('#tt').datagrid('reload');
+            } else {
+                $.messager.alert("提示", "修改失败", "error");
+            }
+        }
     </script>
 </head>
 <body>
@@ -92,7 +196,15 @@
         &nbsp;&nbsp;作者:<input type="text" id="txtArticelAuthor" />&nbsp;&nbsp;发布时间:从<input type="text" id="formDatepicker" class="easyui-datebox" data-options="sharedCalendar:'#cc'">到<input type="text" id="toDatepicker" class="easyui-datebox" data-options="sharedCalendar:'#cc'">
 
         <div id="cc" class="easyui-calendar"></div>
+        <input type="button" id="btnSeach" value="搜索" />
         <table id="tt" style="width: 700px;" title="标题，可以使用代码进行初始化，也可以使用这种属性的方式" iconcls="icon-edit"></table>
+    </div>
+    <div id="addDiv">
+        <iframe id="addFrmae" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
+
+    <div id="editDiv">
+        <iframe id="editFrmae" width="100%" height="100%" frameborder="0"></iframe>
     </div>
 </body>
 </html>

@@ -22,6 +22,8 @@ namespace JCJ.OA.BLL
 	
 	public partial class ArticelService :BaseService<Articel>,IArticelService
     {
+        
+
         public override void SetCurrentDal()
         {
 			CurrentDal = this.DbSession.ArticelDal;

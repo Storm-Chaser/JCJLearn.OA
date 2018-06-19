@@ -10,4 +10,6 @@
     </object>
     <object type="JCJ.OA.BLL.ArticelClassService, JCJ.OA.BLL" singleton="false" name="ArticelClassService">
     </object>
+    <object type="JCJ.OA.BLL.ArticelService, JCJ.OA.BLL" singleton="false" name="ArticelService">
+    </object>
   </objects>
