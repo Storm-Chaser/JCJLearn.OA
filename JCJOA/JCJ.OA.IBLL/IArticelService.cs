@@ -11,5 +11,7 @@ namespace JCJ.OA.IBLL
     public partial interface IArticelService:IBaseService<Articel>
     {
         IQueryable<Articel> LoadSearchEntities(ArticelSearch articelSearch);
+
+        bool AddEntity(int cid, Articel articelInfo);
     }
 }

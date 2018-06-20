@@ -1,4 +1,5 @@
-﻿using JCJ.OA.Model.Search;
+﻿using JCJ.OA.Model;
+using JCJ.OA.Model.Search;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -131,6 +132,23 @@ namespace JCJ.OA.WebUI.Controllers
             {
                 return Content("no:请选择上传的文件");
             }
+        }
+
+        /// <summary>
+        /// 完成文章新闻添加
+        /// </summary>
+        /// <param name="articelInfo"></param>
+        /// <returns></returns>
+        [ValidateInput(false)]//不对发送给该方法的HTML内容作安全检查
+        [HttpPost]
+        public ActionResult AddArticelInfo(Articel articelInfo)
+        {
+            articelInfo.AddDate = DateTime.Now;
+            articelInfo.DelFlag = 0;
+            articelInfo.ModifyDate = DateTime.Now;
+            int cid = int.Parse(Request["ArticelClassInfo"]);
+            ArticelService.AddEntity(cid, articelInfo);
+            return Content("ok");
         }
     }
 }

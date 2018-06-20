@@ -99,6 +99,55 @@
                 swfu.startUpload();//继续上传
             }
         }
+        //上传成功以后
+        function uploadOk(file, serverData) {
+            var data = serverData.split(':');
+            if (data[0] == "ok") {
+                $("#imgSrc").attr("src", data[1]);
+                $("#PhotoUrl").val(data[1]);
+                //判断是否选择了"图片是否插入编辑器"
+                var flag = $("#InsertEditContent").is(":checked");
+                if (flag) {
+                    var oEditor = CKEDITOR.instances.ArticleContent;//找到编辑器
+                    if (oEditor.mode == 'wysiwyg') {//what you see is what you get  所见即所得
+                        var img = "<img src='"+data[1]+"'/>";
+                            oEditor.insertHtml(img);//将上传成功的图片插入到编辑器中。
+                    }
+                    else
+                        alert('You must be in WYSIWYG mode!');
+
+                }
+            } else {
+                alert(data[0]);
+            }
+        }
+        $(function () {
+            //添加作者
+            $(".authorClick").click(function () {
+                $("#Author").val($(this).text());
+            });
+            //添加原创
+            $(".originInfo").click(function () {
+                $("#Origin").val($(this).text());
+            });
+            //给编辑绑定一个事件。
+            CKEDITOR.instances["ArticleContent"].on("blur", function () {
+                //获取编辑器内容。
+                var oEditor = CKEDITOR.instances.ArticleContent;
+                var content = oEditor.getData();
+                $("#txtArticleContent").val(content);
+
+            });
+        });
+        //提交表单。、
+        function subForm() {
+            $("#addFomr").submit();
+        }
+        //提交完成后
+        function afterAdd(data) {
+            window.parent.afterAdd(data);
+        }
+    </script>
 </head>
 <body>
     <div>
