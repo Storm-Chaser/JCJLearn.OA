@@ -150,5 +150,16 @@ namespace JCJ.OA.WebUI.Controllers
             ArticelService.AddEntity(cid, articelInfo);
             return Content("ok");
         }
+        /// <summary>
+        /// 展示要编辑的新闻
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowEditInfo()
+        {
+            int id = int.Parse(Request["id"]);
+            var articelInfo = ArticelService.LoadEntities(a => a.ID == id).FirstOrDefault();
+            ViewBag.ArticelInfo = articelInfo;
+            return View();
+        }
     }
 }

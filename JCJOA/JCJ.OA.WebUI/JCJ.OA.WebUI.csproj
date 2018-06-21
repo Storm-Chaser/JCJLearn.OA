@@ -1824,6 +1824,7 @@
     <Content Include="Views\ArticelClass\ShowAddClass.cshtml" />
     <Content Include="Views\ArticelInfo\Index.cshtml" />
     <Content Include="Views\ArticelInfo\ShowAddInfo.cshtml" />
+    <Content Include="Views\ArticelInfo\ShowEditInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

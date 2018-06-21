@@ -1,0 +1,363 @@
+﻿
+@{
+    Layout = null;
+}
+@using JCJ.OA.Model
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>编辑新闻</title>
+    <link href="~/Content/tableStyle.css" rel="stylesheet" />
+    <link href="~/Content/themes/icon.css" rel="stylesheet" />
+    <link href="~/Content/themes/default/easyui.css" rel="stylesheet" />
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="/SwfUpload/swfupload.js"></script>
+    <script src="/SwfUpload/handlers.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <style type="text/css">
+        textarea, select {
+            padding: 2px;
+            border: 1px solid;
+            border-color: #666 #ccc #ccc #666;
+            background: #F9F9F9;
+            color: #333;
+            resize: none;
+            width: 100%;
+        }
+
+        .textbox {
+            padding: 3px;
+            border: 1px solid;
+            border-color: #666 #ccc #ccc #666;
+            background: #F9F9F9;
+            color: #333;
+            resize: none;
+            width: 100%;
+        }
+
+            .textbox:hover, .textbox:focus, textarea:hover, textarea:focus {
+                border-color: #09C;
+                background: #F5F9FD;
+            }
+    </style>
+    <script type="text/javascript">
+        var swfu;
+        window.onload = function () {
+            swfu = new SWFUpload({
+                // Backend Settings
+                upload_url: "/ArticelInfo/FileUp",
+                post_params: {
+                    "ASPSESSID": "@Session.SessionID"
+                },
+
+                // File Upload Settings
+                file_size_limit: "2 MB",
+                file_types: "*.jpg",
+                file_types_description: "JPG Images",
+                file_upload_limit: 0,    // Zero means unlimited
+
+                // Event Handler Settings - these functions as defined in Handlers.js
+                //  The handlers are not part of SWFUpload but are part of my website and control how
+                //  my website reacts to the SWFUpload events.
+                swfupload_preload_handler: preLoad,
+                swfupload_load_failed_handler: loadFailed,
+                file_queue_error_handler: fileQueueError,
+                file_dialog_complete_handler: fileDialogComplete,
+                upload_progress_handler: uploadProgress,
+                upload_error_handler: uploadError,
+                upload_success_handler: uploadOk,
+                upload_complete_handler: uploadComplete,
+                upload_start_handler: uploadStart,
+                // Button settings
+                button_image_url: "/SWFUpload/images/XPButtonNoText_160x22.png",
+                button_placeholder_id: "spanButtonPlaceholder",
+                button_width: 160,
+                button_height: 22,
+                button_text: '<span class="button">Select Images <span class="buttonSmall">(2 MB Max)</span></span>',
+                button_text_style: '.button { font-family: Helvetica, Arial, sans-serif; font-size: 14pt; } .buttonSmall { font-size: 10pt; }',
+                button_text_top_padding: 1,
+                button_text_left_padding: 5,
+
+                // Flash Settings
+                flash_url: "/SWFUpload/swfupload.swf",	// Relative to this file
+                flash9_url: "/SWFUpload/swfupload_FP9.swf",	// Relative to this file
+
+                custom_settings: {
+                    upload_target: "divFileProgressContainer"
+                },
+
+                // Debug Settings
+                debug: false
+            });
+        }
+        //上传之前。
+        function uploadStart() {
+            var flag = $("#AddWaterFlag").is(":checked");
+            if (flag) {
+                swfu.setPostParams({ "flag": 1 });
+                swfu.startUpload();//继续上传
+            }
+        }
+        //上传成功以后
+        function uploadOk(file, serverData) {
+            var data = serverData.split(':');
+            if (data[0] == "ok") {
+                $("#imgSrc").attr("src", data[1]);
+                $("#PhotoUrl").val(data[1]);
+                //判断是否选择了"图片是否插入编辑器"
+                var flag = $("#InsertEditContent").is(":checked");
+                if (flag) {
+                    var oEditor = CKEDITOR.instances.ArticleContent;//找到编辑器
+                    if (oEditor.mode == 'wysiwyg') {//what you see is what you get  所见即所得
+                        var img = "<img src='" + data[1] + "'/>";
+                        oEditor.insertHtml(img);//将上传成功的图片插入到编辑器中。
+                    }
+                    else
+                        alert('You must be in WYSIWYG mode!');
+
+                }
+            } else {
+                alert(data[0]);
+            }
+        }
+        $(function () {
+            //添加作者
+            $(".authorClick").click(function () {
+                $("#Author").val($(this).text());
+            });
+            //添加原创
+            $(".originInfo").click(function () {
+                $("#Origin").val($(this).text());
+            });
+            //给编辑绑定一个事件。
+            CKEDITOR.instances["ArticleContent"].on("blur", function () {
+                //获取编辑器内容。
+                var oEditor = CKEDITOR.instances.ArticleContent;
+                var content = oEditor.getData();
+                $("#txtArticleContent").val(content);
+
+            });
+            //给树的节点绑定单击事件.
+            bindTreeClickEvent();
+            //更新类别
+            bindBtnClassEvent();
+        });
+        //提交表单。、
+        function subForm() {
+            $("#addFomr").submit();
+        }
+        //提交完成后
+        function afterEdit(data) {
+            window.parent.afterEdit(data);
+        }
+        //给树的节点绑定单击事件.
+        function bindTreeClickEvent() {
+            $("#tt").tree({
+                onClick: function (node) {
+                    var classId = node.id;
+                    $.post("/ArticelInfo/ShowChildClass", { "classId": classId, "articelId": $("#articelId").val() }, function (data) {
+                        $("#tt").tree('append', {
+                            parent: node.target,
+                            data:data
+                        })
+                    })
+
+
+                }
+
+            });
+        }
+        //更新类别
+        function bindBtnClassEvent() {
+            $("#btnEditClass").click(function () {
+                var nodes = $("#tt").tree('getChecked');//获取所有选择的节点
+                var s = "";
+                for (var i = 0; i < nodes.length; i++) {
+                    s += nodes[i].id + ","
+
+                }
+                s = s.substr(0, s.length - 1);
+                alert(s);
+                $.post("/ArticelInfo/EditArticelClass", { "classId": s, "articelId": $("#articelId").val() }, function (data) {
+                    if (data == "ok") {
+                        $.messager.alert("提示", "类别更新成功!!", "info");
+                    } else {
+                        $.messager.alert("提示", "类别更新失败!!", "error");
+                    }
+                });
+            });
+        }
+    </script>
+</head>
+<body>
+    <div>
+        @{
+            Articel articelInfo = ViewBag.ArticelInfo;
+        }
+        @using (Ajax.BeginForm("EditArticelInfo", "ArticelInfo", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterEdit" }, new { id = "addFomr" }))
+        {
+            <input type="hidden" name="ID" value="@articelInfo.ID" id="articelId" />
+
+            <table style="width:auto; margin: 0 auto">
+                <tr>
+                    <td>简短标题:</td>
+                    <td>
+                        <select name="TitleType" id="TitleType">
+                            <option></option>
+                            @{
+                                if (articelInfo.TitleType == "[图文]")
+                                {
+                                    <option style="color: green" selected="selected">[图文]</option>
+                                }
+                                else
+                                {
+                                    <option style="color: green">[图文]</option>
+                                }
+                                if (articelInfo.TitleType == "[组图]")
+                                {
+                                    <option style="color: red" selected="selected">[组图]</option>
+                                }
+                                else
+                                {
+                                    <option style="color: red">[组图]</option>
+                                }
+                                if (articelInfo.TitleType == "[推荐]")
+                                {
+                                    <option style="color:  #990000" selected="selected">[推荐]</option>
+                                }
+                                else
+                                {
+                                    <option style="color:  #990000">[推荐]</option>
+                                }
+
+                                if (articelInfo.TitleType == "[注意]")
+                                {
+                                    <option style="color:#0000FF" selected="selected">[注意]</option>
+                                }
+                                else
+                                {
+                                    <option style="color: #0000FF">[注意]</option>
+                                }
+
+                                if (articelInfo.TitleType == "[公告]")
+                                {
+                                    <option style="color:blue" selected="selected">[公告]</option>
+                                }
+                                else
+                                {
+                                    <option style="color:blue">[公告]</option>
+                                }
+
+                            }
+
+
+
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" name="title" maxlength="160" class="textbox" id="title" value="@articelInfo.Title" />
+                    </td>
+                    <td>
+                        <select name="TitleFontType" id="TitleFontType">
+                            <option value="0">字形</option>
+                            <option value="1">粗体</option>
+                            <option value="2">斜体</option>
+                            <option value="3">粗+斜</option>
+                            <option value="0">规则</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="TitleFontColor" id="TitleFontColor">
+                            <option value="0">颜色</option>
+                            <option value="1">红色</option>
+                            <option value="2">蓝色</option>
+                            <option value="3">绿色</option>
+
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>完整标题:</td>
+                    <td colspan="4">
+                        <input type="text" name="Fulltitle" class="textbox" id="Fulltitle" value="@articelInfo.FullTitle" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>归属栏目:</td>
+                    <td colspan="4">
+                        @*  <select name="ArticelClassInfo" id="ArticelClassInfo">
+                             <option value="">--请选择归属栏目--</option>
+                        @MvcHtmlString.Create(ViewBag.classInfo)
+                         </select>*@
+                        <ul id="tt" class="easyui-tree" data-options="url:'/ArticelInfo/GetArticelClass',method:'get',animate:true,checkbox:true"></ul>
+                        <input type="button" id="btnEditClass" value="更新类别" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>关 键 字</td>
+                    <td colspan="4">
+                        <input type="text" name="KeyWords" class="textbox" id="KeyWords" value="@articelInfo.KeyWords" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>文章作者:</td>
+                    <td colspan="4">
+                        <input type="text" name="Author" class="textbox" value="@articelInfo.Author" id="Author" />&nbsp;&nbsp;【<a href="javascript:void(0)" class="authorClick">未知</a>】【<a href="javascript:void(0)" class="authorClick">佚名</a>】【<a href="javascript:void(0)" class="authorClick">Itcast</a>】
+                    </td>
+                </tr>
+                <tr>
+                    <td>文章来源:</td>
+                    <td colspan="4">
+                        <input name="Origin" id="Origin" value="@articelInfo.Origin" size="50" class="textbox" type="text">&nbsp;&nbsp;【<a href="javascript:void(0)" class="originInfo">不详</a>】【<a href="javascript:void(0)" class="originInfo">本站原创</a>】【<a href="javascript:void(0)" class="originInfo">互联网</a>】
+                    </td>
+                </tr>
+                <tr>
+                    <td>文章导读</td>
+                    <td colspan="4">
+                        <textarea class="textbox" name="Intro" style="width: 95%; height: 80px">@articelInfo.Intro</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>文章内容</td>
+                    <td colspan="4">
+                        <textarea class="textbox" onblur="getData2()" id="ArticleContent" name="ArticleContent1" rows="30" cols="40" style="width: 95%; height: 80px">@articelInfo.ArticleContent</textarea>
+                        <script type="text/javascript">
+                            //<![CDATA[
+                            // Replace the <textarea id="editor1"> with an CKEditor instance.
+                            var editor = CKEDITOR.replace('ArticleContent');
+                                                  //]]>
+                        </script>
+                        <textarea class="textbox" name="ArticleContent" id="txtArticleContent" rows="30" cols="40" style="display:none">@articelInfo.ArticleContent</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>图片地址:</td>
+                    <td colspan="4">
+                        <div id="content">
+                            <div id="swfu_container" style="margin: 0px 10px;">
+                                <div>
+                                    <span id="spanButtonPlaceholder"></span>
+                                </div>
+                                <div id="divFileProgressContainer" style="height: 45px;"></div>
+                                <div id="thumbnails"></div>
+                                <img id="imgSrc" width="50px" height="50px" src="@articelInfo.PhotoUrl" />
+                            </div>
+                        </div>
+
+
+                        <input name="PhotoUrl" id="PhotoUrl" value="@articelInfo.PhotoUrl" type="hidden">
+                        <input name="AddWaterFlag" id="AddWaterFlag" value="1" type="checkbox">添加水印
+                        <input name="InsertEditContent" id="InsertEditContent" value="1" type="checkbox">图片是否插入编辑器
+                    </td>
+                </tr>
+            </table>
+        }
+
+    </div>
+</body>
+</html>
