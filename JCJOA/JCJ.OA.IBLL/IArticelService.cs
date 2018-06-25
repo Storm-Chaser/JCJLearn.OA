@@ -13,5 +13,7 @@ namespace JCJ.OA.IBLL
         IQueryable<Articel> LoadSearchEntities(ArticelSearch articelSearch);
 
         bool AddEntity(int cid, Articel articelInfo);
+
+        bool EditArticelClass(int articelId, List<int> classIdList);
     }
 }

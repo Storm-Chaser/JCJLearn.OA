@@ -182,7 +182,6 @@
 
                 }
                 s = s.substr(0, s.length - 1);
-                alert(s);
                 $.post("/ArticelInfo/EditArticelClass", { "classId": s, "articelId": $("#articelId").val() }, function (data) {
                     if (data == "ok") {
                         $.messager.alert("提示", "类别更新成功!!", "info");
@@ -291,9 +290,9 @@
                     <td>归属栏目:</td>
                     <td colspan="4">
                         @*  <select name="ArticelClassInfo" id="ArticelClassInfo">
-                             <option value="">--请选择归属栏目--</option>
-                        @MvcHtmlString.Create(ViewBag.classInfo)
-                         </select>*@
+                                 <option value="">--请选择归属栏目--</option>
+                            @MvcHtmlString.Create(ViewBag.classInfo)
+                             </select>*@
                         <ul id="tt" class="easyui-tree" data-options="url:'/ArticelInfo/GetArticelClass',method:'get',animate:true,checkbox:true"></ul>
                         <input type="button" id="btnEditClass" value="更新类别" />
                     </td>

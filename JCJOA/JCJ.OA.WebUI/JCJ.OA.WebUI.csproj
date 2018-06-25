@@ -218,6 +218,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ArticelClassModel.cs" />
     <Compile Include="Models\MyExceptionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextTemplate1.cs">
@@ -227,6 +228,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ArticelTemplate\ArticelStyle.css" />
+    <Content Include="ArticelTemplate\ArticelTemplateInfo.html" />
+    <Content Include="ArticelTemplate\images\logo.gif" />
+    <Content Include="ArticelTemplate\images\search.jpg" />
+    <Content Include="ArticelTemplate\images\sicon.png" />
+    <Content Include="ArticelTemplate\images\top_bg.jpg" />
     <Content Include="ckeditor\adapters\jquery.js" />
     <Content Include="ckeditor\CHANGES.html" />
     <Content Include="ckeditor\ckeditor.asp" />

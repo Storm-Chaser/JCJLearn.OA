@@ -1,5 +1,6 @@
 ﻿using JCJ.OA.Model;
 using JCJ.OA.Model.Search;
+using JCJ.OA.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -160,6 +161,95 @@ namespace JCJ.OA.WebUI.Controllers
             var articelInfo = ArticelService.LoadEntities(a => a.ID == id).FirstOrDefault();
             ViewBag.ArticelInfo = articelInfo;
             return View();
+        }
+        /// <summary>
+        /// 获取根类别信息，填充Tree
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetArticelClass()
+        {
+            var articelClassList = ArticelClassService.LoadEntities(a => a.ParentId == 0);
+            var temp = from a in articelClassList
+                       select new { id = a.ID, text = a.ClassName };
+            return Json(temp, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 查找子类别，并且将文章所属的类别前面的复选框选中
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowChildClass()
+        {
+            int classId = int.Parse(Request["classId"]);//父类别编号
+            int articelId = int.Parse(Request["articelId"]);//文章编号
+                                                            //找出父类下的子类
+            var childClassList = ArticelClassService.LoadEntities(a => a.ParentId == classId);
+            //获取文章的类别。
+            var articelInfo = ArticelService.LoadEntities(a => a.ID == articelId).FirstOrDefault();
+            var articelClassList = from a in articelInfo.ArticelClass
+                                   select a.ID;
+            List<ArticelClassModel> list = new List<ArticelClassModel>();
+            foreach (var childClass in childClassList)
+            {
+                if (articelClassList.Contains(childClass.ID))
+                {
+                    ArticelClassModel articelClassModel = new ArticelClassModel();
+                    articelClassModel.Checked = true;
+                    articelClassModel.Id = childClass.ID;
+                    articelClassModel.Text = childClass.ClassName;
+                    list.Add(articelClassModel);
+                }
+                else
+                {
+                    ArticelClassModel articelClassModel = new ArticelClassModel();
+                    articelClassModel.Id = childClass.ID;
+                    articelClassModel.Text = childClass.ClassName;
+                    list.Add(articelClassModel);
+                }
+            }
+            var temp = from a in list
+                       select new { id = a.Id, text = a.Text, @checked = a.Checked };
+            return Json(temp, JsonRequestBehavior.AllowGet);
+
+        }
+        /// <summary>
+        /// 完成文章类别的修改
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult EditArticelClass()
+        {
+            string classId = Request["classId"];
+            string[] classIds = classId.Split(',');
+            int articelId = int.Parse(Request["articelId"]);
+            List<int> list = new List<int>();
+            foreach (string cid in classIds)
+            {
+                list.Add(Convert.ToInt32(cid));
+            }
+            return Content(ArticelService.EditArticelClass(articelId, list) ? "ok" : "no");
+        }
+        /// <summary>
+        /// 完成新闻的更新.
+        /// </summary>
+        /// <param name="articelInfo"></param>
+        /// <returns></returns>
+        [ValidateInput(false)]
+        public ActionResult EditArticelInfo(Articel articelInfo)
+        {
+            var articel = ArticelService.LoadEntities(a => a.ID == articelInfo.ID).FirstOrDefault();
+            articel.ArticleContent = articelInfo.ArticleContent;
+            articel.Author = articelInfo.Author;
+            articel.FullTitle = articelInfo.FullTitle;
+            articel.ModifyDate = DateTime.Now;
+            articel.Intro = articelInfo.Intro;
+            articel.KeyWords = articelInfo.KeyWords;
+            articel.Origin = articelInfo.Origin;
+            articel.PhotoUrl = articelInfo.PhotoUrl;
+            articel.Title = articelInfo.Title;
+            articel.TitleFontColor = articelInfo.TitleFontColor;
+            articel.TitleFontType = articelInfo.TitleFontType;
+            articel.TitleType = articelInfo.TitleType;
+            return Content(ArticelService.EditEntity(articel) ? "ok" : "no");
         }
     }
 }

@@ -1,0 +1,255 @@
+﻿*{
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+	font-family: "微软雅黑";
+}
+a{color:#333;text-decoration:none;}
+a:hover{text-decoration:underline; color:#FF0000;}
+a img{border:none;} 
+#articelTop{
+	width: 1000px;
+	margin: 0 auto;
+	
+	/*height:30px; */
+	overflow: hidden;
+
+}
+.articelTop_oneleft{
+	float: left;
+	/*margin:5px 0 0 10px;*/
+	margin-left: 10px;
+	height: 30px;
+	line-height: 30px;
+}
+.articelTop_oneRight{
+	float: right;
+	margin-right: 10px;
+	height: 30px;
+	line-height: 30px;
+}
+#articelTop_two{
+  
+ 
+}
+.articelTopSearch{
+	float: right;
+height: 70px;
+	line-height: 70px;
+	margin-right: 10px;
+}
+.articelTopImg{
+	float: left;
+
+}
+#txtBtnSearch{
+	color:#FFFFFF;
+ background:#008CD4;
+  height:38px;
+   line-height:38px;
+    font-size:14px;
+    width:80px; 
+    border:#2A6CA2 0px solid; 
+    cursor:pointer; font-family:"微软雅黑";
+
+}
+#txtSearch{
+	color:#999999;
+	width:220px;
+	height:37px; 
+	line-height:37px;  
+	padding-left:36px; 
+	border:2px #008CD4 solid;
+    background:#fff url(/ArticelTemplate/images/sicon.png) no-repeat 10px 7px; 
+	 font-size:12px;
+    margin-left: 20px;
+}
+#articelNav{
+background-color: #0C9AD8;
+height: 41px;
+}
+#articelNav ul{
+	list-style-type: none;
+
+}
+#articelNav ul li{
+	float: left;
+   padding-left:10px;
+  line-height: 41px;
+  height: 41px;
+}
+#articelNav ul li a{
+	color: white;
+	height: 41px;
+	display: block;/* 行内元素高度不起作用，必须转成块级元素*/
+
+}
+#articelNav ul li a:hover{
+	color: white;
+	text-decoration:none;
+	background-color: red;
+}
+#articelContent{
+	width: 1000px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+#articelContent_left{
+	float: left;
+	width: 70%;
+	
+}
+#articelContent_right{
+	float: right;
+	width: 27%;
+}
+#articelContent_leftTop{
+font-size: 12px;
+}
+#articelContent_leftTop a{
+	text-decoration:none;
+	color: #999;
+font-size: 12px;
+}
+#articelContent_leftTop a:hover{
+	color: red;
+}
+#articelContent_leftBttom{
+	border: 1px solid #999;
+}
+#articelContent_leftBttom h2{
+	text-align: center;
+	font-size: 30px;
+	margin-bottom: 10px;
+}
+.artcelTop{
+	font-size: 12px;
+	text-align: center;
+	margin-bottom: 10px;
+
+}
+#splitLine{
+	width: 80%;
+	border-top: 1px solid #999;
+	margin: 0 auto;
+
+}
+#articelContent_leftBttom p{
+	font-size: 14px;
+	margin-top: 15px;
+	text-indent: 2em;
+	line-height: 30px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#articelContent_Same {
+   width:80%;
+   border:1px solid #999;
+   margin:0 auto;
+}
+    #articelContent_Same ul {
+       margin-left:30px;
+       line-height:30px;
+    }
+.articelContent_SameNew {
+   font-size:20px;
+   font-weight:bolder;
+   margin-left:20px;
+   margin-top:10px;
+   margin-bottom:10px;
+}
+#articelComment {
+    width:80%;
+margin:0 auto;
+}
+#articelComment_top {
+ line-height:40px;
+}
+#articelComment_middle ul {
+  list-style-type:none;
+  line-height:30px;
+}
+#articelCommnet_bottome {
+ overflow:hidden;
+ margin-bottom:10px;
+}
+.reply_btn{ font-size:14px;
+             background:#cc0000; 
+             padding:8px 15px;
+         border:none; 
+         color:#fff;
+          cursor: pointer;
+           font:"Microsoft YaHei"; 
+           font-weight:bold;}
+
+
+#about{
+	height: 30px;
+margin-bottom: 5px;
+line-height: 30px;
+text-align: center;
+}
+#about a{
+	color: #333;
+border-right: #d8d8d8 1px solid;
+padding: 0px 10px;
+font-size: 14px;
+
+}
+#copyRight{
+	text-align:center; 
+	line-height:25px;
+	font-size: 14px;
+	text-indent: 3em;
+
+}
+.newArticel_Title{
+	height:39px;
+	line-height: 39px;
+	 background-color:#F8F8F8; 
+	 border-top:1px #0C9AD8 solid; 
+	 border-bottom:1px solid #E7E7E7; 
+	 padding-left: 10PX;
+	 margin-bottom:10px;
+	 margin-top: 30px;
+}
+.newArticel_Title h3 span{
+	color:#0C9AD8;
+	 font-size:25px; 
+	 padding-right:5px;
+	  font-weight:500;
+	  font-family:"微软雅黑";
+}
+.showUl{
+	list-style-type: none;
+
+}
+.showUl li{
+	padding-bottom: 7px;
+line-height: 27px;
+border-bottom: #ccc dashed 1px;
+padding-top: 7px;
+font-size: 12px;
+}
+.showImage{
+	padding-left: 15px;
+width: 100px;
+height: 60px;
+padding-right: 15px;
+float: right;
+}
+.spanData{
+	width: 20px;
+height: 20px;
+float: left;
+text-align: center;
+line-height: 20px;
+margin-right: 10px;
+font-size: 16px;
+background-color: #fff;
+color: #000;
+border: 1px #D5D5D5 solid;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+border-radius: 10px;
+}

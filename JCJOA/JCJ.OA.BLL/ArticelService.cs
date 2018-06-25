@@ -66,6 +66,27 @@ namespace JCJ.OA.BLL
 
         }
 
+        /// <summary>
+        /// 完成文章类别的更新
+        /// </summary>
+        /// <param name="articelId"></param>
+        /// <param name="classIdList"></param>
+        /// <returns></returns>
+        public bool EditArticelClass(int articelId, List<int> classIdList)
+        {
+            var articelInfo = this.DbSession.ArticelDal.LoadEntities(a => a.ID == articelId).FirstOrDefault();
+            if (articelInfo != null)
+            {
+                articelInfo.ArticelClass.Clear();
+                foreach (int cid in classIdList)
+                {
+                    var articelClassInfo = this.DbSession.ArticelClassDal.LoadEntities(a => a.ID == cid).FirstOrDefault();
+                    articelInfo.ArticelClass.Add(articelClassInfo);
+                }
+                return this.DbSession.SaveChanges();
+            }
+            return false;
+        }
     }
 
 }
