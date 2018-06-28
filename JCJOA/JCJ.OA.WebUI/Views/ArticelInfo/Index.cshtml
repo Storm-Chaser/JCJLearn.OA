@@ -72,8 +72,25 @@
                         formatter: function (value, row, index) {
                             return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).pattern("yyyy-M-d");
                         }
+                    },
+                    {
+                        field: 'showDetail', title: '详细', width: 80, align: 'right',
+                        formatter: function (value, row, index) {
+                            var str = "<a href='javascript:void(0)' ids='" + row.ID + "' class='detail'showAddData='" + ChangeDateFormat(row.AddDate) + "'>详细</a>";
+                            return str;
+                        }
                     }
                 ]],
+                //载入成功以后触发
+                onLoadSuccess: function (data) {
+                    console.log(data);
+                    $(".details").click(function () {
+                        var articelId = $(this).attr("ids");
+                        var showAddData = $(this).attr("showAddData");//2015/1/12
+                        var dir = "/ArticelHtml/" + showAddData + "/" + articelId + ".html";
+                        window.open(dir);
+                    });
+                },
                 toolbar: [{
                     id: 'btnDelete',
                     text: '删除',
@@ -111,7 +128,7 @@
                 resizable: true,
                 modal: true,
                 width: 800,
-                height: 700,
+                height: 500,
                 buttons: [{
                     text: 'Ok',
                     iconCls: 'icon-ok',
@@ -155,7 +172,7 @@
                 resizable: true,
                 modal: true,
                 width: 800,
-                height: 700,
+                height: 500,
                 buttons: [{
                     text: 'Ok',
                     iconCls: 'icon-ok',
@@ -181,6 +198,13 @@
             } else {
                 $.messager.alert("提示", "修改失败", "error");
             }
+        }
+        //将序列化成json格式后日期(毫秒数)转成日期格式
+        function ChangeDateFormat(cellval) {
+            var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
+            var month = date.getMonth() + 1;
+            var currentDate = date.getDate();
+            return date.getFullYear() + "/" + month + "/" + currentDate;
         }
     </script>
 </head>

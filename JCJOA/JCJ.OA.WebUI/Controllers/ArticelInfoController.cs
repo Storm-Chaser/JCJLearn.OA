@@ -1,4 +1,5 @@
-﻿using JCJ.OA.Model;
+﻿using JCJ.OA.Common;
+using JCJ.OA.Model;
 using JCJ.OA.Model.Search;
 using JCJ.OA.WebUI.Models;
 using System;
@@ -149,6 +150,9 @@ namespace JCJ.OA.WebUI.Controllers
             articelInfo.ModifyDate = DateTime.Now;
             int cid = int.Parse(Request["ArticelClassInfo"]);
             ArticelService.AddEntity(cid, articelInfo);
+            //完成内容保存以后，生成静态页面
+            CreateHtmlPage(articelInfo, "add");
+            
             return Content("ok");
         }
         /// <summary>
@@ -249,7 +253,58 @@ namespace JCJ.OA.WebUI.Controllers
             articel.TitleFontColor = articelInfo.TitleFontColor;
             articel.TitleFontType = articelInfo.TitleFontType;
             articel.TitleType = articelInfo.TitleType;
-            return Content(ArticelService.EditEntity(articel) ? "ok" : "no");
+            if (ArticelService.EditEntity(articel))
+            {
+                CreateHtmlPage(articel, "edit");
+                return Content("ok");
+            }
+            else
+            {
+                return Content("no");
+            }
+        }
+        /// <summary>
+        /// 生成静态页
+        /// </summary>
+        /// <param name="articelInfo"></param>
+        /// <param name="flag"></param>
+        public void CreateHtmlPage(Articel articelInfo, string flag)
+        {
+            string html = NVelocityHelper.RenderTemplate("ArticelTemplateInfo", articelInfo, "/ArticelTemplate/");
+            string dir = string.Empty;
+            if (flag == "add")
+            {
+                dir = "/ArticelHtml/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/" + DateTime.Now.Day + "/";
+                Directory.CreateDirectory(Path.GetDirectoryName(Request.MapPath(dir)));
+            }
+            else
+            {
+                dir = "/ArticelHtml/" + articelInfo.AddDate.Year + "/" + articelInfo.AddDate.Month + "/" + articelInfo.AddDate.Day + "/";
+            }
+
+            string fullDir = dir + articelInfo.ID + ".html";
+            System.IO.File.WriteAllText(Request.MapPath(fullDir), html, System.Text.Encoding.UTF8);
+
+        }
+        /// <summary>
+        /// 加载相关的新闻.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LoadLikeNews()
+        {
+            //根据找相同类别的新闻。
+            int articelId = int.Parse(Request["articelId"]);
+            var articelInfo = ArticelService.LoadEntities(a => a.ID == articelId).FirstOrDefault();
+            var articelList = (from a in articelInfo.ArticelClass
+                               from b in a.Articel
+                               orderby b.ID descending
+                               where b.ID != articelId
+                               select b).Skip<Articel>(0).Take<Articel>(4);
+            var temp = from a in articelList
+                       select new { Id = a.ID, Title = a.Title, AddDate = a.AddDate };
+            //  return Json(temp,JsonRequestBehavior.AllowGet);
+            return Content(Common.SerializeHelper.SerializeToString(temp));
+
         }
     }
 }
