@@ -28,6 +28,8 @@
   <object type="JCJ.OA.WebUI.Controllers.ArticelInfoController, JCJ.OA.WebUI" singleton="false" >
     <property name="ArticelClassService" ref="ArticelClassService" />
     <property name="ArticelService" ref="ArticelService" />
+    <property name="SensitiveWordService" ref="SensitiveWordService" />
+    <property name="ArticelCommentService" ref="ArticelCommentService" />
   </object>
   <!--intentionally do NOT register the AccountController or the ValuesController with the container; demonstrates that the underlying
   default controller factory will properly (attempt to!) resolve all controllers not registered with Spring.NET

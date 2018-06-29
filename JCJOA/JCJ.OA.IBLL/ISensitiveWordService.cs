@@ -9,7 +9,8 @@ namespace JCJ.OA.IBLL
 {
     public partial interface ISensitiveWordService:IBaseService<SensitiveWord>
     {
-        bool FilterForbidWord(string msg);
-
+        bool FilterFobidWord(string msg);
+        bool FilterModWord(string msg);
+        string FileterReplaceWord(string msg);
     }
 }

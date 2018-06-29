@@ -12,4 +12,8 @@
     </object>
     <object type="JCJ.OA.BLL.ArticelService, JCJ.OA.BLL" singleton="false" name="ArticelService">
     </object>
+    <object type="JCJ.OA.BLL.SensitiveWordService, JCJ.OA.BLL" singleton="false" name="SensitiveWordService">
+    </object>
+    <object type="JCJ.OA.BLL.ArticelCommentService, JCJ.OA.BLL" singleton="false" name="ArticelCommentService">
+    </object>
   </objects>

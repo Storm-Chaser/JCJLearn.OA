@@ -19,6 +19,8 @@ namespace JCJ.OA.WebUI.Controllers
         // GET: ArticelInfo
         IBLL.IArticelClassService ArticelClassService { get; set; }
         IBLL.IArticelService ArticelService { get; set; }
+        IBLL.ISensitiveWordService SensitiveWordService { get; set; }
+        IBLL.IArticelCommentService ArticelCommentService { get; set; }
         public ActionResult Index()
         {
             ViewBag.classInfo = LoadArticelClassList();
@@ -325,34 +327,34 @@ namespace JCJ.OA.WebUI.Controllers
         /// 完成评论的添加
         /// </summary>
         /// <returns></returns>
-        //public ActionResult AddArticelComment()
-        //{
-        //    int articelId = int.Parse(Request["articelId"]);
-        //    string msg = Request["msg"];
-        //    if (SensitiveWordService.FilterFobidWord(msg))
-        //    {
-        //        return Content("no:评论中含有禁用词!!");
-        //    }
-        //    else if (SensitiveWordService.FilterModWord(msg))
-        //    {
-        //        ArticelComment articelComment = new ArticelComment();
-        //        articelComment.AddDate = DateTime.Now;
-        //        articelComment.IsPass = 0;
-        //        articelComment.Msg = msg;
-        //        articelComment.ArticelID = articelId;
-        //        ArticelCommentService.AddEntity(articelComment);
-        //        return Content("no:评论待审查!!");
-        //    }
-        //    else
-        //    {
-        //        ArticelComment articelComment = new ArticelComment();
-        //        articelComment.AddDate = DateTime.Now;
-        //        articelComment.IsPass = 1;
-        //        articelComment.Msg = msg;
-        //        articelComment.ArticelID = articelId;
-        //        ArticelCommentService.AddEntity(articelComment);
-        //        return Content("ok:评论成功");
-        //    }
-        //}
+        public ActionResult AddArticelComment()
+        {
+            int articelId = int.Parse(Request["articelId"]);
+            string msg = Request["msg"];
+            if (SensitiveWordService.FilterFobidWord(msg))
+            {
+                return Content("no:评论中含有禁用词!!");
+            }
+            else if (SensitiveWordService.FilterModWord(msg))
+            {
+                ArticelComment articelComment = new ArticelComment();
+                articelComment.AddDate = DateTime.Now;
+                articelComment.IsPass = 0;
+                articelComment.Msg = msg;
+                articelComment.ArticelID = articelId;
+                ArticelCommentService.AddEntity(articelComment);
+                return Content("no:评论待审查!!");
+            }
+            else
+            {
+                ArticelComment articelComment = new ArticelComment();
+                articelComment.AddDate = DateTime.Now;
+                articelComment.IsPass = 1;
+                articelComment.Msg = msg;
+                articelComment.ArticelID = articelId;
+                ArticelCommentService.AddEntity(articelComment);
+                return Content("ok:评论成功");
+            }
+        }
     }
 }
