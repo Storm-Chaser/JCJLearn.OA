@@ -113,6 +113,20 @@ namespace JCJ.OA.DALFactory
             set { _RoleInfoDal = value; }
         }
 	
+		private ISensitiveWordDal _SensitiveWordDal;
+        public ISensitiveWordDal SensitiveWordDal
+        {
+            get
+            {
+                if(_SensitiveWordDal == null)
+                {
+                    _SensitiveWordDal = AbstractFactory.CreateSensitiveWordDal();
+                }
+                return _SensitiveWordDal;
+            }
+            set { _SensitiveWordDal = value; }
+        }
+	
 		private IUserInfoDal _UserInfoDal;
         public IUserInfoDal UserInfoDal
         {

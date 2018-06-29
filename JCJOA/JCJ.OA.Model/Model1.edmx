@@ -132,6 +132,16 @@
           <Property Name="RoleInfo_ID" Type="int" Nullable="false" />
           <Property Name="ActionInfo_ID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="SensitiveWord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WordPattern" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsForbid" Type="bit" Nullable="false" />
+          <Property Name="IsMod" Type="bit" Nullable="false" />
+          <Property Name="ReplaceWord" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="UserInfo">
           <Key>
             <PropertyRef Name="ID" />
@@ -328,6 +338,7 @@
           <EntitySet Name="R_UserInfo_ActionInfo" EntityType="Self.R_UserInfo_ActionInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleInfo" EntityType="Self.RoleInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleInfoActionInfo" EntityType="Self.RoleInfoActionInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SensitiveWord" EntityType="Self.SensitiveWord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfoDepartment" EntityType="Self.UserInfoDepartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfoRoleInfo" EntityType="Self.UserInfoRoleInfo" Schema="dbo" store:Type="Tables" />
@@ -445,6 +456,7 @@
             <End Role="Articel" EntitySet="Articel" />
             <End Role="ArticelClass" EntitySet="ArticelClass" />
           </AssociationSet>
+          <EntitySet Name="SensitiveWord" EntityType="ItcastCmsModel.SensitiveWord" />
         </EntityContainer>
         <EntityType Name="ActionInfo">
           <Key>
@@ -618,6 +630,16 @@
           <End Type="ItcastCmsModel.Articel" Role="Articel" Multiplicity="*" />
           <End Type="ItcastCmsModel.ArticelClass" Role="ArticelClass" Multiplicity="*" />
         </Association>
+        <EntityType Name="SensitiveWord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WordPattern" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsForbid" Type="Boolean" Nullable="false" />
+          <Property Name="IsMod" Type="Boolean" Nullable="false" />
+          <Property Name="ReplaceWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -788,6 +810,17 @@
               <ScalarProperty Name="ID" ColumnName="Articel_ID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="SensitiveWord">
+            <EntityTypeMapping TypeName="ItcastCmsModel.SensitiveWord">
+              <MappingFragment StoreEntitySet="SensitiveWord">
+                <ScalarProperty Name="ReplaceWord" ColumnName="ReplaceWord" />
+                <ScalarProperty Name="IsMod" ColumnName="IsMod" />
+                <ScalarProperty Name="IsForbid" ColumnName="IsForbid" />
+                <ScalarProperty Name="WordPattern" ColumnName="WordPattern" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

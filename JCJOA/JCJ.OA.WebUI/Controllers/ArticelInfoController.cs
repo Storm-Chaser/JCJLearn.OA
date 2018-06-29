@@ -1,4 +1,5 @@
-﻿using JCJ.OA.Common;
+﻿using JCJ.OA.BLL;
+using JCJ.OA.Common;
 using JCJ.OA.Model;
 using JCJ.OA.Model.Search;
 using JCJ.OA.WebUI.Models;
@@ -271,16 +272,16 @@ namespace JCJ.OA.WebUI.Controllers
         public void CreateHtmlPage(Articel articelInfo, string flag)
         {
             string html = NVelocityHelper.RenderTemplate("ArticelTemplateInfo", articelInfo, "/ArticelTemplate/");
-            string dir = string.Empty;
+            string dir = "/ArticelHtml/" + articelInfo.AddDate.Year + "/" + articelInfo.AddDate.Month + "/" + articelInfo.AddDate.Day + "/";
             if (flag == "add")
             {
-                dir = "/ArticelHtml/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/" + DateTime.Now.Day + "/";
+                //dir = "/ArticelHtml/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/" + DateTime.Now.Day + "/";
                 Directory.CreateDirectory(Path.GetDirectoryName(Request.MapPath(dir)));
             }
-            else
-            {
-                dir = "/ArticelHtml/" + articelInfo.AddDate.Year + "/" + articelInfo.AddDate.Month + "/" + articelInfo.AddDate.Day + "/";
-            }
+            //else
+            //{
+            //    dir = "/ArticelHtml/" + articelInfo.AddDate.Year + "/" + articelInfo.AddDate.Month + "/" + articelInfo.AddDate.Day + "/";
+            //}
 
             string fullDir = dir + articelInfo.ID + ".html";
             System.IO.File.WriteAllText(Request.MapPath(fullDir), html, System.Text.Encoding.UTF8);
@@ -306,5 +307,52 @@ namespace JCJ.OA.WebUI.Controllers
             return Content(Common.SerializeHelper.SerializeToString(temp));
 
         }
+
+        /// <summary>
+        /// 一站静态化
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SetAllArticelPage()
+        {
+            var articelList = ArticelService.LoadEntities(a => a.DelFlag == 0);
+            foreach (var articelInfo in articelList)
+            {
+                CreateHtmlPage(articelInfo, "add");
+            }
+            return Content("ok");
+        }
+        /// <summary>
+        /// 完成评论的添加
+        /// </summary>
+        /// <returns></returns>
+        //public ActionResult AddArticelComment()
+        //{
+        //    int articelId = int.Parse(Request["articelId"]);
+        //    string msg = Request["msg"];
+        //    if (SensitiveWordService.FilterFobidWord(msg))
+        //    {
+        //        return Content("no:评论中含有禁用词!!");
+        //    }
+        //    else if (SensitiveWordService.FilterModWord(msg))
+        //    {
+        //        ArticelComment articelComment = new ArticelComment();
+        //        articelComment.AddDate = DateTime.Now;
+        //        articelComment.IsPass = 0;
+        //        articelComment.Msg = msg;
+        //        articelComment.ArticelID = articelId;
+        //        ArticelCommentService.AddEntity(articelComment);
+        //        return Content("no:评论待审查!!");
+        //    }
+        //    else
+        //    {
+        //        ArticelComment articelComment = new ArticelComment();
+        //        articelComment.AddDate = DateTime.Now;
+        //        articelComment.IsPass = 1;
+        //        articelComment.Msg = msg;
+        //        articelComment.ArticelID = articelId;
+        //        ArticelCommentService.AddEntity(articelComment);
+        //        return Content("ok:评论成功");
+        //    }
+        //}
     }
 }

@@ -115,8 +115,29 @@
 
                         editArticel();//编辑文章
                     }
+                },
+                    {
+                        id: 'btnSetAll',
+                        text: '一站静态化',
+                        iconCls: 'icon-edit',
+                        handler: function () {
+
+                            setArticelPage();//页面静态化
+                        }
                 }],
             });
+        }
+        //一站静态化
+        function setArticelPage() {
+            $.messager.confirm("提示", "确定要全站静态化吗?需要时间可能比较长", function (r) {
+                if (r) {
+                    $.post("/ArticelInfo/SetAllArticelPage", {}, function (data) {
+                        if (data == "ok") {
+                            $.messager.alert("提示", "生成成功!!", "infor");
+                        }
+                    });
+                }
+            })
         }
         function addArticel() {
             $("#addFrmae").attr("src", "/ArticelInfo/ShowAddInfo");

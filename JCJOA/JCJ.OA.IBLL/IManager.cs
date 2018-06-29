@@ -46,6 +46,11 @@ namespace JCJ.OA.IBLL
        
     }   
 	
+	public partial interface ISensitiveWordService : IBaseService<SensitiveWord>
+    {
+       
+    }   
+	
 	public partial interface IUserInfoService : IBaseService<UserInfo>
     {
        

@@ -22,8 +22,6 @@ namespace JCJ.OA.BLL
 	
 	public partial class ArticelService :BaseService<Articel>,IArticelService
     {
-        
-
         public override void SetCurrentDal()
         {
 			CurrentDal = this.DbSession.ArticelDal;
@@ -67,6 +65,14 @@ namespace JCJ.OA.BLL
         public override void SetCurrentDal()
         {
 			CurrentDal = this.DbSession.RoleInfoDal;
+        }
+    }   
+	
+	public partial class SensitiveWordService :BaseService<SensitiveWord>,ISensitiveWordService
+    {
+        public override void SetCurrentDal()
+        {
+			CurrentDal = this.DbSession.SensitiveWordDal;
         }
     }   
 	

@@ -45,6 +45,11 @@ namespace JCJ.OA.IDAL
       
     }
 	
+	public partial interface ISensitiveWordDal :IBaseDal<SensitiveWord>
+    {
+      
+    }
+	
 	public partial interface IUserInfoDal :IBaseDal<UserInfo>
     {
       

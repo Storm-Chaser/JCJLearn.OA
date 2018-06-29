@@ -27,6 +27,8 @@ namespace JCJ.OA.IDAL
 	
 		IRoleInfoDal RoleInfoDal{get;set;}
 	
+		ISensitiveWordDal SensitiveWordDal{get;set;}
+	
 		IUserInfoDal UserInfoDal{get;set;}
 	}	
 }

@@ -113,6 +113,20 @@ namespace JCJ.OA.DALFactory
             return obj as IDAL.IRoleInfoDal;
         }
 		
+	    public static IDAL.ISensitiveWordDal CreateSensitiveWordDal()
+        {
+
+            //string classFulleName = ConfigurationManager.AppSettings["DALNameSpace"] + ".SensitiveWordDAL";
+
+
+            //object obj = Assembly.Load(ConfigurationManager.AppSettings["DalAssembly"]).CreateInstance(classFulleName, true);
+			string fullClassName = NameSpace + ".SensitiveWordDal";
+            var obj  = CreateInstance(fullClassName);
+
+
+            return obj as IDAL.ISensitiveWordDal;
+        }
+		
 	    public static IDAL.IUserInfoDal CreateUserInfoDal()
         {
 

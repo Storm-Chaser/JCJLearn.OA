@@ -4,10 +4,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <link rel="stylesheet" type="text/css" href="/ArticelTemplate/ArticelStyle.css ">
+    <link href="/Content/themes/default/easyui.css" rel="stylesheet" />
+    <link href="/Content/themes/icon.css" rel="stylesheet" />
     <script src="/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="/Scripts/jquery.easyui.min.js"></script>
+    <script src="/Scripts/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript">
         jQuery(function () {
             loadLikeNews();
+            jQuery("#btnComment").click(function () {
+                addComment();
+            });
         });
         //加载相关新闻.
         function loadLikeNews() {
@@ -24,6 +31,22 @@
                     jQuery("<li><a href='/ArticelHtml/" + dir + "/" + serverData[i].Id + ".html'>" + serverData[i].Title + "</a></li>").appendTo("#likeNewList");
                 }
             });
+        }
+        //添加评论
+        function addComment() {
+            var msg = jQuery("#commentMsg").val();
+            if (msg != "") {
+                jQuery.post("/ArticelInfo/AddArticelComment", { "msg": msg, "articelId": $data.ID }, function (data) {
+                    var serverData = data.split(':');
+                    if (serverData[0] == "ok") {
+                        //重新加载
+                    } else {
+                        jQuery.messager.alert("提示", serverData[1], "error");
+                    }
+                });
+            } else {
+                jQuery.messager.alert("提示", "评论内容不能为空?", "error");
+            }
         }
     </script>
 </head>
@@ -111,7 +134,7 @@ $data.ArticleContent
                         </ul>
                     </div>
                     <div id="articelCommnet_bottome">
-                        <textarea style="font-size:14px;padding:5px;width:90%;height:90px;overflow:auto;" placeholder="文明上网，请对您的发言负责"></textarea>
+                        <textarea style="font-size:14px;padding:5px;width:90%;height:90px;overflow:auto;" placeholder="文明上网，请对您的发言负责" id="commentMsg"></textarea>
                         <input type="button" id="btnComment" style="float:right" value="发布评论" class="reply_btn"/>
                     </div>
 

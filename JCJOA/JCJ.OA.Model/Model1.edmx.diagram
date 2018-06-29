@@ -21,6 +21,7 @@
         <EntityTypeShape EntityType="ItcastCmsModel.ArticelComment" Width="1.5" PointX="8.625" PointY="7.375" />
         <AssociationConnector Association="ItcastCmsModel.FK_ArticelArticelComment" />
         <AssociationConnector Association="ItcastCmsModel.ArticelClassArticel" />
+        <EntityTypeShape EntityType="ItcastCmsModel.SensitiveWord" Width="1.5" PointX="1.25" PointY="8" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -47,6 +47,11 @@ namespace JCJ.OA.DLL
 
     }
 		
+	public partial class SensitiveWordDal :BaseDal<SensitiveWord>,ISensitiveWordDal
+    {
+
+    }
+		
 	public partial class UserInfoDal :BaseDal<UserInfo>,IUserInfoDal
     {
 

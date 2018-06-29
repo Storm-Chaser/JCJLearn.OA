@@ -33,5 +33,6 @@ namespace JCJ.OA.Model
         public virtual DbSet<Articel> Articel { get; set; }
         public virtual DbSet<ArticelClass> ArticelClass { get; set; }
         public virtual DbSet<ArticelComment> ArticelComment { get; set; }
+        public virtual DbSet<SensitiveWord> SensitiveWord { get; set; }
     }
 }
