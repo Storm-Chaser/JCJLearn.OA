@@ -85,6 +85,34 @@ namespace JCJ.OA.DALFactory
             set { _DepartmentDal = value; }
         }
 	
+		private IPhotoClassDal _PhotoClassDal;
+        public IPhotoClassDal PhotoClassDal
+        {
+            get
+            {
+                if(_PhotoClassDal == null)
+                {
+                    _PhotoClassDal = AbstractFactory.CreatePhotoClassDal();
+                }
+                return _PhotoClassDal;
+            }
+            set { _PhotoClassDal = value; }
+        }
+	
+		private IPhotoInfoDal _PhotoInfoDal;
+        public IPhotoInfoDal PhotoInfoDal
+        {
+            get
+            {
+                if(_PhotoInfoDal == null)
+                {
+                    _PhotoInfoDal = AbstractFactory.CreatePhotoInfoDal();
+                }
+                return _PhotoInfoDal;
+            }
+            set { _PhotoInfoDal = value; }
+        }
+	
 		private IR_UserInfo_ActionInfoDal _R_UserInfo_ActionInfoDal;
         public IR_UserInfo_ActionInfoDal R_UserInfo_ActionInfoDal
         {

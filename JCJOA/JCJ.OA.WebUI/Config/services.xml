@@ -16,4 +16,8 @@
     </object>
     <object type="JCJ.OA.BLL.ArticelCommentService, JCJ.OA.BLL" singleton="false" name="ArticelCommentService">
     </object>
+    <object type="JCJ.OA.BLL.PhotoInfoService, JCJ.OA.BLL" singleton="false" name="PhotoInfoService">
+    </object>
+    <object type="JCJ.OA.BLL.PhotoClassService, JCJ.OA.BLL" singleton="false" name="PhotoClassService">
+    </object>
   </objects>

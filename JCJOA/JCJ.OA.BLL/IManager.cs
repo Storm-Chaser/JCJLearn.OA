@@ -52,6 +52,22 @@ namespace JCJ.OA.BLL
         }
     }   
 	
+	public partial class PhotoClassService :BaseService<PhotoClass>,IPhotoClassService
+    {
+        public override void SetCurrentDal()
+        {
+			CurrentDal = this.DbSession.PhotoClassDal;
+        }
+    }   
+	
+	public partial class PhotoInfoService :BaseService<PhotoInfo>,IPhotoInfoService
+    {
+        public override void SetCurrentDal()
+        {
+			CurrentDal = this.DbSession.PhotoInfoDal;
+        }
+    }   
+	
 	public partial class R_UserInfo_ActionInfoService :BaseService<R_UserInfo_ActionInfo>,IR_UserInfo_ActionInfoService
     {
         public override void SetCurrentDal()

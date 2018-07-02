@@ -212,6 +212,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PhotoInfoController.cs" />
     <Compile Include="Controllers\RoleInfoController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
@@ -219,6 +220,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ArticelClassModel.cs" />
+    <Compile Include="Models\ArticelCommentViewModel.cs" />
     <Compile Include="Models\MyExceptionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextTemplate1.cs">
@@ -893,6 +895,7 @@
     <Content Include="Content\Images\Program Files Folder.png" />
     <Content Include="Content\Images\topicon.gif" />
     <Content Include="Content\Images\Xp-G5 006.png" />
+    <Content Include="Content\jqzoom.css" />
     <Content Include="Content\ligerUI\js\core\base.js" />
     <Content Include="Content\ligerUI\js\core\inject.js" />
     <Content Include="Content\ligerUI\js\ligerui.all.js" />
@@ -1319,6 +1322,11 @@
     <Content Include="Content\ligerUI\skins\Tab\images\win\dialog-winbtns.gif" />
     <Content Include="Content\ligerUI\skins\Tab\images\win\dialogbtn.gif" />
     <Content Include="Content\ligerUI\skins\Tab\images\win\dialogicon.gif" />
+    <Content Include="Content\p1.gif" />
+    <Content Include="Content\p2.gif" />
+    <Content Include="Content\p3.gif" />
+    <Content Include="Content\p4.gif" />
+    <Content Include="Content\p5.gif" />
     <Content Include="Content\tableStyle.css" />
     <Content Include="Content\themes\angular.css" />
     <Content Include="Content\themes\black\accordion.css" />
@@ -1781,6 +1789,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.easyui.min.js" />
+    <Content Include="Scripts\jquery.jqzoom.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -1832,6 +1841,8 @@
     <Content Include="Views\ArticelInfo\Index.cshtml" />
     <Content Include="Views\ArticelInfo\ShowAddInfo.cshtml" />
     <Content Include="Views\ArticelInfo\ShowEditInfo.cshtml" />
+    <Content Include="Views\PhotoInfo\Index.cshtml" />
+    <Content Include="Views\PhotoInfo\ShowAddPhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

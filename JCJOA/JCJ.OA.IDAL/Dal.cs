@@ -35,6 +35,16 @@ namespace JCJ.OA.IDAL
       
     }
 	
+	public partial interface IPhotoClassDal :IBaseDal<PhotoClass>
+    {
+      
+    }
+	
+	public partial interface IPhotoInfoDal :IBaseDal<PhotoInfo>
+    {
+      
+    }
+	
 	public partial interface IR_UserInfo_ActionInfoDal :IBaseDal<R_UserInfo_ActionInfo>
     {
       

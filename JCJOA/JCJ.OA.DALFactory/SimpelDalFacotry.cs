@@ -85,6 +85,34 @@ namespace JCJ.OA.DALFactory
             return obj as IDAL.IDepartmentDal;
         }
 		
+	    public static IDAL.IPhotoClassDal CreatePhotoClassDal()
+        {
+
+            //string classFulleName = ConfigurationManager.AppSettings["DALNameSpace"] + ".PhotoClassDAL";
+
+
+            //object obj = Assembly.Load(ConfigurationManager.AppSettings["DalAssembly"]).CreateInstance(classFulleName, true);
+			string fullClassName = NameSpace + ".PhotoClassDal";
+            var obj  = CreateInstance(fullClassName);
+
+
+            return obj as IDAL.IPhotoClassDal;
+        }
+		
+	    public static IDAL.IPhotoInfoDal CreatePhotoInfoDal()
+        {
+
+            //string classFulleName = ConfigurationManager.AppSettings["DALNameSpace"] + ".PhotoInfoDAL";
+
+
+            //object obj = Assembly.Load(ConfigurationManager.AppSettings["DalAssembly"]).CreateInstance(classFulleName, true);
+			string fullClassName = NameSpace + ".PhotoInfoDal";
+            var obj  = CreateInstance(fullClassName);
+
+
+            return obj as IDAL.IPhotoInfoDal;
+        }
+		
 	    public static IDAL.IR_UserInfo_ActionInfoDal CreateR_UserInfo_ActionInfoDal()
         {
 

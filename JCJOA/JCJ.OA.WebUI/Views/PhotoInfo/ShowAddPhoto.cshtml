@@ -1,0 +1,248 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowAddPhoto</title>
+    <script src="~/SWFUpload/swfupload.js"></script>
+    <script src="~/SWFUpload/handlers.js"></script>
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <link href="~/Content/tableStyle.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/SwfUpload/swfupload.queue.js"></script>
+    <style type="text/css">
+        textarea, select {
+            padding: 2px;
+            border: 1px solid;
+            border-color: #666 #ccc #ccc #666;
+            background: #F9F9F9;
+            color: #333;
+            resize: none;
+            width: 100%;
+        }
+
+        .textbox {
+            padding: 3px;
+            border: 1px solid;
+            border-color: #666 #ccc #ccc #666;
+            background: #F9F9F9;
+            color: #333;
+            resize: none;
+            width: 100%;
+        }
+
+            .textbox:hover, .textbox:focus, textarea:hover, textarea:focus {
+                border-color: #09C;
+                background: #F5F9FD;
+            }
+
+        div {
+            display: block;
+        }
+
+            div.thumbshow {
+                text-align: center;
+                margin: 2px;
+                padding: 2px;
+                width: 162px;
+                height: 150px;
+                border: dashed 1px #B8B808;
+                background: #FFFFF6;
+                float: left;
+            }
+    </style>
+    <script type="text/javascript">
+        var swfu;
+        window.onload = function () {
+            swfu = new SWFUpload({
+                // Backend Settings
+                upload_url: "/PhotoInfo/FileUp",
+                post_params: {
+                    "ASPSESSID": "@Session.SessionID"
+                },
+
+                // File Upload Settings
+                file_size_limit: "2 MB",
+                file_types: "*.jpg;*.gif",
+                file_types_description: "JPG Images",
+                file_upload_limit: 10,    // Zero means unlimited
+                file_queue_limit: 0,
+                // Event Handler Settings - these functions as defined in Handlers.js
+                //  The handlers are not part of SWFUpload but are part of my website and control how
+                //  my website reacts to the SWFUpload events.
+                swfupload_preload_handler: preLoad,
+                //file_queued_handler: fileQueued,
+                swfupload_load_failed_handler: loadFailed,
+
+                file_queue_error_handler: fileQueueError,
+                file_dialog_complete_handler: fileDialogComplete,
+                upload_progress_handler: uploadProgress,
+                upload_error_handler: uploadError,
+                upload_success_handler: showImage,
+                upload_complete_handler: uploadComplete,
+
+                // Button settings
+                button_image_url: "/SWFUpload/images/XPButtonNoText_160x22.png",
+                button_placeholder_id: "spanButtonPlaceholder",
+                button_width: 160,
+                button_height: 22,
+                button_text: '<span class="button">请选择上传图片<span class="buttonSmall">(2 MB Max)</span></span>',
+                button_text_style: '.button { font-family: Helvetica, Arial, sans-serif; font-size: 14pt; } .buttonSmall { font-size: 10pt; }',
+                button_text_top_padding: 1,
+                button_text_left_padding: 5,
+
+                // Flash Settings
+                flash_url: "/SWFUpload/swfupload.swf",	// Relative to this file
+                flash9_url: "/SWFUpload/swfupload_FP9.swf",	// Relative to this file
+
+                custom_settings: {
+                    upload_target: "divFileProgressContainer"
+                },
+
+                // Debug Settings
+                debug: false
+            });
+        }
+
+
+        //上传成功以后调用该方法
+        var str = "";
+        function showImage(file, serverData) {
+            var txtNum = $("#txtNum").val();//获取隐藏域
+            var num = parseInt(txtNum);
+            num++;
+            $("#txtNum").val(num);
+            var data = serverData.split(':');
+            $("#showImage").css("display", "block");
+            $('<div class="thumbshow" id="thumbshow' + num + '"><a href="#" target="_blank"><span id="show' + num + '"><img src="' + data[1] + '" width="50px" height="50px" ></span></a><div style="margin-top:5px;text-align:left"><a href="javascript:DelUpFiles(' + num + ')" style="color:#ff6600">[删除]</a> <b>注释：</b><input type="hidden" class="pics"  value="' + data[1] + '" id="pic' + num + '"><input type="text" class="textbox" name="picinfo' + num + '" value="' + data[2] + '" style="width:155px;"> </div></div>').appendTo("#showImage");
+
+
+            str = str + data[2] + "|" + data[1] + "$";
+            $("#hiddenUrl").val(str);
+        }
+        $(function () {
+            $(".authorClick").click(function () {
+                var value = $(this).text();
+                $("#Author").val(value);
+            });
+            $(".originInfo").click(function () {
+                $("#Origin").val($(this).text());
+            });
+            //跟编辑器添加事件
+            CKEDITOR.instances["PictureContent"].on("blur", function () {
+                //set keyup event
+                // this.document.on("keyup", getData2);
+                //and click event
+                //this.document.on("blur", getData2);
+                //and select event
+                //this.document.on("select", AutoSave);
+                getData2();
+            });
+
+        });
+        //删除文件
+        //删除已经上传的图片
+        function DelUpFiles(pid) {
+            var p = $('#pic' + pid).val();
+            if (p !== '') {
+                $.post("/PhotoInfo/DeleteFile", { "p": p }, function (data) {
+
+                    $("#thumbshow" + pid).remove();
+                });
+            }
+
+        }
+        //将编辑器的内容赋值给另外一个文本域
+        function getData2() {
+            var oEditor = CKEDITOR.instances.PictureContent;
+            var data = oEditor.getData();
+            $("#txtPictureContent").val(data);
+        }
+
+        //提交表单
+        function subForm() {
+            $("#addForm").submit();
+        }
+
+        //完成添加
+        function afterAdd(data) {
+            window.parent.afterAdd(data);
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <input type="hidden" id="txtNum" value="-1" />
+        @using (Ajax.BeginForm("AddPhoto", "PhotoInfo", new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterAdd" }, new { id = "addForm" }))
+        {
+            <input type="hidden" name="hiddenUrl" id="hiddenUrl" />
+            <table style="width:auto; margin: 0 auto">
+                <tr><td>图片名称：</td><td><input type="text" name="Title" class="textbox" /></td></tr>
+                <tr><td>归属栏目:</td><td>@Html.DropDownList("photoClass")</td></tr>
+                <tr><td>关 键 字</td><td><input type="text" name="KeyWords" class="textbox" /></td></tr>
+                <tr><td>图片作者:</td><td><input type="text" name="Author" id="Author" class="textbox" />&nbsp;&nbsp;【<a href="javascript:void(0)" class="authorClick">未知</a>】【<a href="javascript:void(0)" class="authorClick">佚名</a>】【<a href="javascript:void(0)" class="authorClick">Itcast</a>】</td></tr>
+                <tr><td>图片来源:</td><td><input type="text" name="Orgin" id="Origin" class="textbox" />&nbsp;&nbsp;【<a href="javascript:void(0)" class="originInfo">不详</a>】【<a href="javascript:void(0)" class="originInfo">本站原创</a>】【<a href="javascript:void(0)" class="originInfo">互联网</a>】</td></tr>
+                <tr>
+                    <td>显示样式:</td>
+                    <td>
+                        <img src="/Content/p1.gif" />
+                        <input type="radio" name="ShowStyle" value="0" />
+                        <img src="/Content/p2.gif" />
+                        <input type="radio" name="ShowStyle" value="1" />
+                        <img src="/Content/p3.gif" />
+                        <input type="radio" name="ShowStyle" value="2" />
+                        <img src="/Content/p4.gif" />
+                        <input type="radio" name="ShowStyle" value="3" />
+                        <img src="/Content/p5.gif" />
+                        <input type="radio" name="ShowStyle" value="4" />
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>图片内容:</td>
+                    <td>
+                        <div id="content">
+                            <div id="swfu_container" style="margin: 0px 10px;">
+                                <div>
+                                    <span id="spanButtonPlaceholder">
+                                    </span>
+                                </div>
+                                <div id="divFileProgressContainer" style="height: 45px;"></div>
+                                <div class="fieldset flash" id="fsUploadProgress">
+                                    <span class="legend">Upload Queue</span>
+                                </div>
+                                <div id="thumbnails">
+
+                                </div>
+                                <div id="showImage" style="display:none">
+                                </div>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>图片介绍:</td>
+                    <td>
+                        <textarea class="textbox" id="PictureContent" name="PictureContent1" rows="30" cols="40" style="width: 95%; height: 80px"></textarea>
+                        <script type="text/javascript">
+                          //<![CDATA[
+                          // Replace the <textarea id="editor1"> with an CKEditor instance.
+                          var editor = CKEDITOR.replace('PictureContent');
+                          //]]>
+                        </script>
+                        <textarea class="textbox" name="PictureContent" id="txtPictureContent" rows="30" cols="40" style="display:none"></textarea>
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+</body>
+</html>

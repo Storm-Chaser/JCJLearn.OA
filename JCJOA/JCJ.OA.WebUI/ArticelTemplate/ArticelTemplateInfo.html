@@ -48,6 +48,29 @@
                 jQuery.messager.alert("提示", "评论内容不能为空?", "error");
             }
         }
+        //加载评论
+        function loadComment() {
+            jQuery.post("/ArticelInfo/LoadArticelComment", { "articelId": $data.ID }, function (data) {
+                var serverData = jQuery.parseJSON(data);
+                var serverDataLength = data.length;
+                for (var i = 0; i < serverDataLength; i++) {
+                    jQuery("<li>" + serverData[i].AddDate + ":" + serverData[i].Msg + "</li>").appendTo(jQuery("#articelCommentList"));
+                }
+
+            });
+        }
+        function check() {
+            var obj = document.getElementById('articelCommentList');
+            var dom = (document.compatMode && document.compatMode == "CSS1Compat") ? document.documentElement : document.body;
+            var scrollTop = dom.scrollTop || document.body.scrollTop || 0;
+            if (obj.offsetTop - scrollTop - dom.clientHeight < 100) {
+                loadComment();//加载评论数据
+            }
+            else {
+                setTimeout("check()", 1000);
+            }
+        }
+        setTimeout("check()", 1000);
     </script>
 </head>
 <body>
@@ -121,16 +144,8 @@ $data.ArticleContent
                            <span > 以下是对 <strong>[$data.Title]</strong> 的评论,总共:1条评论</span>
                     </div>
                     <div id="articelComment_middle">
-                        <ul>
-                            <li>
-                                评论时间评论内容
-                            </li>
-                             <li>
-                                 评论时间评论内容
-                            </li>
-                            <li>
-                                 评论时间评论内容
-                            </li>
+                        <ul id="articelCommentList">
+                            
                         </ul>
                     </div>
                     <div id="articelCommnet_bottome">

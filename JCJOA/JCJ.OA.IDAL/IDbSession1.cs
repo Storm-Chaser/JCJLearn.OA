@@ -23,6 +23,10 @@ namespace JCJ.OA.IDAL
 	
 		IDepartmentDal DepartmentDal{get;set;}
 	
+		IPhotoClassDal PhotoClassDal{get;set;}
+	
+		IPhotoInfoDal PhotoInfoDal{get;set;}
+	
 		IR_UserInfo_ActionInfoDal R_UserInfo_ActionInfoDal{get;set;}
 	
 		IRoleInfoDal RoleInfoDal{get;set;}

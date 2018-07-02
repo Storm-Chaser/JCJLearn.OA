@@ -36,6 +36,16 @@ namespace JCJ.OA.IBLL
        
     }   
 	
+	public partial interface IPhotoClassService : IBaseService<PhotoClass>
+    {
+       
+    }   
+	
+	public partial interface IPhotoInfoService : IBaseService<PhotoInfo>
+    {
+       
+    }   
+	
 	public partial interface IR_UserInfo_ActionInfoService : IBaseService<R_UserInfo_ActionInfo>
     {
        

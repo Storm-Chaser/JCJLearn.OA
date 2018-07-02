@@ -356,5 +356,55 @@ namespace JCJ.OA.WebUI.Controllers
                 return Content("ok:评论成功");
             }
         }
+        /// <summary>
+        /// 加载评论
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LoadArticelComment()
+        {
+            int articelId = int.Parse(Request["articelId"]);
+            var commentList = ArticelCommentService.LoadEntities(a => a.ArticelID == articelId && a.IsPass == 1).ToList();
+            List<ArticelCommentViewModel> newList = new List<ArticelCommentViewModel>();
+            foreach (var articelComment in commentList)
+            {
+                ArticelCommentViewModel articelCommentModel = new ArticelCommentViewModel();
+                TimeSpan ts = DateTime.Now - articelComment.AddDate;
+                articelCommentModel.AddDate = Common.WebCommon.GetTimespan(ts);
+                articelCommentModel.Msg = articelComment.Msg;
+                newList.Add(articelCommentModel);
+            }
+
+            return Content(Common.SerializeHelper.SerializeToString(newList));
+        }
+        /// <summary>
+        /// 设置文章的各种状态（推荐,置顶，滚动等等）
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SetArticelState()
+        {
+            int articelId = int.Parse(Request["articelId"]);
+            int flag = int.Parse(Request["flag"]);
+            var articelInfo = ArticelService.LoadEntities(a => a.ID == articelId).FirstOrDefault();
+            switch (flag)
+            {
+                case 1:
+                    articelInfo.Recommend = 1;
+                    break;
+                case 2:
+                    articelInfo.Popular = 1;
+                    break;
+                case 3:
+                    articelInfo.Strip = 1;
+                    break;
+                case 4:
+                    articelInfo.IsTop = 1;
+                    break;
+                case 5:
+                    articelInfo.Rolls = 1;
+                    break;
+
+            }
+            return Content(ArticelService.EditEntity(articelInfo) ? "ok" : "no");
+        }
     }
 }

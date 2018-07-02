@@ -37,6 +37,16 @@ namespace JCJ.OA.DLL
 
     }
 		
+	public partial class PhotoClassDal :BaseDal<PhotoClass>,IPhotoClassDal
+    {
+
+    }
+		
+	public partial class PhotoInfoDal :BaseDal<PhotoInfo>,IPhotoInfoDal
+    {
+
+    }
+		
 	public partial class R_UserInfo_ActionInfoDal :BaseDal<R_UserInfo_ActionInfo>,IR_UserInfo_ActionInfoDal
     {
 

@@ -103,6 +103,39 @@
           <Property Name="Department_ID" Type="int" Nullable="false" />
           <Property Name="ActionInfo_ID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="PhotoClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="CreateUserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="DelFlag" Type="smallint" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PhotoInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KeyWords" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PicUrls" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PictureContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="Orgin" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="AddDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifyDate" Type="datetime" Nullable="false" />
+          <Property Name="Recommend" Type="smallint" Nullable="false" />
+          <Property Name="Rolls" Type="smallint" Nullable="false" />
+          <Property Name="IsTop" Type="smallint" Nullable="false" />
+          <Property Name="ReadPoint" Type="int" Nullable="false" />
+          <Property Name="DelFlag" Type="smallint" Nullable="false" />
+          <Property Name="PhotoClassID" Type="int" Nullable="false" />
+          <Property Name="ShowStyle" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="R_UserInfo_ActionInfo">
           <Key>
             <PropertyRef Name="ID" />
@@ -243,6 +276,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PhotoClassPhotoInfo">
+          <End Role="PhotoClass" Type="Self.PhotoClass" Multiplicity="1" />
+          <End Role="PhotoInfo" Type="Self.PhotoInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhotoClass">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PhotoInfo">
+              <PropertyRef Name="PhotoClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RoleInfoActionInfo_ActionInfo">
           <End Role="ActionInfo" Type="Self.ActionInfo" Multiplicity="1" />
           <End Role="RoleInfoActionInfo" Type="Self.RoleInfoActionInfo" Multiplicity="*" />
@@ -335,6 +380,8 @@
           <EntitySet Name="ArticelComment" EntityType="Self.ArticelComment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentActionInfo" EntityType="Self.DepartmentActionInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhotoClass" EntityType="Self.PhotoClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhotoInfo" EntityType="Self.PhotoInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="R_UserInfo_ActionInfo" EntityType="Self.R_UserInfo_ActionInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleInfo" EntityType="Self.RoleInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleInfoActionInfo" EntityType="Self.RoleInfoActionInfo" Schema="dbo" store:Type="Tables" />
@@ -365,6 +412,10 @@
           <AssociationSet Name="FK_DepartmentActionInfo_Department" Association="Self.FK_DepartmentActionInfo_Department">
             <End Role="Department" EntitySet="Department" />
             <End Role="DepartmentActionInfo" EntitySet="DepartmentActionInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoClassPhotoInfo" Association="Self.FK_PhotoClassPhotoInfo">
+            <End Role="PhotoClass" EntitySet="PhotoClass" />
+            <End Role="PhotoInfo" EntitySet="PhotoInfo" />
           </AssociationSet>
           <AssociationSet Name="FK_RoleInfoActionInfo_ActionInfo" Association="Self.FK_RoleInfoActionInfo_ActionInfo">
             <End Role="ActionInfo" EntitySet="ActionInfo" />
@@ -457,6 +508,12 @@
             <End Role="ArticelClass" EntitySet="ArticelClass" />
           </AssociationSet>
           <EntitySet Name="SensitiveWord" EntityType="ItcastCmsModel.SensitiveWord" />
+          <EntitySet Name="PhotoClass" EntityType="ItcastCmsModel.PhotoClass" />
+          <EntitySet Name="PhotoInfo" EntityType="ItcastCmsModel.PhotoInfo" />
+          <AssociationSet Name="FK_PhotoClassPhotoInfo" Association="ItcastCmsModel.FK_PhotoClassPhotoInfo">
+            <End Role="PhotoClass" EntitySet="PhotoClass" />
+            <End Role="PhotoInfo" EntitySet="PhotoInfo" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ActionInfo">
           <Key>
@@ -640,6 +697,53 @@
           <Property Name="IsMod" Type="Boolean" Nullable="false" />
           <Property Name="ReplaceWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="PhotoClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="CreateUserId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DelFlag" Type="Int16" Nullable="false" />
+          <Property Name="Remark" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PhotoInfo" Relationship="ItcastCmsModel.FK_PhotoClassPhotoInfo" FromRole="PhotoClass" ToRole="PhotoInfo" />
+        </EntityType>
+        <EntityType Name="PhotoInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KeyWords" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PicUrls" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PictureContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Orgin" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="AddDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Recommend" Type="Int16" Nullable="false" />
+          <Property Name="Rolls" Type="Int16" Nullable="false" />
+          <Property Name="IsTop" Type="Int16" Nullable="false" />
+          <Property Name="ReadPoint" Type="Int32" Nullable="false" />
+          <Property Name="DelFlag" Type="Int16" Nullable="false" />
+          <Property Name="PhotoClassID" Type="Int32" Nullable="false" />
+          <Property Name="ShowStyle" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PhotoClass" Relationship="ItcastCmsModel.FK_PhotoClassPhotoInfo" FromRole="PhotoInfo" ToRole="PhotoClass" />
+        </EntityType>
+        <Association Name="FK_PhotoClassPhotoInfo">
+          <End Type="ItcastCmsModel.PhotoClass" Role="PhotoClass" Multiplicity="1" />
+          <End Type="ItcastCmsModel.PhotoInfo" Role="PhotoInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhotoClass">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PhotoInfo">
+              <PropertyRef Name="PhotoClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -817,6 +921,41 @@
                 <ScalarProperty Name="IsMod" ColumnName="IsMod" />
                 <ScalarProperty Name="IsForbid" ColumnName="IsForbid" />
                 <ScalarProperty Name="WordPattern" ColumnName="WordPattern" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhotoClass">
+            <EntityTypeMapping TypeName="ItcastCmsModel.PhotoClass">
+              <MappingFragment StoreEntitySet="PhotoClass">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhotoInfo">
+            <EntityTypeMapping TypeName="ItcastCmsModel.PhotoInfo">
+              <MappingFragment StoreEntitySet="PhotoInfo">
+                <ScalarProperty Name="ShowStyle" ColumnName="ShowStyle" />
+                <ScalarProperty Name="PhotoClassID" ColumnName="PhotoClassID" />
+                <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+                <ScalarProperty Name="ReadPoint" ColumnName="ReadPoint" />
+                <ScalarProperty Name="IsTop" ColumnName="IsTop" />
+                <ScalarProperty Name="Rolls" ColumnName="Rolls" />
+                <ScalarProperty Name="Recommend" ColumnName="Recommend" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="AddDate" ColumnName="AddDate" />
+                <ScalarProperty Name="Orgin" ColumnName="Orgin" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="PictureContent" ColumnName="PictureContent" />
+                <ScalarProperty Name="PicUrls" ColumnName="PicUrls" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="KeyWords" ColumnName="KeyWords" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
