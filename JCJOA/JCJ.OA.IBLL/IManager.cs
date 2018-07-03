@@ -66,4 +66,14 @@ namespace JCJ.OA.IBLL
        
     }   
 	
+	public partial interface IVideoClassService : IBaseService<VideoClass>
+    {
+       
+    }   
+	
+	public partial interface IVideoFileInfoService : IBaseService<VideoFileInfo>
+    {
+       
+    }   
+	
 }

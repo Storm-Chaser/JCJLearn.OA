@@ -36,5 +36,7 @@ namespace JCJ.OA.Model
         public virtual DbSet<SensitiveWord> SensitiveWord { get; set; }
         public virtual DbSet<PhotoClass> PhotoClass { get; set; }
         public virtual DbSet<PhotoInfo> PhotoInfo { get; set; }
+        public virtual DbSet<VideoClass> VideoClass { get; set; }
+        public virtual DbSet<VideoFileInfo> VideoFileInfo { get; set; }
     }
 }

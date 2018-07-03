@@ -1,0 +1,88 @@
+﻿
+@{
+    Layout = null;
+}
+@using JCJ.OA.Model
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>展示图片的详细信息</title>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <div>
+        @{
+            PhotoInfo photoInfo = ViewBag.PhotoInfo;
+        }
+        <h3>@photoInfo.Title</h3>
+        <hr />
+        时间:<span>@photoInfo.AddDate</span>&nbsp;&nbsp;来源:<span>@photoInfo.Orgin</span>
+    </div>
+    @{
+        string picUrl = photoInfo.PicUrls.Substring(0, photoInfo.PicUrls.Length - 1);
+        string[] picUrls = picUrl.Split('$');
+
+    }
+    @if (photoInfo.ShowStyle == 0)
+    {
+        <link href="~/Content/AutoPlay/datouwang.css" rel="stylesheet" />
+        <script src="~/Content/AutoPlay/koala.min.1.5.js"></script>
+
+        <div id="fsD1" class="focus" style="margin-left:400px">
+            <div id="D1pic1" class="fPic">
+                @foreach (string url in picUrls)
+                {
+                    string[] urls = url.Split('|');
+                    <div class="fcon" style="display: none;">
+                        <a href="javascript:void(0)"><img src="@urls[1]" style="opacity: 1; "></a>
+                        <span class="shadow"><a href="#">@urls[0]</a></span>
+                    </div>
+                }
+
+
+
+
+            </div>
+            <div class="fbg">
+                <div class="D1fBt" id="D1fBt">
+
+                    @for (int i = 1; i <= picUrls.Length; i++)
+                    {
+                        if (i == 1)
+                        {
+                            <a href="javascript:void(0)" hidefocus="true" target="_self" class="current"><i>@i</i></a>
+                        }
+                        else
+                        {
+                            <a href="javascript:void(0)" hidefocus="true" target="_self" class=""><i>@i</i></a>
+                        }
+                    }
+
+                </div>
+            </div>
+            <span class="prev"></span>
+            <span class="next"></span>
+        </div>
+        <script type="text/javascript">
+            Qfast.add('widgets', { path: "/Content/AutoPlay/terminator2.2.min.js", type: "js", requires: ['fx'] });
+            Qfast(false, 'widgets', function () {
+                K.tabs({
+                    id: 'fsD1',   //焦点图包裹id
+                    conId: "D1pic1",  //** 大图域包裹id
+                    tabId: "D1fBt",
+                    tabTn: "a",
+                    conCn: '.fcon', //** 大图域配置class
+                    auto: 1,   //自动播放 1或0
+                    effect: 'fade',   //效果配置
+                    eType: 'click', //** 鼠标事件
+                    pageBt: true,//是否有按钮切换页码
+                    bns: ['.prev', '.next'],//** 前后按钮配置class
+                    interval: 3000  //** 停顿时间
+                })
+            })
+        </script>
+    }
+</body>
+</html>

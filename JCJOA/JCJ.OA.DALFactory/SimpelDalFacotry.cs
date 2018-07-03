@@ -168,6 +168,34 @@ namespace JCJ.OA.DALFactory
 
             return obj as IDAL.IUserInfoDal;
         }
+		
+	    public static IDAL.IVideoClassDal CreateVideoClassDal()
+        {
+
+            //string classFulleName = ConfigurationManager.AppSettings["DALNameSpace"] + ".VideoClassDAL";
+
+
+            //object obj = Assembly.Load(ConfigurationManager.AppSettings["DalAssembly"]).CreateInstance(classFulleName, true);
+			string fullClassName = NameSpace + ".VideoClassDal";
+            var obj  = CreateInstance(fullClassName);
+
+
+            return obj as IDAL.IVideoClassDal;
+        }
+		
+	    public static IDAL.IVideoFileInfoDal CreateVideoFileInfoDal()
+        {
+
+            //string classFulleName = ConfigurationManager.AppSettings["DALNameSpace"] + ".VideoFileInfoDAL";
+
+
+            //object obj = Assembly.Load(ConfigurationManager.AppSettings["DalAssembly"]).CreateInstance(classFulleName, true);
+			string fullClassName = NameSpace + ".VideoFileInfoDal";
+            var obj  = CreateInstance(fullClassName);
+
+
+            return obj as IDAL.IVideoFileInfoDal;
+        }
 	}
 	
 }

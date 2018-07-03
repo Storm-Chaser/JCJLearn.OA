@@ -66,5 +66,15 @@ namespace JCJ.OA.DLL
     {
 
     }
+		
+	public partial class VideoClassDal :BaseDal<VideoClass>,IVideoClassDal
+    {
+
+    }
+		
+	public partial class VideoFileInfoDal :BaseDal<VideoFileInfo>,IVideoFileInfoDal
+    {
+
+    }
 	
 }

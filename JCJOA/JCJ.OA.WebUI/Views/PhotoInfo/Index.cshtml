@@ -72,12 +72,12 @@
                 ]],
                 //载入成功以后触发
                 onLoadSuccess: function (data) {
-                    //$(".details").click(function () {
-                    //    var articelId = $(this).attr("ids");
-                    //    var showAddData = $(this).attr("showAddData");//2015/1/12
-                    //    var dir = "/ArticelHtml/" + showAddData + "/" + articelId + ".html";
-                    //    window.open(dir);
-                    //});
+                    $(".details").click(function () {
+                        var pId = $(this).attr("ids");
+                        //var showAddData = $(this).attr("showAddData");//2015/1/12
+                        //var dir = "/ArticelHtml/" + showAddData + "/" + articelId + ".html";
+                        window.open("/PhotoInfo/ShowPhotoDetail?id=" + pId);
+                    });
 
                     $(".jqzoom").jqueryzoom({
 
@@ -141,7 +141,7 @@
                     text: 'Ok',
                     iconCls: 'icon-ok',
                     handler: function () {
-                        var childWindow = $("#addFrmae")[0].contentWindow;
+                        var childWindow = $("#addFrame")[0].contentWindow;
                         childWindow.subForm();
 
                     }
@@ -153,6 +153,12 @@
                     }
                 }]
             });
+        }
+        //完成后调用该方法
+        function afterAdd(data) {
+            if (data == "ok") {
+                $("#addDiv").dialog('close');
+            }
         }
         //将序列化成json格式后日期(毫秒数)转成日期格式
         function ChangeDateFormat(cellval) {

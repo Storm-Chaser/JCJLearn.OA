@@ -168,5 +168,33 @@ namespace JCJ.OA.DALFactory
             }
             set { _UserInfoDal = value; }
         }
+	
+		private IVideoClassDal _VideoClassDal;
+        public IVideoClassDal VideoClassDal
+        {
+            get
+            {
+                if(_VideoClassDal == null)
+                {
+                    _VideoClassDal = AbstractFactory.CreateVideoClassDal();
+                }
+                return _VideoClassDal;
+            }
+            set { _VideoClassDal = value; }
+        }
+	
+		private IVideoFileInfoDal _VideoFileInfoDal;
+        public IVideoFileInfoDal VideoFileInfoDal
+        {
+            get
+            {
+                if(_VideoFileInfoDal == null)
+                {
+                    _VideoFileInfoDal = AbstractFactory.CreateVideoFileInfoDal();
+                }
+                return _VideoFileInfoDal;
+            }
+            set { _VideoFileInfoDal = value; }
+        }
 	}	
 }

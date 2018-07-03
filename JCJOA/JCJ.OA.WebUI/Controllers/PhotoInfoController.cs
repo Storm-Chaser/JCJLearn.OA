@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JCJ.OA.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -73,6 +74,33 @@ namespace JCJ.OA.WebUI.Controllers
             string picUrl = Request["p"];
             System.IO.File.Delete(Request.MapPath(picUrl));
             return Content("ok");
+        }
+        /// <summary>
+        /// 完成图片信息的保存
+        /// </summary>
+        /// <param name="photoInfo"></param>
+        /// <returns></returns>
+        [ValidateInput(false)]
+        public ActionResult AddPhoto(PhotoInfo photoInfo)
+        {
+            photoInfo.AddDate = DateTime.Now;
+            photoInfo.DelFlag = 0;
+            photoInfo.ModifyDate = DateTime.Now;
+            photoInfo.PhotoClassID = Convert.ToInt32(Request["photoClass"]);
+            photoInfo.PicUrls = Request["hiddenUrl"];
+            PhotoInfoService.AddEntity(photoInfo);
+            return Content("ok");
+        }
+        /// <summary>
+        /// 展示图片的详细信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowPhotoDetail()
+        {
+            int pid = Convert.ToInt32(Request["id"]);
+            var photoInfo = PhotoInfoService.LoadEntities(p => p.ID == pid).FirstOrDefault();
+            ViewBag.PhotoInfo = photoInfo;
+            return View();
         }
     }
 }

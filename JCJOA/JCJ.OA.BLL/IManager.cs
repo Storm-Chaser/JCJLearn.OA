@@ -100,4 +100,20 @@ namespace JCJ.OA.BLL
         }
     }   
 	
+	public partial class VideoClassService :BaseService<VideoClass>,IVideoClassService
+    {
+        public override void SetCurrentDal()
+        {
+			CurrentDal = this.DbSession.VideoClassDal;
+        }
+    }   
+	
+	public partial class VideoFileInfoService :BaseService<VideoFileInfo>,IVideoFileInfoService
+    {
+        public override void SetCurrentDal()
+        {
+			CurrentDal = this.DbSession.VideoFileInfoDal;
+        }
+    }   
+	
 }

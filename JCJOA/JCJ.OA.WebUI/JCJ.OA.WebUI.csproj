@@ -216,6 +216,7 @@
     <Compile Include="Controllers\RoleInfoController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
+    <Compile Include="Controllers\VideoInfoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -873,6 +874,10 @@
     <Content Include="Config\services.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\AutoPlay\datouwang.css" />
+    <Content Include="Content\AutoPlay\focus_btn.png" />
+    <Content Include="Content\AutoPlay\koala.min.1.5.js" />
+    <Content Include="Content\AutoPlay\terminator2.2.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1843,6 +1848,8 @@
     <Content Include="Views\ArticelInfo\ShowEditInfo.cshtml" />
     <Content Include="Views\PhotoInfo\Index.cshtml" />
     <Content Include="Views\PhotoInfo\ShowAddPhoto.cshtml" />
+    <Content Include="Views\PhotoInfo\ShowPhotoDetail.cshtml" />
+    <Content Include="Views\VideoInfo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1851,6 +1858,7 @@
     <Folder Include="Log\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Test\" />
+    <Folder Include="Views\VidoFile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

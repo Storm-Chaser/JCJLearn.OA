@@ -204,6 +204,44 @@
           <Property Name="UserInfo_ID" Type="int" Nullable="false" />
           <Property Name="RoleInfo_ID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="VideoClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="CreateUserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="DelFlag" Type="smallint" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VideoClassVideoFileInfo">
+          <Key>
+            <PropertyRef Name="VideoClass_ID" />
+            <PropertyRef Name="VideoFileInfo_ID" />
+          </Key>
+          <Property Name="VideoClass_ID" Type="int" Nullable="false" />
+          <Property Name="VideoFileInfo_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VideoFileInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KeyWords" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VideoPath" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="VideoContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="Orgin" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="AddDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifyDate" Type="datetime" Nullable="false" />
+          <Property Name="DelFlag" Type="smallint" Nullable="false" />
+          <Property Name="Rolls" Type="smallint" Nullable="false" />
+          <Property Name="IsTop" Type="smallint" Nullable="false" />
+          <Property Name="ImageUrl" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <Association Name="FK_ActionInfoR_UserInfo_ActionInfo">
           <End Role="ActionInfo" Type="Self.ActionInfo" Multiplicity="1" />
           <End Role="R_UserInfo_ActionInfo" Type="Self.R_UserInfo_ActionInfo" Multiplicity="*" />
@@ -372,6 +410,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VideoClassVideoFileInfo_VideoClass">
+          <End Role="VideoClass" Type="Self.VideoClass" Multiplicity="1" />
+          <End Role="VideoClassVideoFileInfo" Type="Self.VideoClassVideoFileInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VideoClass">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VideoClassVideoFileInfo">
+              <PropertyRef Name="VideoClass_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VideoClassVideoFileInfo_VideoFileInfo">
+          <End Role="VideoFileInfo" Type="Self.VideoFileInfo" Multiplicity="1" />
+          <End Role="VideoClassVideoFileInfo" Type="Self.VideoClassVideoFileInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VideoFileInfo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VideoClassVideoFileInfo">
+              <PropertyRef Name="VideoFileInfo_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ItcastCmsModelStoreContainer">
           <EntitySet Name="ActionInfo" EntityType="Self.ActionInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Articel" EntityType="Self.Articel" Schema="dbo" store:Type="Tables" />
@@ -389,6 +451,9 @@
           <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfoDepartment" EntityType="Self.UserInfoDepartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfoRoleInfo" EntityType="Self.UserInfoRoleInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideoClass" EntityType="Self.VideoClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideoClassVideoFileInfo" EntityType="Self.VideoClassVideoFileInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideoFileInfo" EntityType="Self.VideoFileInfo" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ActionInfoR_UserInfo_ActionInfo" Association="Self.FK_ActionInfoR_UserInfo_ActionInfo">
             <End Role="ActionInfo" EntitySet="ActionInfo" />
             <End Role="R_UserInfo_ActionInfo" EntitySet="R_UserInfo_ActionInfo" />
@@ -444,6 +509,14 @@
           <AssociationSet Name="FK_UserInfoRoleInfo_UserInfo" Association="Self.FK_UserInfoRoleInfo_UserInfo">
             <End Role="UserInfo" EntitySet="UserInfo" />
             <End Role="UserInfoRoleInfo" EntitySet="UserInfoRoleInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideoClassVideoFileInfo_VideoClass" Association="Self.FK_VideoClassVideoFileInfo_VideoClass">
+            <End Role="VideoClass" EntitySet="VideoClass" />
+            <End Role="VideoClassVideoFileInfo" EntitySet="VideoClassVideoFileInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideoClassVideoFileInfo_VideoFileInfo" Association="Self.FK_VideoClassVideoFileInfo_VideoFileInfo">
+            <End Role="VideoFileInfo" EntitySet="VideoFileInfo" />
+            <End Role="VideoClassVideoFileInfo" EntitySet="VideoClassVideoFileInfo" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -513,6 +586,12 @@
           <AssociationSet Name="FK_PhotoClassPhotoInfo" Association="ItcastCmsModel.FK_PhotoClassPhotoInfo">
             <End Role="PhotoClass" EntitySet="PhotoClass" />
             <End Role="PhotoInfo" EntitySet="PhotoInfo" />
+          </AssociationSet>
+          <EntitySet Name="VideoClass" EntityType="ItcastCmsModel.VideoClass" />
+          <EntitySet Name="VideoFileInfo" EntityType="ItcastCmsModel.VideoFileInfo" />
+          <AssociationSet Name="VideoClassVideoFileInfo" Association="ItcastCmsModel.VideoClassVideoFileInfo">
+            <End Role="VideoClass" EntitySet="VideoClass" />
+            <End Role="VideoFileInfo" EntitySet="VideoFileInfo" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="ActionInfo">
@@ -744,6 +823,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="VideoClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="CreateUserId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DelFlag" Type="Int16" Nullable="false" />
+          <Property Name="Remark" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VideoFileInfo" Relationship="ItcastCmsModel.VideoClassVideoFileInfo" FromRole="VideoClass" ToRole="VideoFileInfo" />
+        </EntityType>
+        <EntityType Name="VideoFileInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KeyWords" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VideoPath" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="VideoContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Orgin" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="AddDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DelFlag" Type="Int16" Nullable="false" />
+          <Property Name="Rolls" Type="Int16" Nullable="false" />
+          <Property Name="IsTop" Type="Int16" Nullable="false" />
+          <Property Name="ImageUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VideoClass" Relationship="ItcastCmsModel.VideoClassVideoFileInfo" FromRole="VideoFileInfo" ToRole="VideoClass" />
+        </EntityType>
+        <Association Name="VideoClassVideoFileInfo">
+          <End Type="ItcastCmsModel.VideoClass" Role="VideoClass" Multiplicity="*" />
+          <End Type="ItcastCmsModel.VideoFileInfo" Role="VideoFileInfo" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -960,6 +1075,46 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="VideoClass">
+            <EntityTypeMapping TypeName="ItcastCmsModel.VideoClass">
+              <MappingFragment StoreEntitySet="VideoClass">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VideoFileInfo">
+            <EntityTypeMapping TypeName="ItcastCmsModel.VideoFileInfo">
+              <MappingFragment StoreEntitySet="VideoFileInfo">
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="IsTop" ColumnName="IsTop" />
+                <ScalarProperty Name="Rolls" ColumnName="Rolls" />
+                <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="AddDate" ColumnName="AddDate" />
+                <ScalarProperty Name="Orgin" ColumnName="Orgin" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="VideoContent" ColumnName="VideoContent" />
+                <ScalarProperty Name="VideoPath" ColumnName="VideoPath" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="KeyWords" ColumnName="KeyWords" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="VideoClassVideoFileInfo" TypeName="ItcastCmsModel.VideoClassVideoFileInfo" StoreEntitySet="VideoClassVideoFileInfo">
+            <EndProperty Name="VideoFileInfo">
+              <ScalarProperty Name="ID" ColumnName="VideoFileInfo_ID" />
+            </EndProperty>
+            <EndProperty Name="VideoClass">
+              <ScalarProperty Name="ID" ColumnName="VideoClass_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

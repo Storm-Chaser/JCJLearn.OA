@@ -34,5 +34,9 @@ namespace JCJ.OA.IDAL
 		ISensitiveWordDal SensitiveWordDal{get;set;}
 	
 		IUserInfoDal UserInfoDal{get;set;}
+	
+		IVideoClassDal VideoClassDal{get;set;}
+	
+		IVideoFileInfoDal VideoFileInfoDal{get;set;}
 	}	
 }

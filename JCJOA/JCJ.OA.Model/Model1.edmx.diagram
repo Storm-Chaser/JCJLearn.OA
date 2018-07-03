@@ -7,7 +7,7 @@
       <Diagram DiagramId="8680f57ffe074ac4be52080b9a6ef8d6" Name="Diagram1">
         <EntityTypeShape EntityType="ItcastCmsModel.UserInfo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ItcastCmsModel.ActionInfo" Width="1.5" PointX="11" PointY="1.625" />
-        <EntityTypeShape EntityType="ItcastCmsModel.Department" Width="1.5" PointX="4.25" PointY="4.625" />
+        <EntityTypeShape EntityType="ItcastCmsModel.Department" Width="1.5" PointX="3.5" PointY="4.375" />
         <EntityTypeShape EntityType="ItcastCmsModel.R_UserInfo_ActionInfo" Width="1.5" PointX="8.125" PointY="0.5" />
         <EntityTypeShape EntityType="ItcastCmsModel.RoleInfo" Width="1.5" PointX="6.125" PointY="1.75" />
         <AssociationConnector Association="ItcastCmsModel.FK_ActionInfoR_UserInfo_ActionInfo" />
@@ -25,6 +25,9 @@
         <EntityTypeShape EntityType="ItcastCmsModel.PhotoClass" Width="1.5" PointX="0.5" PointY="8.625" />
         <EntityTypeShape EntityType="ItcastCmsModel.PhotoInfo" Width="1.5" PointX="3" PointY="7.875" />
         <AssociationConnector Association="ItcastCmsModel.FK_PhotoClassPhotoInfo" />
+        <EntityTypeShape EntityType="ItcastCmsModel.VideoClass" Width="1.5" PointX="1" PointY="14.375" />
+        <EntityTypeShape EntityType="ItcastCmsModel.VideoFileInfo" Width="1.5" PointX="5.25" PointY="14.125" />
+        <AssociationConnector Association="ItcastCmsModel.VideoClassVideoFileInfo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

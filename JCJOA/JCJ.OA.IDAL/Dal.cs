@@ -65,4 +65,14 @@ namespace JCJ.OA.IDAL
       
     }
 	
+	public partial interface IVideoClassDal :IBaseDal<VideoClass>
+    {
+      
+    }
+	
+	public partial interface IVideoFileInfoDal :IBaseDal<VideoFileInfo>
+    {
+      
+    }
+	
 }
