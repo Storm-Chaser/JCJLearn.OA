@@ -1850,6 +1850,7 @@
     <Content Include="Views\PhotoInfo\ShowAddPhoto.cshtml" />
     <Content Include="Views\PhotoInfo\ShowPhotoDetail.cshtml" />
     <Content Include="Views\VideoInfo\Index.cshtml" />
+    <Content Include="Views\VideoInfo\ShowAddVideo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -20,4 +20,6 @@
     </object>
     <object type="JCJ.OA.BLL.PhotoClassService, JCJ.OA.BLL" singleton="false" name="PhotoClassService">
     </object>
+    <object type="JCJ.OA.BLL.VideoFileInfoService, JCJ.OA.BLL" singleton="false" name="VideoFileInfoService">
+    </object>
   </objects>

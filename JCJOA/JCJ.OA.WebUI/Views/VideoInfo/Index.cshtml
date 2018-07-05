@@ -9,9 +9,127 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <link href="~/Content/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Content/themes/icon.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
+    <script src="~/Scripts/datapattern.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#addDiv").css("display", "none");
+            loadData();
+        });
+        function loadData() {
+            $('#tt').datagrid({
+                url: '/VideoInfo/GetVideoInfo',
+                title: '视频数据表格',
+                width: 700,
+                height: 400,
+                fitColumns: true, //列自适应
+                nowrap: false,
+                idField: 'ID',//主键列的列明
+                loadMsg: '正在加载视频的信息...',
+                pagination: true,//是否有分页
+                singleSelect: false,//是否单行选择
+                pageSize: 5,//页大小，一页多少条数据
+                pageNumber: 1,//当前页，默认的
+                pageList: [5, 10, 15],
+                queryParams: {},//往后台传递参数
+                columns: [[//c.UserName, c.UserPass, c.Email, c.RegTime
+                    { field: 'ck', checkbox: true, align: 'left', width: 50 },
+                    { field: 'ID', title: '编号', width: 80 },
+
+                    { field: 'Title', title: '视频标题', width: 120 },
+                    { field: 'Author', title: '视频作者', width: 120 },
+                    { field: 'ClassName', title: '视频类别', width: 120 },
+                    { field: 'Orgin', title: '视频来源', width: 120 },
+                    {
+                        field: 'AddDate', title: '时间', width: 80, align: 'right',
+                        formatter: function (value, row, index) {
+                            return (eval(value.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"))).pattern("yyyy-M-d");
+                        }
+                    },
+
+                    {
+                        field: 'showDetail', title: '详细', width: 80, align: 'right',
+                        formatter: function (value, row, index) {
+                            var str = "<a href='javascript:void(0)' class='details' ids=" + row.ID + " >详细</a>";
+                            return str;
+                        }
+                    }
+                ]],
+                toolbar: [{
+                    id: 'btnDelete',
+                    text: '删除',
+                    iconCls: 'icon-remove',
+                    handler: function () {
+
+
+                    }
+                }, {
+                    id: 'btnAdd',
+                    text: '添加',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        addVideo();
+
+                    }
+                }, {
+                    id: 'btnEdit',
+                    text: '编辑',
+                    iconCls: 'icon-edit',
+                    handler: function () {
+
+                    }
+                }],
+                onLoadSuccess: function () {
+                    $(".details").click(function () {
+                        var id = $(this).attr("ids");
+                        var url = "/VideoInfo/ShowDetail?id=" + id;
+                        window.open(url);
+                    });
+
+                }
+            });
+        }
+
+        //添加视频
+        function addVideo() {
+            $("#addFrame").attr("src", "/VideoInfo/ShowAddVideo");
+            $("#addDiv").css("display", "block");
+            $('#addDiv').dialog({
+                title: '添加视频信息',
+                width: 900,
+                height: 600,
+                collapsible: true,
+                maximizable: true,
+                resizable: true,
+                modal: true,
+                buttons: [{
+                    text: 'Ok',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        var childWindow = $("#addFrame")[0].contentWindow;
+                        childWindow.subForm();
+                    }
+                }, {
+                    text: 'Cancel',
+                    handler: function () {
+                        $('#addDiv').dialog('close');
+                    }
+                }]
+            });
+        }
+    </script>
 </head>
 <body>
-    <div> 
+    <div>
+        <table id="tt" style="width: 700px;" title="标题，可以使用代码进行初始化，也可以使用这种属性的方式" iconcls="icon-edit"></table>
+    </div>
+    <div>
+        <iframe id="addFrame" width="100%" height="100%" frameborder="0"></iframe>
     </div>
 </body>
 </html>
