@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{6C823400-8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JCJ.OA.SpringNer", "JCJ.OA.SpringNer\JCJ.OA.SpringNer.csproj", "{55617F3B-F04B-4C13-BB5A-0CD5680D8A23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JCJ.OA.VideoServer", "JCJ.OA.VideoServer\JCJ.OA.VideoServer.csproj", "{E68A92D3-9CFA-4808-A500-E150581F8249}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{55617F3B-F04B-4C13-BB5A-0CD5680D8A23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55617F3B-F04B-4C13-BB5A-0CD5680D8A23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55617F3B-F04B-4C13-BB5A-0CD5680D8A23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E68A92D3-9CFA-4808-A500-E150581F8249}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E68A92D3-9CFA-4808-A500-E150581F8249}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E68A92D3-9CFA-4808-A500-E150581F8249}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E68A92D3-9CFA-4808-A500-E150581F8249}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
