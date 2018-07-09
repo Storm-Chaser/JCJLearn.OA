@@ -47,7 +47,7 @@
                         field: 'ImageUrl', title: '图片内容', width: 120,
                         formatter: function (value, row, index) {
                             var url = value.split('$')[0].split('|')[1];
-                            var img = "<div class='jqzoom'><img src='" + url + "' width='50' height='50' jqimg='" + url + "'/></div>";
+                            var img = "<div class='jqzoom'><img src='/PhotoInfo/IsFileExt?url=" + url + "' width='50' height='50' jqimg='/PhotoInfo/IsFileExt?url=" + url + "'/></div>";
                             return img;
                         }
 
@@ -75,7 +75,7 @@
                     $(".details").click(function () {
                         var pId = $(this).attr("ids");
                         //var showAddData = $(this).attr("showAddData");//2015/1/12
-                        //var dir = "/ArticelHtml/" + showAddData + "/" + articelId + ".html";
+                        //  var dir = "/ArticelHtml/" + showAddData + "/" + articelId + ".html";
                         window.open("/PhotoInfo/ShowPhotoDetail?id=" + pId);
                     });
 
@@ -154,10 +154,10 @@
                 }]
             });
         }
-        //完成后调用该方法
+        //添加完成后调用该方法.
         function afterAdd(data) {
             if (data == "ok") {
-                $("#addDiv").dialog('close');
+                $('#addDiv').dialog('close');
             }
         }
         //将序列化成json格式后日期(毫秒数)转成日期格式
@@ -167,7 +167,6 @@
             var currentDate = date.getDate();
             return date.getFullYear() + "/" + month + "/" + currentDate;
         }
-
     </script>
 </head>
 <body>
