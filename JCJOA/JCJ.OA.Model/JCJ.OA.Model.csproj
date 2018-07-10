@@ -114,6 +114,7 @@
     <Compile Include="VideoFileInfo.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="VideoFileModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

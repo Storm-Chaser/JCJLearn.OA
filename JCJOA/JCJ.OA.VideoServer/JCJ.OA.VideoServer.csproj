@@ -89,6 +89,16 @@
   <ItemGroup>
     <Folder Include="VideoFile\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JCJ.OA.Common\JCJ.OA.Common.csproj">
+      <Project>{63750fe9-0b3e-4e3a-8040-0f0ac80ed133}</Project>
+      <Name>JCJ.OA.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JCJ.OA.Model\JCJ.OA.Model.csproj">
+      <Project>{c165f29b-629b-4ffa-917d-c540e35e4657}</Project>
+      <Name>JCJ.OA.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
