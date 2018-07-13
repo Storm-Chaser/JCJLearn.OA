@@ -52,6 +52,7 @@
     <Compile Include="RoleInfoService.cs" />
     <Compile Include="SensitiveWordService.cs" />
     <Compile Include="UserInfoService.cs" />
+    <Compile Include="VideoFileInfoService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JCJ.OA.Common\JCJ.OA.Common.csproj">

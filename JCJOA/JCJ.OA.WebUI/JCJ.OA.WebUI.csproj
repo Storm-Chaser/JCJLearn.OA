@@ -1818,6 +1818,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TextTemplate1.cs</LastGenOutput>
     </Content>
+    <Content Include="VideoPlay\AC_RunActiveContent.js" />
+    <Content Include="VideoPlay\OSplayer.swf" />
+    <Content Include="VideoPlay\rac.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1851,12 +1854,14 @@
     <Content Include="Views\PhotoInfo\ShowPhotoDetail.cshtml" />
     <Content Include="Views\VideoInfo\Index.cshtml" />
     <Content Include="Views\VideoInfo\ShowAddVideo.cshtml" />
+    <Content Include="Views\VideoInfo\PlayVideo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ArticelHtml\" />
     <Folder Include="ImageUp\" />
     <Folder Include="Log\" />
+    <Folder Include="Videos\Flv\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Test\" />
     <Folder Include="Views\VidoFile\" />

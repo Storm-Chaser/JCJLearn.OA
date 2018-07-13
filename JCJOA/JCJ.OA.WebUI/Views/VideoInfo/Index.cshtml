@@ -122,6 +122,14 @@
                 }]
             });
         }
+        function afterAdd(data) {
+            if (data == "ok") {
+                $('#addDiv').dialog('close');
+                $('#tt').datagrid('reload');
+            } else {
+                $.messager.alert("提示", "添加失败", "error");
+            }
+        }
     </script>
 </head>
 <body>

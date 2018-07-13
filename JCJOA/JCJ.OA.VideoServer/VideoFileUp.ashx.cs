@@ -19,7 +19,7 @@ namespace JCJ.OA.VideoServer
             string fileName = context.Request["fileName"];  //文件路径
             string fileExt = context.Request["ext"];//文件扩展名
             //将传递过来的视频文件接收并且存到视频转换服务器的磁盘上，同时将视频的信息写到队列中
-            using (FileStream fileStream = File.OpenWrite(context.Request.MapPath("D:/" + fileName + fileExt)))
+            using (FileStream fileStream = File.OpenWrite("D:/" + fileName + fileExt))
             {
                 //将web服务器传递过来的视频保存到转换服务器磁盘上
                 context.Request.InputStream.CopyTo(fileStream);

@@ -37,7 +37,9 @@
   </object>
   <object type="JCJ.OA.WebUI.Controllers.VideoInfoController, JCJ.OA.WebUI" singleton="false" >
     <property name="VideoFileInfoService" ref="VideoFileInfoService" />
+    <property name="VideoClassService" ref="VideoClassService" />
   </object>
+  
   <!--intentionally do NOT register the AccountController or the ValuesController with the container; demonstrates that the underlying
   default controller factory will properly (attempt to!) resolve all controllers not registered with Spring.NET
   using its default controller resolution behavoir-->

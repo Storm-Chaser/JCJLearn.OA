@@ -51,6 +51,7 @@
     <Compile Include="IRoleInfoService.cs" />
     <Compile Include="ISensitiveWordService.cs" />
     <Compile Include="IUserInfoService.cs" />
+    <Compile Include="IVideoFileInfoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

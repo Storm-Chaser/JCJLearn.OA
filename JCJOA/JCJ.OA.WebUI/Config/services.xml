@@ -22,4 +22,6 @@
     </object>
     <object type="JCJ.OA.BLL.VideoFileInfoService, JCJ.OA.BLL" singleton="false" name="VideoFileInfoService">
     </object>
+    <object type="JCJ.OA.BLL.VideoClassService, JCJ.OA.BLL" singleton="false" name="VideoClassService">
+    </object>
   </objects>

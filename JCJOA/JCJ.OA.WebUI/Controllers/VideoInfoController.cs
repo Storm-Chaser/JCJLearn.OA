@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JCJ.OA.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace JCJ.OA.WebUI.Controllers
     {
         // GET: VidoFile
         IBLL.IVideoFileInfoService VideoFileInfoService { get; set; }
+        IBLL.IVideoClassService VideoClassService { get; set; }
         public ActionResult Index()
         {
             return View();
@@ -37,6 +39,10 @@ namespace JCJ.OA.WebUI.Controllers
         /// <returns></returns>
         public ActionResult ShowAddVideo()
         {
+            var temp = VideoClassService.LoadEntities(a => a.DelFlag == 0).ToList();
+            var videoClassList = from v in temp
+                                 select new SelectListItem() { Text = v.ClassName, Value = v.ID.ToString() };
+            ViewData["videoClass"] = videoClassList;
             return View();
         }
         /// <summary>
@@ -56,7 +62,7 @@ namespace JCJ.OA.WebUI.Controllers
                 webClient.UploadData("http://localhost:33242/VideoFileUp.ashx?fileName=" + newFileName + "&ext=" + fileExt, StreamToByte(file.InputStream));
 
 
-                return Content("ok:视频上传成功!!");
+                return Content("ok:视频上传成功!!" + ":" + newFileName);
             }
             return Content("no:视频上传错误!!");
         }
@@ -66,6 +72,58 @@ namespace JCJ.OA.WebUI.Controllers
             byte[] buffer = new byte[stream.Length];
             stream.Read(buffer, 0, buffer.Length);
             return buffer;
+        }
+        /// <summary>
+        /// 接收从视频转换服务器发送过来的转换后的FLV视频。
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetVideoFile()
+        {
+            string fileName = Request["fileName"];
+            string t = Request["t"];
+            if (t == "flv")
+            {
+                using (FileStream fileStream = System.IO.File.OpenWrite(Request.MapPath("/Videos/Flv/" + fileName + ".flv")))
+                {
+                    Request.InputStream.CopyTo(fileStream);
+                    return Content("ok");
+                }
+            }
+            else
+            {
+                using (FileStream fileStream = System.IO.File.OpenWrite(Request.MapPath("/Videos/Flv/" + fileName + ".jpg")))
+                {
+                    Request.InputStream.CopyTo(fileStream);
+                    return Content("ok");
+                }
+            }
+        }
+        /// <summary>
+        /// 完成信息保存
+        /// </summary>
+        /// <param name="videoInfo"></param>
+        /// <returns></returns>
+        [ValidateInput(false)]
+        public ActionResult AddVideo(VideoFileInfo videoInfo)
+        {
+            videoInfo.AddDate = DateTime.Now;
+            videoInfo.DelFlag = 0;
+            videoInfo.ImageUrl = "/Videos/Flv/" + Request["ImageUrl"] + ".jpg";
+            videoInfo.ModifyDate = DateTime.Now;
+            videoInfo.VideoPath = "/Videos/Flv/" + Request["ImageUrl"] + ".flv";
+            int classId = int.Parse(Request["videoClass"]);
+            return Content(VideoFileInfoService.AddVideoFileInfo(classId, videoInfo) ? "ok" : "no");
+        }
+        /// <summary>
+        /// 播放视频
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PlayVideo()
+        {
+            int id = int.Parse(Request["id"]);
+            var videoInfo = VideoFileInfoService.LoadEntities(a => a.ID == id).FirstOrDefault();
+            ViewBag.VideoInfo = videoInfo;
+            return View();
         }
     }
 }

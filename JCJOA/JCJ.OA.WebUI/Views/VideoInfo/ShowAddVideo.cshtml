@@ -112,7 +112,7 @@
           //上传成功以后执行
           function showVideo(file, serverData) {
               //将上传成功视频路径存储到隐藏域中。
-              var data = serverData.split('#');
+              var data = serverData.split(':');
               if (data[0] == "ok") {
                   $("#txtVideoPath").val(data[1]);
                   $("#txtImageUrl").val(data[2]);
@@ -152,7 +152,7 @@
 
           //提交表单
           function subForm() {
-              alert("aaaaa");
+              
               $("#addForm").submit();
           }
 
@@ -170,7 +170,7 @@
             <input type="hidden" name="ImageUrl" id="txtImageUrl" />
             <table style="width:auto; margin: 0 auto">
                 <tr><td>视频名称：</td><td><input type="text" name="Title" class="textbox" /></td></tr>
-                <tr><td>归属栏目:</td><td>@*@Html.DropDownList("videoClass")*@</td></tr>
+                <tr><td>归属栏目:</td><td>@Html.DropDownList("videoClass")</td></tr>
                 <tr><td>关 键 字</td><td><input type="text" name="KeyWords" class="textbox" /></td></tr>
                 <tr><td>视频作者:</td><td><input type="text" name="Author" id="Author" class="textbox" />&nbsp;&nbsp;【<a href="javascript:void(0)" class="authorClick">未知</a>】【<a href="javascript:void(0)" class="authorClick">佚名</a>】【<a href="javascript:void(0)" class="authorClick">Itcast</a>】</td></tr>
                 <tr><td>视频来源:</td><td><input type="text" name="Orgin" id="Origin" class="textbox" />&nbsp;&nbsp;【<a href="javascript:void(0)" class="originInfo">不详</a>】【<a href="javascript:void(0)" class="originInfo">本站原创</a>】【<a href="javascript:void(0)" class="originInfo">互联网</a>】</td></tr>
