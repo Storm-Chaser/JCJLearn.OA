@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = null;
+}
+@using JCJ.OA.WebUI.Models
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div> 
+        <form method="post" action="/Search/SearchContent">
+            <input type="text" name="txtSearch" /><input type="submit" value="搜索" id="btnSearch" name="btnSearch"/>
+            <input type="submit" value="创建索引库" id="btnCreateSearch" name="btnCreateSearch"/>
+        </form>
+        
+            @if (ViewData["searchList"] != null)
+            {
+                <ul>
+                @foreach (var searchConent in (List<SearchContent>)ViewData["searchList"]) {
+                <li>
+                    @searchConent.Title
+                </li>
+                <li>
+                    @MvcHtmlString.Create(searchConent.Content)
+                </li>
+                }
+                    </ul>
+            }
+
+        
+
+    </div>
+</body>
+</html>

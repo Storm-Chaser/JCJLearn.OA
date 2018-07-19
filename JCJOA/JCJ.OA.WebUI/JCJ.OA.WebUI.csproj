@@ -71,6 +71,9 @@
     <Reference Include="log4net.Fakes">
       <HintPath>FakesAssemblies\log4net.Fakes.dll</HintPath>
     </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>..\lib\Lucene.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Memcached.ClientLibrary">
       <HintPath>..\lib\Memcached.ClientLibrary.dll</HintPath>
     </Reference>
@@ -86,6 +89,15 @@
     </Reference>
     <Reference Include="MvcCodeRouting.Web.Http.WebHost, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bf7cf9743009fe42, processorArchitecture=MSIL">
       <HintPath>..\packages\MvcCodeRouting.Web.Http.WebHost.1.1.0\lib\net40\MvcCodeRouting.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="PanGu">
+      <HintPath>..\lib\PanGu.dll</HintPath>
+    </Reference>
+    <Reference Include="PanGu.HighLight">
+      <HintPath>..\lib\PanGu.HighLight.dll</HintPath>
+    </Reference>
+    <Reference Include="PanGu.Lucene.Analyzer">
+      <HintPath>..\lib\PanGu.Lucene.Analyzer.dll</HintPath>
     </Reference>
     <Reference Include="Spring.Core, Version=2.0.1.45000, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <HintPath>..\packages\Spring.Core.2.0.1\lib\net45\Spring.Core.dll</HintPath>
@@ -214,6 +226,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PhotoInfoController.cs" />
     <Compile Include="Controllers\RoleInfoController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Controllers\VideoInfoController.cs" />
@@ -223,6 +236,7 @@
     <Compile Include="Models\ArticelClassModel.cs" />
     <Compile Include="Models\ArticelCommentViewModel.cs" />
     <Compile Include="Models\MyExceptionAttribute.cs" />
+    <Compile Include="Models\SearchContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextTemplate1.cs">
       <AutoGen>True</AutoGen>
@@ -1767,6 +1781,24 @@
     <Content Include="Content\themes\metro\validatebox.css" />
     <Content Include="Content\themes\metro\window.css" />
     <Content Include="Content\themes\mobile.css" />
+    <Content Include="Dict\ChsDoubleName1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dict\ChsDoubleName2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dict\ChsSingleName.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dict\Stopword.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dict\Synonym.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dict\Wildcard.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Error.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -1785,6 +1817,9 @@
     <Content Include="ckeditor\_samples\adobeair\run.bat" />
     <Content Include="ckeditor\_samples\adobeair\run.sh" />
     <Content Include="ckeditor\_samples\assets\output_for_flash.fla" />
+    <Content Include="Dict\Dict.dct">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\datapattern.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
@@ -1855,6 +1890,7 @@
     <Content Include="Views\VideoInfo\Index.cshtml" />
     <Content Include="Views\VideoInfo\ShowAddVideo.cshtml" />
     <Content Include="Views\VideoInfo\PlayVideo.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

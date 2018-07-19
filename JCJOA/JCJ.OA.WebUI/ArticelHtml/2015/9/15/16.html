@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/ArticelTemplate/ArticelStyle.css ">
+    <link href="/Content/themes/default/easyui.css" rel="stylesheet" />
+    <link href="/Content/themes/icon.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="/Scripts/jquery.easyui.min.js"></script>
+    <script src="/Scripts/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript">
+        jQuery(function () {
+            loadLikeNews();
+            jQuery("#btnComment").click(function () {
+                addComment();
+            });
+        });
+        //加载相关新闻.
+        function loadLikeNews() {
+            jQuery.post("/ArticelInfo/LoadLikeNews", { "articelId": 16 }, function (data) {
+                var serverData = jQuery.parseJSON(data)
+                var serverDataLength = serverData.length;
+                for (var i = 0; i < serverDataLength; i++) {
+                    var addDate = serverData[i].AddDate;
+                    var d = addDate.split('T')[0];
+                    var date = new Date(d);
+                    var month = date.getMonth() + 1;
+                    var currentDate = date.getDate();
+                    var dir = date.getFullYear() + "/" + month + "/" + currentDate;
+                    jQuery("<li><a href='/ArticelHtml/" + dir + "/" + serverData[i].Id + ".html'>" + serverData[i].Title + "</a></li>").appendTo("#likeNewList");
+                }
+            });
+        }
+        //添加评论
+        function addComment() {
+            var msg = jQuery("#commentMsg").val();
+            if (msg != "") {
+                jQuery.post("/ArticelInfo/AddArticelComment", { "msg": msg, "articelId": 16 }, function (data) {
+                    var serverData = data.split(':');
+                    if (serverData[0] == "ok") {
+                        //重新加载
+                    } else {
+                        jQuery.messager.alert("提示", serverData[1], "error");
+                    }
+                });
+            } else {
+                jQuery.messager.alert("提示", "评论内容不能为空?", "error");
+            }
+        }
+        //加载评论
+        function loadComment() {
+            jQuery.post("/ArticelInfo/LoadArticelComment", { "articelId": 16 }, function (data) {
+                var serverData = jQuery.parseJSON(data);
+                var serverDataLength = data.length;
+                for (var i = 0; i < serverDataLength; i++) {
+                    jQuery("<li>" + serverData[i].AddDate + ":" + serverData[i].Msg + "</li>").appendTo(jQuery("#articelCommentList"));
+                }
+
+            });
+        }
+        function check() {
+            var obj = document.getElementById('articelCommentList');
+            var dom = (document.compatMode && document.compatMode == "CSS1Compat") ? document.documentElement : document.body;
+            var scrollTop = dom.scrollTop || document.body.scrollTop || 0;
+            if (obj.offsetTop - scrollTop - dom.clientHeight < 100) {
+                loadComment();//加载评论数据
+            }
+            else {
+                setTimeout("check()", 1000);
+            }
+        }
+        setTimeout("check()", 1000);
+    </script>
+</head>
+<body>
+<!--顶部布局-->
+    <div id="articelTop">
+    <!--顶部布局第一行-->
+    	<div id="articelTop_one">
+    		<div class="articelTop_oneleft">
+    			您好！admin,欢迎来到会员中心!【会员中心】【短消息0】【退出】
+    		</div>
+    		<div class="articelTop_oneRight">
+    			设为首页&nbsp;加入收藏&nbsp;网站地图
+    		</div>
+    	</div>
+    	 <!--顶部布局第一行结束-->
+    	 <div style="clear:both"></div>
+    	 	 <!--顶部布局第二行开始-->
+    	 	 <div id="articelTop_two">
+    	 	 		<div class="articelTopImg">
+    	 	 			<img src="/ArticelTemplate/images/logo.gif">
+    	 	 		</div>
+    	 	 		<div class="articelTopSearch">
+    	 	 			<input type="text" id="txtSearch" />
+    	 	 			<input type="button" value="搜索" id="txtBtnSearch" />
+    	 	 		</div>
+    	 	 </div>
+    	 	  <!--顶部布局第二行结束-->
+    	 	   <div style="clear:both"></div>
+    	 	  <!--导航条布局-->
+    	 	  <div id="articelNav">
+    	 	  		<ul>
+    	 	  			<li><a href="javascript:void(0)">首页</a></li>
+    	 	  			<li><a href="javascript:void(0)">新闻频道</a></li>
+    	 	  			<li><a href="javascript:void(0)">图片频道</a></li>
+    	 	  			<li><a href="javascript:void(0)">下载频道</a></li>
+    	 	  		</ul>
+    	 	   </div>
+    	 	    <!--导航条布局结束-->
+    </div>
+    <!--顶部布局结束-->
+    <!--中间内容开始-->
+    <div id="articelContent">
+    	<div id="articelContent_left">
+ 		 <div id="articelContent_leftTop">
+                您当前位置：
+    			<a href="javascript:void(0)">ItcastCMS</a> >> 
+    			<a href="javascript:void(0)">新闻频道</a> >>
+    				<a href="javascript:void(0)">传智播客</a> >>
+    				<a href="javascript:void(0)">浏览文章</a> 
+    		</div>
+    		<div id="articelContent_leftBttom">
+    			<h2>传智播客</h2> 
+<div class="artcelTop"><span>时间:2015/9/14 23:58:07 </span><span>信息来源:本站原创</span><span>点击:0</span> <span>【收藏此文】【字体：大 中 小】</span></div>
+<div id="splitLine"></div>
+<p>
+	传智播客传智播客传智播客传智播客传智播客<img src="/ImageFileUp/2015/9/15/ebec815e-e916-4642-b422-89b415bf9ddf.jpg" style="font-size: 12px;" /><span style="font-size: 12px;">传智播客传智播客传智播客传智播客传智播客传智播客传智播客传智播客</span></p>
+
+
+                <!-------相关新闻------->
+                  <div id="articelContent_Same">
+                  <div class="articelContent_SameNew">相关新闻</div>
+                <ul id="likeNewList">
+                  
+                </ul>
+            </div>
+                 <!-------相关新闻结束------->
+                  <br />
+                <!----------评论展示----------------->
+                <div id="articelComment">
+                    <div id="articelComment_top">
+                       <span style="font-size:20px;font-weight:bolder;display:block"> 我有话说</span>
+                     
+                           <span > 以下是对 <strong>[传智播客]</strong> 的评论,总共:1条评论</span>
+                    </div>
+                    <div id="articelComment_middle">
+                        <ul id="articelCommentList">
+                            
+                        </ul>
+                    </div>
+                    <div id="articelCommnet_bottome">
+                        <textarea style="font-size:14px;padding:5px;width:90%;height:90px;overflow:auto;" placeholder="文明上网，请对您的发言负责" id="commentMsg"></textarea>
+                        <input type="button" id="btnComment" style="float:right" value="发布评论" class="reply_btn"/>
+                    </div>
+
+                </div>
+                <!----------评论展示结束----------------->
+    		</div>
+          
+    	</div>
+        <!---中间内容右侧布局---->
+    		<div id="articelContent_right">
+    		   <div id="hotArticel">
+                   <div class="newArticel_Title">
+                    <h3><span>最</span>新文章</h3>
+                </div>
+                <div id="newArticel_Content">
+                    <ul class="showUl">
+                        <li>
+                            <span class="spanData">1</span>
+                            <a href="javascript:void(0)">
+                                <span style="color:green">[图文]</span>
+                                啊啊啊啊
+                            </a>
+                            <span style="float:right"><img class="showImage" src="/ArticelTemplate/images/logo.gif"></span>
+                           <p style="padding-left:20px">啊啊啊啊......</p>
+                        </li>
+                        <li> <span class="spanData">2</span>
+                            <a href="javascript:void(0)">
+                                <span style="color:green">[图文]</span>
+                                啊啊啊啊
+                            </a>
+                            <span style="float:right"><img class="showImage" src="/ArticelTemplate/images/logo.gif"></span>
+                           <p style="padding-left:20px">啊啊啊啊......</p></li>
+                        <li> <span class="spanData">3</span>
+                            <a href="javascript:void(0)">
+                                <span style="color:green">[图文]</span>
+                                啊啊啊啊
+                            </a>
+                            <span style="float:right"><img class="showImage" src="/ArticelTemplate/images/logo.gif"></span>
+                           <p style="padding-left:20px">啊啊啊啊......</p></li>
+                    </ul>
+                    
+              </div>
+
+        </div>
+    	   </div>
+          <!---中间内容右侧布局结束---->
+    </div>
+
+    <!--中间内容结束-->
+    <div id="articelBottom">
+
+           <div id="about">
+            <a href="javascript:void(0)">关于我们</a>
+            <a href="javascript:void(0)">联系我们</a>
+            <a href="javascript:void(0)">法律声明</a>
+            <a href="javascript:void(0)">人才招聘</a>
+            <a href="javascript:void(0)">免责声明</a>
+            <a href="javascript:void(0)">网站地图</a>
+             <a href="javascript:void(0)">友情链接</a>
+            
+        </div>
+        <div id="copyRight">
+            <p>传智播客-专业java培训、php培训、iOS培训、C++培训、网页设计、平面设计、网络营销、游戏开发、前端与移动开发培训机构
+版权所有 2006 - 2015 北京传智播客教育科技有限公司</p>
+<p>地址：北京市昌平区建材城西路金燕龙办公楼一层 邮编：100096</p>
+<p>电话：010-82935150/60/70 传真：010-82935100 邮箱: zhanghj+itcast.cn</p>
+        </div>
+
+
+    </div>
+</body>
+</html>

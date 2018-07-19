@@ -1,0 +1,8 @@
+
+----------------------header--------------------------
+2018-07-19 09:25:52,332 [9] ERROR Memcached.ClientLibrary.SockIOPool - Failed to get SockIO obj for: 10.0.0.132:11211 -- new socket is not connected
+System.IO.IOException: Could not connect for 1000 milliseconds
+   дк Memcached.ClientLibrary.SockIO.GetSocket(String host, Int32 port, Int32 timeout)
+   дк Memcached.ClientLibrary.SockIO..ctor(SockIOPool pool, String host, Int32 timeout, Int32 connectTimeout, Boolean noDelay)
+   дк Memcached.ClientLibrary.SockIOPool.CreateSocket(String host)
+2018-07-19 09:25:52,342 [9] ERROR Memcached.ClientLibrary.SockIOPool - Failed to create connection to: 10.0.0.132:11211 -- only 0 created

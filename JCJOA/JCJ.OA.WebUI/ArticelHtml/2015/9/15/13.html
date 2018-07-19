@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/ArticelTemplate/ArticelStyle.css ">
+    <link href="/Content/themes/default/easyui.css" rel="stylesheet" />
+    <link href="/Content/themes/icon.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="/Scripts/jquery.easyui.min.js"></script>
+    <script src="/Scripts/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript">
+        jQuery(function () {
+            loadLikeNews();
+            jQuery("#btnComment").click(function () {
+                addComment();
+            });
+        });
+        //加载相关新闻.
+        function loadLikeNews() {
+            jQuery.post("/ArticelInfo/LoadLikeNews", { "articelId": 13 }, function (data) {
+                var serverData = jQuery.parseJSON(data)
+                var serverDataLength = serverData.length;
+                for (var i = 0; i < serverDataLength; i++) {
+                    var addDate = serverData[i].AddDate;
+                    var d = addDate.split('T')[0];
+                    var date = new Date(d);
+                    var month = date.getMonth() + 1;
+                    var currentDate = date.getDate();
+                    var dir = date.getFullYear() + "/" + month + "/" + currentDate;
+                    jQuery("<li><a href='/ArticelHtml/" + dir + "/" + serverData[i].Id + ".html'>" + serverData[i].Title + "</a></li>").appendTo("#likeNewList");
+                }
+            });
+        }
+        //添加评论
+        function addComment() {
+            var msg = jQuery("#commentMsg").val();
+            if (msg != "") {
+                jQuery.post("/ArticelInfo/AddArticelComment", { "msg": msg, "articelId": 13 }, function (data) {
+                    var serverData = data.split(':');
+                    if (serverData[0] == "ok") {
+                        //重新加载
+                    } else {
+                        jQuery.messager.alert("提示", serverData[1], "error");
+                    }
+                });
+            } else {
+                jQuery.messager.alert("提示", "评论内容不能为空?", "error");
+            }
+        }
+        //加载评论
+        function loadComment() {
+            jQuery.post("/ArticelInfo/LoadArticelComment", { "articelId": 13 }, function (data) {
+                var serverData = jQuery.parseJSON(data);
+                var serverDataLength = data.length;
+                for (var i = 0; i < serverDataLength; i++) {
+                    jQuery("<li>" + serverData[i].AddDate + ":" + serverData[i].Msg + "</li>").appendTo(jQuery("#articelCommentList"));
+                }
+
+            });
+        }
+        function check() {
+            var obj = document.getElementById('articelCommentList');
+            var dom = (document.compatMode && document.compatMode == "CSS1Compat") ? document.documentElement : document.body;
+            var scrollTop = dom.scrollTop || document.body.scrollTop || 0;
+            if (obj.offsetTop - scrollTop - dom.clientHeight < 100) {
+                loadComment();//加载评论数据
+            }
+            else {
+                setTimeout("check()", 1000);
+            }
+        }
+        setTimeout("check()", 1000);
+    </script>
+</head>
+<body>
+<!--顶部布局-->
+    <div id="articelTop">
+    <!--顶部布局第一行-->
+    	<div id="articelTop_one">
+    		<div class="articelTop_oneleft">
+    			您好！admin,欢迎来到会员中心!【会员中心】【短消息0】【退出】
+    		</div>
+    		<div class="articelTop_oneRight">
+    			设为首页&nbsp;加入收藏&nbsp;网站地图
+    		</div>
+    	</div>
+    	 <!--顶部布局第一行结束-->
+    	 <div style="clear:both"></div>
+    	 	 <!--顶部布局第二行开始-->
+    	 	 <div id="articelTop_two">
+    	 	 		<div class="articelTopImg">
+    	 	 			<img src="/ArticelTemplate/images/logo.gif">
+    	 	 		</div>
+    	 	 		<div class="articelTopSearch">
+    	 	 			<input type="text" id="txtSearch" />
+    	 	 			<input type="button" value="搜索" id="txtBtnSearch" />
+    	 	 		</div>
+    	 	 </div>
+    	 	  <!--顶部布局第二行结束-->
+    	 	   <div style="clear:both"></div>
+    	 	  <!--导航条布局-->
+    	 	  <div id="articelNav">
+    	 	  		<ul>
+    	 	  			<li><a href="javascript:void(0)">首页</a></li>
+    	 	  			<li><a href="javascript:void(0)">新闻频道</a></li>
+    	 	  			<li><a href="javascript:void(0)">图片频道</a></li>
+    	 	  			<li><a href="javascript:void(0)">下载频道</a></li>
+    	 	  		</ul>
+    	 	   </div>
+    	 	    <!--导航条布局结束-->
+    </div>
+    <!--顶部布局结束-->
+    <!--中间内容开始-->
+    <div id="articelContent">
+    	<div id="articelContent_left">
+ 		 <div id="articelContent_leftTop">
+                您当前位置：
+    			<a href="javascript:void(0)">ItcastCMS</a> >> 
+    			<a href="javascript:void(0)">新闻频道</a> >>
+    				<a href="javascript:void(0)">神笔马良_童年回忆</a> >>
+    				<a href="javascript:void(0)">浏览文章</a> 
+    		</div>
+    		<div id="articelContent_leftBttom">
+    			<h2>神笔马良_童年回忆</h2> 
+<div class="artcelTop"><span>时间:2015/9/14 23:58:07 </span><span>信息来源:互联网</span><span>点击:0</span> <span>【收藏此文】【字体：大 中 小】</span></div>
+<div id="splitLine"></div>
+<p>
+	<img src="/ImageFileUp/2015/9/14/cd8f6dcd-c1f3-4798-be3d-c89b7e8ed917.jpg" /><br />
+	<img src="/ImageFileUp/2015/9/17/18fdb237-a2ea-4fd4-913e-fb1bec44d978.jpg" /></p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	腾讯娱乐讯 抢滩2014暑期档的国产王牌动画《神笔马良》截至目前已劲收近5000万票房佳绩，创今夏暑期档迄今为止非续集国产动画新纪录。影片改编自经典民间神话故事，由<span class="infoMblog" style="position: relative; z-index: 9;"><a _href="http://t.qq.com/disney#pref=qqcom.keyword" class="a-tips-Article-QQ" href="http://t.qq.com/disney#pref=qqcom.keyword" rel="disney" reltitle="华特迪士尼" style="outline: none; color: rgb(0, 0, 0); text-decoration: none; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(83, 109, 166);" target="_blank">华特迪士尼</a></span>中国全动力引擎，&ldquo;中西合璧&rdquo;的意蕴让人耳目一新，对传统文化的传承与推动也是功不可没。影片自横空出世以来，以社会化网络为核心，一方面跨界整合了全方位多渠道优质资源，联合了中影、华特迪士尼、炫动、少儿频道、六百余家幼儿园、儿童机构等多方平台，共同启动了一系列互动营销活动，真正实现优势互用、资源共享；另一方面影片针对目标受众进行渠道细分，横向带动网络新媒体、数字新媒体、移动新媒体等多种渠道，实现线上线下无缝对接，树立了国产动画营销新典范。</p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	该片由天古数码、中影股份、上海炫动联合出品，华特迪士尼中国创意技术支持，中影股份发行，<a _href="http://ent.qq.com/zt/2008/panda/" class="a-tips-Article-QQ" href="http://ent.qq.com/zt/2008/panda/" style="outline: none; color: rgb(0, 0, 0); text-decoration: none; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(83, 109, 166);" target="_blank">《功夫熊猫》</a>原班人马配音，<a _href="http://datalib.ent.qq.com/star/117/index.shtml" class="a-tips-Article-QQ" href="http://datalib.ent.qq.com/star/117/index.shtml" style="outline: none; color: rgb(0, 0, 0); text-decoration: none; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(83, 109, 166);" target="_blank">张学友</a>倾情献唱主题曲，并且这首主题曲是张学友与其老搭档欧丁玉为影片&ldquo;量身定制&rdquo;的全新力作。</p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	作为一部非续集动画<a _href="http://ent.qq.com/movie/" class="a-tips-Article-QQ" href="http://ent.qq.com/movie/" style="outline: none; color: rgb(0, 0, 0); text-decoration: none; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(83, 109, 166);" target="_blank">电影</a>，影片自7月25日上映以来，上座率高开高走，并凭借过硬的品质和观众口口相传的口碑，在暑期扎堆混战中，接连划出了首日700万、首周末3天2800万、8天近5000万的优质弧线，其中首个周六以1200万的单日票房创下暑期观影的合家盛况，8天近5000万的总票房更是创下今夏暑期档迄今为止非续集国产动画新纪录。</p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	<strong>&ldquo;布局&rdquo;跨界整合 &ldquo;运作&rdquo;渠道细分</strong></p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	跨界整合方面，影片从一开始，就启动了资源共享的跨平台合作模式，中影作为出品、发行，不仅联合了上海炫动、华特迪士尼，还深度合作了炫动卡通卫视、哈哈少儿、金鹰卡通、北京卡酷、江苏优漫、浙江少儿、重庆少儿等数十家少儿频道，进行节目植入，软硬广有效投放。同时还与全国六百余家幼儿园、儿童机构，以及各大购物商圈、Bobo乐乐园、网易游戏、网票预售、各渠道观影团、媒体亲子观影团进行了紧密合作。</p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	为了提升渠道价值优化市场策略，影片对目标受众则进行了渠道细分。更进一步讲，影片分别从&ldquo;小手&rdquo;、&ldquo;大手&rdquo;以及&ldquo;大手牵小手&rdquo;三个维度，着力少儿频道、童年情怀、暑期合家欢三个突破口，勾勒出广大受众的兴趣爱好，真正实现精准化投放。</p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	<strong>携手迪士尼 开启跨国合作新模式</strong></p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	与华特迪士尼中国的深度合作，堪称影片的一大亮点。据了解，影片从筹备之初，华特迪士尼就作为创意技术机构，参与了影片的创作部分，从影片的创意、剧本、设计，甚至儿童心理学方面，给出了很多宝贵的建议。对于民族动漫产业来说，这种合作方式无疑是史无前例的，在国产动漫的发展进程中，也具有一定的开创性和示范性。</p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	除此之外，影片还与迪士尼旗下的小神龙俱乐部进行深入合作，录制相关节目，于影片上映前夕集中投放。同时合作还延伸到迪士尼英语的所有门店、迪士尼旗下的小公主、米老鼠杂志，通过衍生品、立牌、DM单等直接与&ldquo;小手&rdquo;互动，使影片精准有效地落地。</p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	<strong>阵地预算高达千万 落地活动关注度爆表</strong></p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	在落地活动中，影片与六百余家幼儿园、儿童机构进行紧密合作，激发潜在受众的参与感和体验感。中影新掌门喇培康亲临新疆青少年提前看片会、北京首映式，两度为影片站台助阵，力挺影片硬实力。《爸爸回来了》中人气颇高的王中磊(<span class="infoMblog" style="position: relative; z-index: 9;"><a _href="http://t.qq.com/jameswang#pref=qqcom.keyword" class="a-tips-Article-QQ" href="http://t.qq.com/jameswang#pref=qqcom.keyword" rel="jameswang" reltitle="王中磊" style="outline: none; color: rgb(0, 0, 0); text-decoration: none; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(83, 109, 166);" target="_blank">微博</a></span>)与儿子威廉，奥运童星<a _href="http://datalib.ent.qq.com/star/4744/index.shtml" class="a-tips-Article-QQ" href="http://datalib.ent.qq.com/star/4744/index.shtml" style="outline: none; color: rgb(0, 0, 0); text-decoration: none; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(83, 109, 166);" target="_blank">林妙可</a>(<span class="infoMblog" style="position: relative; z-index: 9;"><a _href="http://t.qq.com/linmiaoke#pref=qqcom.keyword" class="a-tips-Article-QQ" href="http://t.qq.com/linmiaoke#pref=qqcom.keyword" rel="linmiaoke" reltitle="林妙可" style="outline: none; color: rgb(0, 0, 0); text-decoration: none; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(83, 109, 166);" target="_blank">微博</a></span>)，以及白百何(<span class="infoMblog" style="position: relative; z-index: 9;"><a _href="http://t.qq.com/baibaihe#pref=qqcom.keyword" class="a-tips-Article-QQ" href="http://t.qq.com/baibaihe#pref=qqcom.keyword" rel="baibaihe" reltitle="白百何" style="outline: none; color: rgb(0, 0, 0); text-decoration: none; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(83, 109, 166);" target="_blank">微博</a></span>)<a _href="http://datalib.ent.qq.com/star/3235/index.shtml" class="a-tips-Article-QQ" href="http://datalib.ent.qq.com/star/3235/index.shtml" style="outline: none; color: rgb(0, 0, 0); text-decoration: none; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(83, 109, 166);" target="_blank">陈羽凡</a>(<span class="infoMblog" style="position: relative; z-index: 9;"><a _href="http://t.qq.com/chenyufan#pref=qqcom.keyword" class="a-tips-Article-QQ" href="http://t.qq.com/chenyufan#pref=qqcom.keyword" rel="chenyufan" reltitle="羽泉-陈羽凡" style="outline: none; color: rgb(0, 0, 0); text-decoration: none; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(83, 109, 166);" target="_blank">微博</a></span>)一家三口，也纷纷现身首映活动现场，创下了爆表关注度。</p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	而影片的阵地宣传，可谓耗费了巨大的人力、物力、财力，其中仅礼品派送的预算费用高达千万，创下非续集国产动画之最。为了开启孩子们的暑期狂欢季，影片在上映前夕，在全国各大<a _href="http://ent.qq.com/movie/yingxun.shtml" class="a-tips-Article-QQ" href="http://ent.qq.com/movie/yingxun.shtml" style="outline: none; color: rgb(0, 0, 0); text-decoration: none; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(83, 109, 166);" target="_blank">影院</a>投放了数百个&ldquo;神笔马良&rdquo;、&ldquo;大茶壶&rdquo;超萌真人玩偶，与孩子们热情互动；同时，影院还配备了充足的电影大礼包进行现场派送，让体验式观影植入电影营销。</p>
+<p style="margin: 0px 0px 29px; color: rgb(0, 0, 0); font-size: 16px; padding: 0px; line-height: 28px; position: static; font-family: 宋体, Arial, sans-serif; text-indent: 2em;">
+	值得一提的是，影片近日还在全国各大影院迅速部署了一项重要决策，即影片所有3D场将会全线开放2D密钥，以解除诸多家长对于&ldquo;孩子观看3D伤害眼睛&rdquo;的顾虑，给&ldquo;小手牵大手&rdquo;的家庭观众带来暑期共享的观影乐趣。而这一举措，不仅赢得了家长们的赞誉，也受到影院经理的广泛支持，有效地带动了第二周&ldquo;合家欢观影&rdquo;的小高峰。</p>
+
+
+                <!-------相关新闻------->
+                  <div id="articelContent_Same">
+                  <div class="articelContent_SameNew">相关新闻</div>
+                <ul id="likeNewList">
+                  
+                </ul>
+            </div>
+                 <!-------相关新闻结束------->
+                  <br />
+                <!----------评论展示----------------->
+                <div id="articelComment">
+                    <div id="articelComment_top">
+                       <span style="font-size:20px;font-weight:bolder;display:block"> 我有话说</span>
+                     
+                           <span > 以下是对 <strong>[神笔马良_童年回忆]</strong> 的评论,总共:1条评论</span>
+                    </div>
+                    <div id="articelComment_middle">
+                        <ul id="articelCommentList">
+                            
+                        </ul>
+                    </div>
+                    <div id="articelCommnet_bottome">
+                        <textarea style="font-size:14px;padding:5px;width:90%;height:90px;overflow:auto;" placeholder="文明上网，请对您的发言负责" id="commentMsg"></textarea>
+                        <input type="button" id="btnComment" style="float:right" value="发布评论" class="reply_btn"/>
+                    </div>
+
+                </div>
+                <!----------评论展示结束----------------->
+    		</div>
+          
+    	</div>
+        <!---中间内容右侧布局---->
+    		<div id="articelContent_right">
+    		   <div id="hotArticel">
+                   <div class="newArticel_Title">
+                    <h3><span>最</span>新文章</h3>
+                </div>
+                <div id="newArticel_Content">
+                    <ul class="showUl">
+                        <li>
+                            <span class="spanData">1</span>
+                            <a href="javascript:void(0)">
+                                <span style="color:green">[图文]</span>
+                                啊啊啊啊
+                            </a>
+                            <span style="float:right"><img class="showImage" src="/ArticelTemplate/images/logo.gif"></span>
+                           <p style="padding-left:20px">啊啊啊啊......</p>
+                        </li>
+                        <li> <span class="spanData">2</span>
+                            <a href="javascript:void(0)">
+                                <span style="color:green">[图文]</span>
+                                啊啊啊啊
+                            </a>
+                            <span style="float:right"><img class="showImage" src="/ArticelTemplate/images/logo.gif"></span>
+                           <p style="padding-left:20px">啊啊啊啊......</p></li>
+                        <li> <span class="spanData">3</span>
+                            <a href="javascript:void(0)">
+                                <span style="color:green">[图文]</span>
+                                啊啊啊啊
+                            </a>
+                            <span style="float:right"><img class="showImage" src="/ArticelTemplate/images/logo.gif"></span>
+                           <p style="padding-left:20px">啊啊啊啊......</p></li>
+                    </ul>
+                    
+              </div>
+
+        </div>
+    	   </div>
+          <!---中间内容右侧布局结束---->
+    </div>
+
+    <!--中间内容结束-->
+    <div id="articelBottom">
+
+           <div id="about">
+            <a href="javascript:void(0)">关于我们</a>
+            <a href="javascript:void(0)">联系我们</a>
+            <a href="javascript:void(0)">法律声明</a>
+            <a href="javascript:void(0)">人才招聘</a>
+            <a href="javascript:void(0)">免责声明</a>
+            <a href="javascript:void(0)">网站地图</a>
+             <a href="javascript:void(0)">友情链接</a>
+            
+        </div>
+        <div id="copyRight">
+            <p>传智播客-专业java培训、php培训、iOS培训、C++培训、网页设计、平面设计、网络营销、游戏开发、前端与移动开发培训机构
+版权所有 2006 - 2015 北京传智播客教育科技有限公司</p>
+<p>地址：北京市昌平区建材城西路金燕龙办公楼一层 邮编：100096</p>
+<p>电话：010-82935150/60/70 传真：010-82935100 邮箱: zhanghj+itcast.cn</p>
+        </div>
+
+
+    </div>
+</body>
+</html>

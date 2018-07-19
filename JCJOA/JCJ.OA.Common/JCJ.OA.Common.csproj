@@ -40,6 +40,9 @@
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>..\lib\Lucene.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Memcached.ClientLibrary">
       <HintPath>..\lib\Memcached.ClientLibrary.dll</HintPath>
     </Reference>
@@ -48,6 +51,15 @@
     </Reference>
     <Reference Include="NVelocity">
       <HintPath>..\lib\NVelocity.dll</HintPath>
+    </Reference>
+    <Reference Include="PanGu">
+      <HintPath>..\lib\PanGu.dll</HintPath>
+    </Reference>
+    <Reference Include="PanGu.HighLight">
+      <HintPath>..\lib\PanGu.HighLight.dll</HintPath>
+    </Reference>
+    <Reference Include="PanGu.Lucene.Analyzer">
+      <HintPath>..\lib\PanGu.Lucene.Analyzer.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack">
       <HintPath>..\lib\ServiceStack.dll</HintPath>

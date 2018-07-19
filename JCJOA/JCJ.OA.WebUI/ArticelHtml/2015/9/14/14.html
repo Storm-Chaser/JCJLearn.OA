@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/ArticelTemplate/ArticelStyle.css ">
+    <link href="/Content/themes/default/easyui.css" rel="stylesheet" />
+    <link href="/Content/themes/icon.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="/Scripts/jquery.easyui.min.js"></script>
+    <script src="/Scripts/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript">
+        jQuery(function () {
+            loadLikeNews();
+            jQuery("#btnComment").click(function () {
+                addComment();
+            });
+        });
+        //加载相关新闻.
+        function loadLikeNews() {
+            jQuery.post("/ArticelInfo/LoadLikeNews", { "articelId": 14 }, function (data) {
+                var serverData = jQuery.parseJSON(data)
+                var serverDataLength = serverData.length;
+                for (var i = 0; i < serverDataLength; i++) {
+                    var addDate = serverData[i].AddDate;
+                    var d = addDate.split('T')[0];
+                    var date = new Date(d);
+                    var month = date.getMonth() + 1;
+                    var currentDate = date.getDate();
+                    var dir = date.getFullYear() + "/" + month + "/" + currentDate;
+                    jQuery("<li><a href='/ArticelHtml/" + dir + "/" + serverData[i].Id + ".html'>" + serverData[i].Title + "</a></li>").appendTo("#likeNewList");
+                }
+            });
+        }
+        //添加评论
+        function addComment() {
+            var msg = jQuery("#commentMsg").val();
+            if (msg != "") {
+                jQuery.post("/ArticelInfo/AddArticelComment", { "msg": msg, "articelId": 14 }, function (data) {
+                    var serverData = data.split(':');
+                    if (serverData[0] == "ok") {
+                        //重新加载
+                    } else {
+                        jQuery.messager.alert("提示", serverData[1], "error");
+                    }
+                });
+            } else {
+                jQuery.messager.alert("提示", "评论内容不能为空?", "error");
+            }
+        }
+        //加载评论
+        function loadComment() {
+            jQuery.post("/ArticelInfo/LoadArticelComment", { "articelId": 14 }, function (data) {
+                var serverData = jQuery.parseJSON(data);
+                var serverDataLength = data.length;
+                for (var i = 0; i < serverDataLength; i++) {
+                    jQuery("<li>" + serverData[i].AddDate + ":" + serverData[i].Msg + "</li>").appendTo(jQuery("#articelCommentList"));
+                }
+
+            });
+        }
+        function check() {
+            var obj = document.getElementById('articelCommentList');
+            var dom = (document.compatMode && document.compatMode == "CSS1Compat") ? document.documentElement : document.body;
+            var scrollTop = dom.scrollTop || document.body.scrollTop || 0;
+            if (obj.offsetTop - scrollTop - dom.clientHeight < 100) {
+                loadComment();//加载评论数据
+            }
+            else {
+                setTimeout("check()", 1000);
+            }
+        }
+        setTimeout("check()", 1000);
+    </script>
+</head>
+<body>
+<!--顶部布局-->
+    <div id="articelTop">
+    <!--顶部布局第一行-->
+    	<div id="articelTop_one">
+    		<div class="articelTop_oneleft">
+    			您好！admin,欢迎来到会员中心!【会员中心】【短消息0】【退出】
+    		</div>
+    		<div class="articelTop_oneRight">
+    			设为首页&nbsp;加入收藏&nbsp;网站地图
+    		</div>
+    	</div>
+    	 <!--顶部布局第一行结束-->
+    	 <div style="clear:both"></div>
+    	 	 <!--顶部布局第二行开始-->
+    	 	 <div id="articelTop_two">
+    	 	 		<div class="articelTopImg">
+    	 	 			<img src="/ArticelTemplate/images/logo.gif">
+    	 	 		</div>
+    	 	 		<div class="articelTopSearch">
+    	 	 			<input type="text" id="txtSearch" />
+    	 	 			<input type="button" value="搜索" id="txtBtnSearch" />
+    	 	 		</div>
+    	 	 </div>
+    	 	  <!--顶部布局第二行结束-->
+    	 	   <div style="clear:both"></div>
+    	 	  <!--导航条布局-->
+    	 	  <div id="articelNav">
+    	 	  		<ul>
+    	 	  			<li><a href="javascript:void(0)">首页</a></li>
+    	 	  			<li><a href="javascript:void(0)">新闻频道</a></li>
+    	 	  			<li><a href="javascript:void(0)">图片频道</a></li>
+    	 	  			<li><a href="javascript:void(0)">下载频道</a></li>
+    	 	  		</ul>
+    	 	   </div>
+    	 	    <!--导航条布局结束-->
+    </div>
+    <!--顶部布局结束-->
+    <!--中间内容开始-->
+    <div id="articelContent">
+    	<div id="articelContent_left">
+ 		 <div id="articelContent_leftTop">
+                您当前位置：
+    			<a href="javascript:void(0)">ItcastCMS</a> >> 
+    			<a href="javascript:void(0)">新闻频道</a> >>
+    				<a href="javascript:void(0)">《情怀》毛泽东扮演者</a> >>
+    				<a href="javascript:void(0)">浏览文章</a> 
+    		</div>
+    		<div id="articelContent_leftBttom">
+    			<h2>《情怀》毛泽东扮演者</h2> 
+<div class="artcelTop"><span>时间:2015/9/14 23:58:07 </span><span>信息来源:互联网</span><span>点击:0</span> <span>【收藏此文】【字体：大 中 小】</span></div>
+<div id="splitLine"></div>
+<p style="margin: 0px; color: rgb(0, 0, 0); border: 0px; padding: 26px 0px 0px; font-size: 14px; font-family: 宋体, simsun, sans-serif, Arial; line-height: 26px; text-align: center;">
+	&nbsp;</p>
+<p style="margin: 0px; color: rgb(0, 0, 0); border: 0px; padding: 26px 0px 0px; font-size: 14px; font-family: 宋体, simsun, sans-serif, Arial; line-height: 26px;">
+	<strong><span style="font-size: 14px; line-height: 26px;">&ldquo;我们当中有的同志曾跟随毛主席27年之久。这部电影让我们想起了在主席身边工作的情景，他的音容笑貌又浮现在了眼前。&rdquo;对在电影《情怀》中饰演毛泽东的特型演员红心来说，毛泽东生前警卫战士的这番话无疑是最大肯定。</span></strong></p>
+<p style="margin: 0px; color: rgb(0, 0, 0); border: 0px; padding: 26px 0px 0px; font-size: 14px; font-family: 宋体, simsun, sans-serif, Arial; line-height: 26px;">
+	<strong>　　1947年到1948年间，胡宗南纠集20万军队向延安发起进攻，毛泽东、周恩来等我党领导人带领部队和老百姓撤离延安转战陕北。建党90周年重点献礼影片《情怀》正是在这个历史背景下，讲述了毛泽东在陕北和房东梁老汉一家相处的故事，展现了毛泽东等领导人和百姓的鱼水深情。影片中毛泽东不仅是运筹帷幄全国解放战争的领袖，还是一个热心助人的&ldquo;好房客&rdquo;。</strong></p>
+<p style="margin: 0px; color: rgb(0, 0, 0); border: 0px; padding: 26px 0px 0px; font-size: 14px; font-family: 宋体, simsun, sans-serif, Arial; line-height: 26px;">
+	<strong>　　片中还出现了以往同类题材影片中很少出现的镜头&mdash;流泪的毛主席。房东的孙子没奶吃，主席让警卫员把自己的奶粉送过去，警卫员悄悄给主席的女儿李纳留下了两桶。主席发现后很生气，警卫员哭着辩解说，李纳正在生病也需要奶粉，听到这里主席也忍不住背过身去，眼泪静静地流下来&hellip;&hellip;导演曹桂千说，这样的细节在影片中还有不少，他们力图打破以往符号化的毛主席，要让人们看到一个质朴的、感觉亲切的毛主席。&ldquo;亲切的毛主席&rdquo;也是警卫战士印象里真实的毛主席。</strong></p>
+<p style="margin: 0px; color: rgb(0, 0, 0); border: 0px; padding: 26px 0px 0px; font-size: 14px; font-family: 宋体, simsun, sans-serif, Arial; line-height: 26px;">
+	<strong>　　《情怀》是40多岁的红心继《毛泽东回韶山》、《毛泽东和他的卫士》、《天安门》等影视作品后第四次饰演毛泽东，还是一个&ldquo;年轻&rdquo;的&ldquo;毛泽东&rdquo;。他透露，为了拍好《情怀》，他把睡眠时间压缩到了3个小时，&ldquo;每天两点半我就要起床开始化妆，还要看相关纪录片，练习那个时期毛主席的形态。&rdquo;五六十部和毛主席有关的纪录片他看了一遍又一遍，每天还规定自己看两小时和毛主席有关的书。他从中发现了很多其他特型演员没有注意，没有做到的细节。比如，毛主席走路时手掌心是朝前的，他抽烟时手指是平行地往嘴里放烟，点火柴时是&ldquo;划&rdquo;不是&ldquo;砍&rdquo;&hellip;&hellip;他的这些观察看起来都是细枝末节，可他坚信这些细枝末节对于不是演戏科班出身的自己非常重要。</strong></p>
+<p style="margin: 0px; color: rgb(0, 0, 0); border: 0px; padding: 26px 0px 0px; font-size: 14px; font-family: 宋体, simsun, sans-serif, Arial; line-height: 26px;">
+	<strong>　　《情怀》被广电总局列入重点献礼影片，将于7月正式上映。红心并不期待票房大卖，他只是希望能够有更多的人看到这个不一样的毛主席。</strong></p>
+
+
+                <!-------相关新闻------->
+                  <div id="articelContent_Same">
+                  <div class="articelContent_SameNew">相关新闻</div>
+                <ul id="likeNewList">
+                  
+                </ul>
+            </div>
+                 <!-------相关新闻结束------->
+                  <br />
+                <!----------评论展示----------------->
+                <div id="articelComment">
+                    <div id="articelComment_top">
+                       <span style="font-size:20px;font-weight:bolder;display:block"> 我有话说</span>
+                     
+                           <span > 以下是对 <strong>[《情怀》毛泽东扮演者]</strong> 的评论,总共:1条评论</span>
+                    </div>
+                    <div id="articelComment_middle">
+                        <ul id="articelCommentList">
+                            
+                        </ul>
+                    </div>
+                    <div id="articelCommnet_bottome">
+                        <textarea style="font-size:14px;padding:5px;width:90%;height:90px;overflow:auto;" placeholder="文明上网，请对您的发言负责" id="commentMsg"></textarea>
+                        <input type="button" id="btnComment" style="float:right" value="发布评论" class="reply_btn"/>
+                    </div>
+
+                </div>
+                <!----------评论展示结束----------------->
+    		</div>
+          
+    	</div>
+        <!---中间内容右侧布局---->
+    		<div id="articelContent_right">
+    		   <div id="hotArticel">
+                   <div class="newArticel_Title">
+                    <h3><span>最</span>新文章</h3>
+                </div>
+                <div id="newArticel_Content">
+                    <ul class="showUl">
+                        <li>
+                            <span class="spanData">1</span>
+                            <a href="javascript:void(0)">
+                                <span style="color:green">[图文]</span>
+                                啊啊啊啊
+                            </a>
+                            <span style="float:right"><img class="showImage" src="/ArticelTemplate/images/logo.gif"></span>
+                           <p style="padding-left:20px">啊啊啊啊......</p>
+                        </li>
+                        <li> <span class="spanData">2</span>
+                            <a href="javascript:void(0)">
+                                <span style="color:green">[图文]</span>
+                                啊啊啊啊
+                            </a>
+                            <span style="float:right"><img class="showImage" src="/ArticelTemplate/images/logo.gif"></span>
+                           <p style="padding-left:20px">啊啊啊啊......</p></li>
+                        <li> <span class="spanData">3</span>
+                            <a href="javascript:void(0)">
+                                <span style="color:green">[图文]</span>
+                                啊啊啊啊
+                            </a>
+                            <span style="float:right"><img class="showImage" src="/ArticelTemplate/images/logo.gif"></span>
+                           <p style="padding-left:20px">啊啊啊啊......</p></li>
+                    </ul>
+                    
+              </div>
+
+        </div>
+    	   </div>
+          <!---中间内容右侧布局结束---->
+    </div>
+
+    <!--中间内容结束-->
+    <div id="articelBottom">
+
+           <div id="about">
+            <a href="javascript:void(0)">关于我们</a>
+            <a href="javascript:void(0)">联系我们</a>
+            <a href="javascript:void(0)">法律声明</a>
+            <a href="javascript:void(0)">人才招聘</a>
+            <a href="javascript:void(0)">免责声明</a>
+            <a href="javascript:void(0)">网站地图</a>
+             <a href="javascript:void(0)">友情链接</a>
+            
+        </div>
+        <div id="copyRight">
+            <p>传智播客-专业java培训、php培训、iOS培训、C++培训、网页设计、平面设计、网络营销、游戏开发、前端与移动开发培训机构
+版权所有 2006 - 2015 北京传智播客教育科技有限公司</p>
+<p>地址：北京市昌平区建材城西路金燕龙办公楼一层 邮编：100096</p>
+<p>电话：010-82935150/60/70 传真：010-82935100 邮箱: zhanghj+itcast.cn</p>
+        </div>
+
+
+    </div>
+</body>
+</html>
