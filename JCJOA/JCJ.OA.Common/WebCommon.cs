@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace JCJ.OA.Common
 {
@@ -125,6 +126,7 @@ namespace JCJ.OA.Common
         /// <returns></returns>
         public static string CreateHightLight(string keywords, string Content)
         {
+            Content = ClearTab(Content);//过滤HTML标签
             PanGu.HighLight.SimpleHTMLFormatter simpleHTMLFormatter =
              new PanGu.HighLight.SimpleHTMLFormatter("<font color=\"red\">", "</font>");
             //创建Highlighter ，输入HTMLFormatter 和盘古分词对象Semgent
@@ -136,6 +138,17 @@ namespace JCJ.OA.Common
             //获取最匹配的摘要段
             return highlighter.GetBestFragment(keywords, Content);
 
+        }
+
+        /// <summary>
+        /// 过滤HTML标签
+        /// </summary>
+        /// <param name="Content"></param>
+        /// <returns></returns>
+        private static string ClearTab(string Content)
+        {
+            Regex regex = new Regex(@"<[^>]*>");//匹配所有标签
+            return regex.Replace(Content, "");
         }
     }
 }

@@ -8,30 +8,133 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <title>Index</title>
-</head>
-<body>
-    <div> 
-        <form method="post" action="/Search/SearchContent">
-            <input type="text" name="txtSearch" /><input type="submit" value="搜索" id="btnSearch" name="btnSearch"/>
-            <input type="submit" value="创建索引库" id="btnCreateSearch" name="btnCreateSearch"/>
-        </form>
-        
-            @if (ViewData["searchList"] != null)
-            {
-                <ul>
-                @foreach (var searchConent in (List<SearchContent>)ViewData["searchList"]) {
-                <li>
-                    @searchConent.Title
-                </li>
-                <li>
-                    @MvcHtmlString.Create(searchConent.Content)
-                </li>
-                }
-                    </ul>
+    <style type="text/css">
+        #div1 {
+            width: 100%;
+            height: 32px;
+            padding: 0px;
+        }
+
+        .textbox {
+            border: 1px solid;
+            border-color: #666 #ccc #ccc #666;
+            background: #F9F9F9;
+            color: #333;
+            padding: 0px;
+            width: 60%;
+            height: 32px;
+        }
+
+            .textbox:hover, .textbox:focus, textarea:hover, textarea:focus {
+                border-color: #09C;
+                background: #F5F9FD;
             }
 
-        
+        .search-btn2 {
+            width: 102px;
+            height: 32px;
+            cursor: pointer;
+            border: 0px;
+            background-color: #d6000f;
+            font-family: 'Microsoft Yahei';
+            font-size: 14px;
+            color: #f3f3f3;
+        }
+
+        .search-list-con {
+            width: 640px;
+            background-color: #fff;
+            overflow: hidden;
+            margin-top: 0px;
+            padding-bottom: 15px;
+            padding-top: 5px;
+        }
+
+        .search-list {
+            width: 600px;
+            overflow: hidden;
+            margin: 15px 20px 0px 20px;
+        }
+
+            .search-list dt {
+                font-family: 'Microsoft Yahei';
+                font-size: 16px;
+                line-height: 20px;
+                margin-bottom: 7px;
+                font-weight: normal;
+            }
+
+                .search-list dt a {
+                    color: #2981a9;
+                }
+
+                    .search-list dt a em {
+                        font-style: normal;
+                        color: #cc0000;
+                    }
+
+            .search-list .search-detail {
+                font-size: 14px;
+                color: #666666;
+                margin-bottom: 5px;
+                font-family: microsoft yahei;
+                line-height: 22px;
+                height: 62px;
+                overflow: hidden;
+            }
+
+
+
+
+        .ui-autocomplete-loading {
+            background: white url('/Content/ui-anim_basic_16x16.gif') right center no-repeat;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#txtSearchContent").autocomplete({
+                source: "/Search/AutoComplete",
+
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <form method="get" action="/Search/SearchContent">
+            <div id="div1">
+                <input type="text" id="txtSearchContent" name="txtSearch" autocomplete="off" class="textbox" /><input type="submit" value="搜一搜" id="btnSearch" name="btnSearch" class="search-btn2" />
+            </div>
+            @*  <input type="submit" value="创建索引库" id="btnCreateSearch" name="btnCreateSearch"/>*@
+        </form>
+
+        @if (ViewData["searchList"] != null)
+        {
+            <div class="search-list-con">
+                <dl class="search-list">
+                    @foreach (var searchConent in (List<SearchContent>)ViewData["searchList"])
+                    {
+                        var url = searchConent.AddDate.ToShortDateString().Replace("-", "/") + "/" + searchConent.Id + ".html";
+                        <dt>
+                            @if (searchConent.Flag == 0)
+                            {
+                                <a href="/ArticelHtml/@url" target="_blank">
+
+                                    @searchConent.Title
+                                </a>
+                            }
+
+                        </dt>
+                        <dd class="search-detail">
+                            @MvcHtmlString.Create(searchConent.Content)
+                        </dd>
+                    }
+
+                </dl>
+            </div>
+        }
 
     </div>
 </body>

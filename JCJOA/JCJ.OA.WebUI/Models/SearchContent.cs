@@ -11,5 +11,8 @@ namespace JCJ.OA.WebUI.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+        public DateTime AddDate { get; set; }
+        public int Flag { get; set; }
+        public LuceneActionType LuceneActionType { get; set; }
     }
 }
