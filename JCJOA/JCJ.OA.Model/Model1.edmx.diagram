@@ -28,6 +28,8 @@
         <EntityTypeShape EntityType="ItcastCmsModel.VideoClass" Width="1.5" PointX="1" PointY="14.375" />
         <EntityTypeShape EntityType="ItcastCmsModel.VideoFileInfo" Width="1.5" PointX="5.25" PointY="14.125" />
         <AssociationConnector Association="ItcastCmsModel.VideoClassVideoFileInfo" />
+        <EntityTypeShape EntityType="ItcastCmsModel.KeyWordsRank" Width="1.5" PointX="10.75" PointY="14.25" />
+        <EntityTypeShape EntityType="ItcastCmsModel.SearchDetails" Width="1.5" PointX="7.75" PointY="14.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

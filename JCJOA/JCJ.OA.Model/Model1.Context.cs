@@ -38,5 +38,7 @@ namespace JCJ.OA.Model
         public virtual DbSet<PhotoInfo> PhotoInfo { get; set; }
         public virtual DbSet<VideoClass> VideoClass { get; set; }
         public virtual DbSet<VideoFileInfo> VideoFileInfo { get; set; }
+        public virtual DbSet<KeyWordsRank> KeyWordsRank { get; set; }
+        public virtual DbSet<SearchDetails> SearchDetails { get; set; }
     }
 }

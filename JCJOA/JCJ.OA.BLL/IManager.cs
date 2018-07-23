@@ -52,6 +52,14 @@ namespace JCJ.OA.BLL
         }
     }   
 	
+	public partial class keyWordsRankService :BaseService<KeyWordsRank>,IKeyWordsRankService
+    {
+        public override void SetCurrentDal()
+        {
+			CurrentDal = this.DbSession.KeyWordsRankDal;
+        }
+    }   
+	
 	public partial class PhotoClassService :BaseService<PhotoClass>,IPhotoClassService
     {
         public override void SetCurrentDal()
@@ -81,6 +89,14 @@ namespace JCJ.OA.BLL
         public override void SetCurrentDal()
         {
 			CurrentDal = this.DbSession.RoleInfoDal;
+        }
+    }   
+	
+	public partial class SearchDetailsService :BaseService<SearchDetails>,ISearchDetailsService
+    {
+        public override void SetCurrentDal()
+        {
+			CurrentDal = this.DbSession.SearchDetailsDal;
         }
     }   
 	

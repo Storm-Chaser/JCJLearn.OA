@@ -155,7 +155,14 @@ namespace JCJ.OA.WebUI.Controllers
             ArticelService.AddEntity(cid, articelInfo);
             //完成内容保存以后，生成静态页面
             CreateHtmlPage(articelInfo, "add");
-            
+            //将新添加的文章写到队列中并且存储到Lucene.Net中
+            SearchContent searchContent = new SearchContent();
+            searchContent.Content = articelInfo.ArticleContent;
+            searchContent.Id = articelInfo.ID;
+            searchContent.Flag = 0;
+            searchContent.AddDate = articelInfo.AddDate;
+            searchContent.Title = articelInfo.Title;
+            IndexManager.GetInstance().AddEqueue(searchContent);
             return Content("ok");
         }
         /// <summary>

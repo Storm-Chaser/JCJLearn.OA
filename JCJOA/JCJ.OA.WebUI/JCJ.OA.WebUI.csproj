@@ -235,6 +235,7 @@
     </Compile>
     <Compile Include="Models\ArticelClassModel.cs" />
     <Compile Include="Models\ArticelCommentViewModel.cs" />
+    <Compile Include="Models\IndexManager.cs" />
     <Compile Include="Models\MyExceptionAttribute.cs" />
     <Compile Include="Models\SearchContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

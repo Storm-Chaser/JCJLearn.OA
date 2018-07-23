@@ -43,6 +43,7 @@
     <property name="ArticelService" ref="ArticelService" />
     <property name="PhotoInfoService" ref="PhotoInfoService" />
     <property name="VideoFileInfoService" ref="VideoFileInfoService" />
+    <property name="SearchDetailsService" ref="SearchDetailsService" />
   </object>
   
   <!--intentionally do NOT register the AccountController or the ValuesController with the container; demonstrates that the underlying

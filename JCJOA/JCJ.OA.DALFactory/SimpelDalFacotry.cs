@@ -85,6 +85,20 @@ namespace JCJ.OA.DALFactory
             return obj as IDAL.IDepartmentDal;
         }
 		
+	    public static IDAL.IKeyWordsRankDal CreateKeyWordsRankDal()
+        {
+
+            //string classFulleName = ConfigurationManager.AppSettings["DALNameSpace"] + ".KeyWordsRankDAL";
+
+
+            //object obj = Assembly.Load(ConfigurationManager.AppSettings["DalAssembly"]).CreateInstance(classFulleName, true);
+			string fullClassName = NameSpace + ".KeyWordsRankDal";
+            var obj  = CreateInstance(fullClassName);
+
+
+            return obj as IDAL.IKeyWordsRankDal;
+        }
+		
 	    public static IDAL.IPhotoClassDal CreatePhotoClassDal()
         {
 
@@ -139,6 +153,20 @@ namespace JCJ.OA.DALFactory
 
 
             return obj as IDAL.IRoleInfoDal;
+        }
+		
+	    public static IDAL.ISearchDetailsDal CreateSearchDetailsDal()
+        {
+
+            //string classFulleName = ConfigurationManager.AppSettings["DALNameSpace"] + ".SearchDetailsDAL";
+
+
+            //object obj = Assembly.Load(ConfigurationManager.AppSettings["DalAssembly"]).CreateInstance(classFulleName, true);
+			string fullClassName = NameSpace + ".SearchDetailsDal";
+            var obj  = CreateInstance(fullClassName);
+
+
+            return obj as IDAL.ISearchDetailsDal;
         }
 		
 	    public static IDAL.ISensitiveWordDal CreateSensitiveWordDal()

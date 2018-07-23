@@ -37,6 +37,11 @@ namespace JCJ.OA.DLL
 
     }
 		
+	public partial class KeyWordsRankDal :BaseDal<KeyWordsRank>,IKeyWordsRankDal
+    {
+
+    }
+		
 	public partial class PhotoClassDal :BaseDal<PhotoClass>,IPhotoClassDal
     {
 
@@ -53,6 +58,11 @@ namespace JCJ.OA.DLL
     }
 		
 	public partial class RoleInfoDal :BaseDal<RoleInfo>,IRoleInfoDal
+    {
+
+    }
+		
+	public partial class SearchDetailsDal :BaseDal<SearchDetails>,ISearchDetailsDal
     {
 
     }

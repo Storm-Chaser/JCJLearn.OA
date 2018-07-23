@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JCJ.OA.VideoServer", "JCJ.O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JCJ.OA.VideoConvertServer", "JCJ.OA.VideoConvertServer\JCJ.OA.VideoConvertServer.csproj", "{180DA514-C860-402D-A9C8-E13A773FE223}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JCJ.OA.QuartzServer", "JCJ.OA.QuartzServer\JCJ.OA.QuartzServer.csproj", "{01C4FD68-FE52-495A-805F-540ED5B7E18F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{180DA514-C860-402D-A9C8-E13A773FE223}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{180DA514-C860-402D-A9C8-E13A773FE223}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{180DA514-C860-402D-A9C8-E13A773FE223}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01C4FD68-FE52-495A-805F-540ED5B7E18F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C4FD68-FE52-495A-805F-540ED5B7E18F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01C4FD68-FE52-495A-805F-540ED5B7E18F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01C4FD68-FE52-495A-805F-540ED5B7E18F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

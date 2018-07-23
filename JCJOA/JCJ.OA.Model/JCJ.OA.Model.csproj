@@ -70,7 +70,11 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Enum\DelFlagEnum.cs" />
+    <Compile Include="Enum\LuceneActionType.cs" />
     <Compile Include="EqualityComparer.cs" />
+    <Compile Include="KeyWordsRank.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -97,6 +101,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="R_UserInfo_ActionInfo.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SearchDetails.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Search\ArticelSearch.cs" />

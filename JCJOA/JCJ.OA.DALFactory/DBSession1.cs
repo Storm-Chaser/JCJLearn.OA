@@ -4,6 +4,7 @@ using JCJ.OA.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,18 @@ namespace JCJ.OA.DALFactory
         {
             get { return DBContexFactory.CreateDbContext(); }
         }
+
+        public List<T> ExecuteQuery<T>(string sql, params SqlParameter[] pars)
+        {
+            return Db.Database.SqlQuery<T>(sql, pars).ToList();
+        }
+        //一个业务中有可能涉及到对多张表的操作，但是希望链接一次数据库，完成对多张表的操作。
+        //工作单元模式（UnitofWork）
+        public int ExecuteSql(string sql, params SqlParameter[] pars)
+        {
+            return Db.Database.ExecuteSqlCommand(sql, pars);
+        }
+
         //private IUserInfoDal _userInfoDal;
         //public IUserInfoDal userInfoDal
         //{

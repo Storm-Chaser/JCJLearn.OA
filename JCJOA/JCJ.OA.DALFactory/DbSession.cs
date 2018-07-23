@@ -85,6 +85,20 @@ namespace JCJ.OA.DALFactory
             set { _DepartmentDal = value; }
         }
 	
+		private IKeyWordsRankDal _KeyWordsRankDal;
+        public IKeyWordsRankDal KeyWordsRankDal
+        {
+            get
+            {
+                if(_KeyWordsRankDal == null)
+                {
+                    _KeyWordsRankDal = AbstractFactory.CreateKeyWordsRankDal();
+                }
+                return _KeyWordsRankDal;
+            }
+            set { _KeyWordsRankDal = value; }
+        }
+	
 		private IPhotoClassDal _PhotoClassDal;
         public IPhotoClassDal PhotoClassDal
         {
@@ -139,6 +153,20 @@ namespace JCJ.OA.DALFactory
                 return _RoleInfoDal;
             }
             set { _RoleInfoDal = value; }
+        }
+	
+		private ISearchDetailsDal _SearchDetailsDal;
+        public ISearchDetailsDal SearchDetailsDal
+        {
+            get
+            {
+                if(_SearchDetailsDal == null)
+                {
+                    _SearchDetailsDal = AbstractFactory.CreateSearchDetailsDal();
+                }
+                return _SearchDetailsDal;
+            }
+            set { _SearchDetailsDal = value; }
         }
 	
 		private ISensitiveWordDal _SensitiveWordDal;

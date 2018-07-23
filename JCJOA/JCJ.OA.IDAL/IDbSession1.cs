@@ -23,6 +23,8 @@ namespace JCJ.OA.IDAL
 	
 		IDepartmentDal DepartmentDal{get;set;}
 	
+		IKeyWordsRankDal KeyWordsRankDal{get;set;}
+	
 		IPhotoClassDal PhotoClassDal{get;set;}
 	
 		IPhotoInfoDal PhotoInfoDal{get;set;}
@@ -30,6 +32,8 @@ namespace JCJ.OA.IDAL
 		IR_UserInfo_ActionInfoDal R_UserInfo_ActionInfoDal{get;set;}
 	
 		IRoleInfoDal RoleInfoDal{get;set;}
+	
+		ISearchDetailsDal SearchDetailsDal{get;set;}
 	
 		ISensitiveWordDal SensitiveWordDal{get;set;}
 	

@@ -19,6 +19,7 @@ namespace JCJ.OA.WebUI
     {
         protected void Application_Start()
         {
+            IndexManager.GetInstance().MyThread(); //开启线程
             log4net.Config.XmlConfigurator.Configure();   //获取配置信息
             //开启一个线程，查看异常队列
             string filePath = Server.MapPath("/Log/");

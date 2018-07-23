@@ -36,6 +36,11 @@ namespace JCJ.OA.IBLL
        
     }   
 	
+	public partial interface IKeyWordsRankService : IBaseService<KeyWordsRank>
+    {
+       
+    }   
+	
 	public partial interface IPhotoClassService : IBaseService<PhotoClass>
     {
        
@@ -52,6 +57,11 @@ namespace JCJ.OA.IBLL
     }   
 	
 	public partial interface IRoleInfoService : IBaseService<RoleInfo>
+    {
+       
+    }   
+	
+	public partial interface ISearchDetailsService : IBaseService<SearchDetails>
     {
        
     }   

@@ -35,6 +35,11 @@ namespace JCJ.OA.IDAL
       
     }
 	
+	public partial interface IKeyWordsRankDal :IBaseDal<KeyWordsRank>
+    {
+      
+    }
+	
 	public partial interface IPhotoClassDal :IBaseDal<PhotoClass>
     {
       
@@ -51,6 +56,11 @@ namespace JCJ.OA.IDAL
     }
 	
 	public partial interface IRoleInfoDal :IBaseDal<RoleInfo>
+    {
+      
+    }
+	
+	public partial interface ISearchDetailsDal :IBaseDal<SearchDetails>
     {
       
     }

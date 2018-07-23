@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{01B04A21-CD4F-435E-89DF-E0DECAD2D474}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JCJ.OA.IBLL</RootNamespace>
-    <AssemblyName>JCJ.OA.IBLL</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <ProjectGuid>{01C4FD68-FE52-495A-805F-540ED5B7E18F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>JCJ.OA.QuartzServer</RootNamespace>
+    <AssemblyName>JCJ.OA.QuartzServer</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\lib\Quartz\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz">
+      <HintPath>..\lib\Quartz\Quartz.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,42 +48,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IArticelService.cs" />
-    <Compile Include="IBaseService.cs" />
-    <Compile Include="IKeyWordsRankService.cs" />
-    <Compile Include="IManager.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>IManager.tt</DependentUpon>
-    </Compile>
-    <Compile Include="IRoleInfoService.cs" />
-    <Compile Include="ISensitiveWordService.cs" />
-    <Compile Include="IUserInfoService.cs" />
-    <Compile Include="IVideoFileInfoService.cs" />
+    <Compile Include="IndexJob.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JCJ.OA.DALFactory\JCJ.OA.DALFactory.csproj">
-      <Project>{a000b9dd-0083-4adb-8538-24d78d15fc3a}</Project>
-      <Name>JCJ.OA.DALFactory</Name>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JCJ.OA.BLL\JCJ.OA.BLL.csproj">
+      <Project>{25c0f90d-8f81-4d85-829d-f01ec9009e9b}</Project>
+      <Name>JCJ.OA.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JCJ.OA.IDAL\JCJ.OA.IDAL.csproj">
-      <Project>{301b0b5c-bf46-47f0-a697-39eabcbd285d}</Project>
-      <Name>JCJ.OA.IDAL</Name>
+    <ProjectReference Include="..\JCJ.OA.Common\JCJ.OA.Common.csproj">
+      <Project>{63750fe9-0b3e-4e3a-8040-0f0ac80ed133}</Project>
+      <Name>JCJ.OA.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JCJ.OA.IBLL\JCJ.OA.IBLL.csproj">
+      <Project>{01b04a21-cd4f-435e-89df-e0decad2d474}</Project>
+      <Name>JCJ.OA.IBLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\JCJ.OA.Model\JCJ.OA.Model.csproj">
       <Project>{c165f29b-629b-4ffa-917d-c540e35e4657}</Project>
       <Name>JCJ.OA.Model</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="IManager.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>IManager.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
