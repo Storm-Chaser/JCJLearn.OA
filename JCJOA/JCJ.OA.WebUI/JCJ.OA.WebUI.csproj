@@ -244,6 +244,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TextTemplate1.tt</DependentUpon>
     </Compile>
+    <Compile Include="WebService1.asmx.cs">
+      <DependentUpon>WebService1.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArticelTemplate\ArticelStyle.css" />
@@ -1812,6 +1816,7 @@
     </Content>
     <Content Include="Content\themes\material-teal\images\Thumbs.db" />
     <Content Include="Content\themes\material\images\Thumbs.db" />
+    <Content Include="WebService1.asmx" />
     <Fakes Include="Fakes\log4net.fakes" />
     <Content Include="ckeditor\.htaccess" />
     <Content Include="ckeditor\ckeditor.pack" />
@@ -1936,6 +1941,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
